@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipa Vales Digitais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', Arial, sans-serif;
+            font-size: 10.5px;
+        }
+        
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            color: #000000;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .tabs-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 18px;
+            background: #f1f1f1;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: #555;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover {
+            background: #e8e8e8;
+        }
+        
+        .tab-btn.active {
+            background: #000;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 11px;
+            }
+        }
+        
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 24px;
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        h2 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            color: #000000;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        h4 {
+            color: #000000;
+            margin: 20px 0 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .calculator-section, .text-section, .prompts-section, .welcome-section, .activation-section, .advertiser-section, .invoices-section {
+            background-color: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .hello-section {
+            background-color: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #000000;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        input[type="number"], input[type="email"], input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 15px;
+            border: 1px solid #b0b0b0;
+            border-radius: 0;
+            transition: all 0.3s;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        input[type="number"]:focus, input[type="email"]:focus, input[type="text"]:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+        
+        .calculate-btn, .generate-btn, .template-btn, .invoice-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+        
+        .calculate-btn:hover, .generate-btn:hover, .template-btn:hover, .invoice-btn:hover {
+            background-color: #333333;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .prompt-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .prompt-btn:hover {
+            background-color: #333333;
+            transform: translateY(-1px);
+        }
+        
+        .result-container {
+            background-color: #f8f8f8;
+            border-radius: 0;
+            padding: 20px;
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #d0d0d0;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            color: #555555;
+            font-weight: 500;
+            font-size: 12px;
+        }
+        
+        .result-value {
+            color: #000000;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        
+        .formula {
+            background-color: #f0f0f0;
+            padding: 12px;
+            border-radius: 0;
+            margin-top: 20px;
+            font-size: 11.5px;
+            color: #333333;
+            text-align: center;
+            border-left: 3px solid #000000;
+        }
+        
+        .generated-text, .prompt-text, .welcome-text, .activation-text, .template-text, .invoice-text {
+            background-color: #f8f8f8;
+            border-radius: 0;
+            padding: 25px;
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            font-size: 12px;
+            color: #000000;
+            min-height: 550px;
+            position: relative;
+            font-family: 'Google Sans', Arial, sans-serif;
+            text-align: left;
+        }
+        
+        .prompt-text {
+            min-height: 450px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 11.5px;
+        }
+        
+        .activation-text, .template-text, .invoice-text {
+            min-height: 450px;
+        }
+        
+        .welcome-text {
+            min-height: 550px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding: 30px;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        
+        .copy-btn:hover {
+            background-color: #333333;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .copy-btn.copied {
+            background-color: #4CAF50;
+        }
+        
+        .platform-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .platform-btn {
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 0;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .platform-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .platform-btn.active {
+            background-color: #000;
+            color: white;
+            border-color: #000;
+        }
+        
+        .budget-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .budget-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .budget-card {
+            background: #f8f9fa;
+            border-radius: 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .budget-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .budget-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        
+        .budget-features {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        
+        .budget-features li {
+            padding: 5px 0;
+            font-size: 11.5px;
+            color: #555;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .budget-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .shortcut-info {
+            margin-top: 10px;
+            color: #777777;
+            font-size: 10px;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777777;
+            font-size: 10px;
+            font-weight: 400;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 4px;
+            border-radius: 0;
+            font-weight: 600;
+        }
+        
+        .alert-box {
+            background-color: #fff0f0;
+            border-left: 4px solid #cc0000;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0;
+        }
+        
+        .note-box {
+            background-color: #f0f8ff;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 0;
+            font-size: 10px;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+        
+        .badge-green {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .badge-blue {
+            background-color: #e8f4fd;
+            color: #1565c0;
+        }
+        
+        .badge-orange {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .empty-tab {
+            text-align: center;
+            padding: 60px 20px;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .empty-tab h2 {
+            color: #777;
+            margin-bottom: 20px;
+        }
+        
+        .prompt-section {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .prompt-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .platform-prompts {
+            display: none;
+        }
+        
+        .platform-prompts.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .platform-welcomes {
+            display: none;
+        }
+
+        .platform-welcomes.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .campaign-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .template-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .invoice-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .campaign-buttons, .template-buttons, .invoice-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .email-input {
+            background-color: #fffacd;
+            padding: 2px 4px;
+            border-radius: 0;
+            font-weight: 600;
+            border: 1px dashed #ffcc00;
+        }
+        
+        .template-container {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .template-container:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .welcome-text {
+            font-size: 11.5px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding: 30px;
+            font-family: 'Google Sans', Arial, sans-serif;
+        }
+        
+        .welcome-section h3 {
+            margin-top: 25px;
+            color: #333;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        
+        .hello-message {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .emoji {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .update-box {
+            background-color: #f9f9f9;
+            border-radius: 0;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .update-title {
+            color: #000;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .update-subtitle {
+            color: #555;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+        }
+        
+        .update-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 15px 0;
+        }
+        
+        .update-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 13px;
+            color: #333;
+        }
+        
+        .update-list li:before {
+            content: "•";
+            position: absolute;
+            left: 10px;
+            color: #000;
+            font-size: 16px;
+        }
+        
+        .update-list li.no-dot {
+            padding-left: 0;
+        }
+
+        .update-list li.no-dot:before {
+            content: none;
+        }
+        
+        .future-updates {
+            background-color: #f0f8ff;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Equipa Vales Digitais</h1>
+    
+    <div class="tabs-container">
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="hello-tab">Olá equipa</button>
+            <button class="tab-btn" data-tab="welcomes-tab">Welcomes</button>
+            <button class="tab-btn" data-tab="advertiser-tab">Anunciante</button>
+            <button class="tab-btn" data-tab="prompts-tab">Prompts</button>
+            <button class="tab-btn" data-tab="calculator-tab">Calculadora ±20%</button>
+            <button class="tab-btn" data-tab="activation-tab">Ativação</button>
+            <button class="tab-btn" data-tab="invoices-tab">Faturas</button>
+        </div>
+    </div>
+    
+    <!-- Aba Olá Equipa -->
+    <div id="hello-tab" class="tab-content active">
+        <div class="hello-section">
+            <h2>Olá colega!</h2>
+            <div class="hello-message">
+                Esta é a minha plataforma de geração de texto para campanhas!<br><br>
+                
+                Esta ferramenta foi desenvolvida para otimizar o meu fluxo de trabalho, e agora o teu!<br><br>
+                
+                Seleciona a aba correspondente à tua necessidade para começar!<br><br>
+                
+                Para qualquer dúvida ou sugestão, entra em contacto comigo :)<br><br>
+                
+                <strong>Bom trabalho!<br>
+                Constança Cruz</strong>
+            </div>
+            
+            <div class="update-box">
+                <div class="update-title">Update 2.8 - "Novo visual e mais organização"</div>
+                
+                <div class="update-subtitle">Novidades desta versão:</div>
+                <ul class="update-list">
+                    <li class="no-dot">Novo design mais leve e profissional</li>
+                    <li class="no-dot">Nova aba de <strong>Welcomes</strong> com templates prontos</li>
+                    <li class="no-dot">Organização de conteúdo otimizada para o dia a dia</li>
+                </ul>
+                
+                <div class="update-subtitle">Próximos passos:</div>
+                <div class="future-updates">
+                    <strong>Em planeamento</strong><br>
+                    • Novos recursos na aba calculadora<br>
+                    • Expansão da biblioteca de templates<br>
+                    • Melhorias contínuas nas mensagens e fluxos
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px; font-style: italic; color: #555;">
+                    Digam-me o que acham!
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Aba Welcomes -->
+    <div id="welcomes-tab" class="tab-content">
+        <div class="welcome-section">
+            <h2>Templates de Welcome</h2>
+
+            <div class="platform-buttons welcome-platform-buttons">
+                <button class="platform-btn welcome-platform-btn active" data-welcome-platform="google">Google Ads</button>
+                <button class="platform-btn welcome-platform-btn" data-welcome-platform="meta">Meta Ads</button>
+            </div>
+
+            <div id="google-welcomes" class="platform-welcomes active">
+                <div class="budget-grid">
+                    <div class="budget-card">
+                        <div class="budget-price">500€</div>
+                        <ul class="budget-features">
+                            <li>5 anúncios criados</li>
+                            <li>2 categorias de anúncios</li>
+                            <li>Google Ads (GA)</li>
+                            <li>Template completo de boas-vindas</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="500" data-platform="google">Copiar Welcome 500€</button>
+                    </div>
+
+                    <div class="budget-card">
+                        <div class="budget-price">1000€</div>
+                        <ul class="budget-features">
+                            <li>8 anúncios criados</li>
+                            <li>3 categorias de anúncios</li>
+                            <li>Google Ads (GA)</li>
+                            <li>Template completo de boas-vindas</li>
+                            <li>Mais informações de segmentação</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="1000" data-platform="google">Copiar Welcome 1000€</button>
+                    </div>
+
+                    <div class="budget-card">
+                        <div class="budget-price">1500€+</div>
+                        <ul class="budget-features">
+                            <li>12 anúncios criados</li>
+                            <li>4 categorias de anúncios</li>
+                            <li>Google Ads (GA)</li>
+                            <li>Template completo de boas-vindas</li>
+                            <li>Estratégia avançada</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="1500" data-platform="google">Copiar Welcome 1500€+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="meta-welcomes" class="platform-welcomes">
+                <div class="budget-grid">
+                    <div class="budget-card">
+                        <div class="budget-price">500€</div>
+                        <ul class="budget-features">
+                            <li>5 anúncios criados</li>
+                            <li>2 categorias de anúncios</li>
+                            <li>Meta Ads (MA)</li>
+                            <li>Template de boas-vindas Meta</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="500" data-platform="meta">Copiar Welcome Meta 500€</button>
+                    </div>
+
+                    <div class="budget-card">
+                        <div class="budget-price">1000€</div>
+                        <ul class="budget-features">
+                            <li>8 anúncios criados</li>
+                            <li>3 categorias de anúncios</li>
+                            <li>Meta Ads (MA)</li>
+                            <li>Template de boas-vindas Meta</li>
+                            <li>Mais opções de segmentação</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="1000" data-platform="meta">Copiar Welcome Meta 1000€</button>
+                    </div>
+
+                    <div class="budget-card">
+                        <div class="budget-price">1500€+</div>
+                        <ul class="budget-features">
+                            <li>12 anúncios criados</li>
+                            <li>4 categorias de anúncios</li>
+                            <li>Meta Ads (MA)</li>
+                            <li>Template de boas-vindas Meta</li>
+                            <li>Estratégia avançada</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="1500" data-platform="meta">Copiar Welcome Meta 1500€+</button>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Preview do Welcome:</h3>
+            <div class="welcome-text" id="welcomeText">
+                <button class="copy-btn" id="copyWelcomeBtn" title="Clique para copiar">Copiar Welcome</button>
+                Selecione uma plataforma e orçamento acima para visualizar e copiar o template de welcome correspondente.
+            </div>
+
+            <p class="shortcut-info">Clique nos botões para copiar automaticamente cada template específico</p>
+        </div>
+    </div>
+
+    <!-- Aba Anunciante -->
+    <div id="advertiser-tab" class="tab-content">
+        <div class="advertiser-section">
+            <h2>Templates para Anunciante</h2>
+            
+            <!-- Template 1: Confirmação -->
+            <div class="template-container">
+                <h3>1. Confirmação de Email</h3>
+                
+                <div class="input-group">
+                    <label for="confirmationEmail">Insira o email do cliente:</label>
+                    <input type="email" id="confirmationEmail" placeholder="exemplo@empresa.com" autofocus>
+                </div>
+                
+                <button class="template-btn" id="generateConfirmationBtn">Gerar Email de Confirmação</button>
+                
+                <div class="template-text" id="confirmationText">
+                    <button class="copy-btn" id="copyConfirmationBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    
+Caro cliente,
+
+Gostaria apenas de confirmar se o endereço de e-mail associado à página de Facebook da vossa empresa é <span class="email-input" id="confirmationEmailPlaceholder">[INSERIR EMAIL AQUI]</span>
+
+Se estiver correto, perfeito. Caso o contacto tenha sido alterado, agradeço que me indiquem o e-mail atual para que possa direcionar o meu pedido para o sítio certo.
+
+Obrigada pela ajuda.
+
+Com os melhores cumprimentos,
+Equipa Leadzai
+                </div>
+            </div>
+            
+            <!-- Template 2: Confirmação do Envio do Pedido -->
+            <div class="template-container">
+                <h3>2. Confirmação do Envio do Pedido</h3>
+                
+                <div class="input-group">
+                    <label for="warningEmail">Insira o email do cliente:</label>
+                    <input type="email" id="warningEmail" placeholder="exemplo@empresa.com">
+                </div>
+                
+                <button class="template-btn" id="generateWarningBtn">Gerar Email de Confirmação do Envio</button>
+                
+                <div class="template-text" id="warningText">
+                    <button class="copy-btn" id="copyWarningBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    
+Caro cliente,
+
+No seguimento do pedido enviado, foi encaminhado um e-mail para endereço e <span class="email-input" id="warningEmailPlaceholder">[INSERIR EMAIL AQUI]</span>.
+
+Solicitamos, por favor, que verifique se este e-mail foi recebido. Caso não se encontre na caixa de entrada, pedimos que verifique também a pasta de Spam ou Lixo Eletrônico. 
+
+Ficamos a aguardar o vosso retorno.
+
+Com os melhores cumprimentos,
+Equipa Leadzai
+                </div>
+            </div>
+            
+            <p class="shortcut-info">Pressione Ctrl+C para copiar o texto ou clique no botão "Copiar Tudo"</p>
+        </div>
+    </div>
+    
+    <!-- Aba Prompts -->
+    <div id="prompts-tab" class="tab-content">
+        <div class="prompts-section">
+            <h2>Prompts</h2>
+            
+            <div class="platform-buttons">
+                <button class="platform-btn active" data-platform="google">Google Ads</button>
+                <button class="platform-btn" data-platform="meta">Meta Ads</button>
+            </div>
+            
+            <!-- Google Ads Section -->
+            <div id="google-prompts" class="platform-prompts active">
+                <div class="budget-grid">
+                    <div class="budget-card">
+                        <div class="budget-price">500€</div>
+                        <ul class="budget-features">
+                            <li>Até 2 categorias importantes (SEO)</li>
+                            <li>Máx. 5 anúncios separados</li>
+                            <li>1 Responsivo por categoria</li>
+                        </ul>
+                        <button class="prompt-btn copy-prompt-btn" data-budget="500" data-platform="google">Copiar Prompt 500€</button>
+                    </div>
+                    
+                    <div class="budget-card">
+                        <div class="budget-price">1000€</div>
+                        <ul class="budget-features">
+                            <li>Até 3 categorias importantes (SEO)</li>
+                            <li>Máx. 8 anúncios separados</li>
+                            <li>1 Responsivo por categoria</li>
+                            <li>1 Display estratégico</li>
+                        </ul>
+                        <button class="prompt-btn copy-prompt-btn" data-budget="1000" data-platform="google">Copiar Prompt 1000€</button>
+                    </div>
+                    
+                    <div class="budget-card">
+                        <div class="budget-price">1500€+</div>
+                        <ul class="budget-features">
+                            <li>Até 4 categorias importantes (SEO)</li>
+                            <li>Máx. 12 anúncios separados</li>
+                            <li>1 Responsivo por categoria</li>
+                            <li>1 Display estratégico</li>
+                            <li>Estratégia completa</li>
+                        </ul>
+                        <button class="prompt-btn copy-prompt-btn" data-budget="1500" data-platform="google">Copiar Prompt 1500€+</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Meta Ads Section -->
+            <div id="meta-prompts" class="platform-prompts">
+                <div class="budget-grid">
+                    <div class="budget-card">
+                        <div class="budget-price">500€</div>
+                        <ul class="budget-features">
+                            <li>Melhores categorias (SEO)</li>
+                            <li>Máx. 5 anúncios separados</li>
+                            <li>Modelo Universal Meta Ads</li>
+                        </ul>
+                        <button class="prompt-btn copy-prompt-btn" data-budget="500" data-platform="meta">Copiar Prompt 500€</button>
+                    </div>
+                    
+                    <div class="budget-card">
+                        <div class="budget-price">1000€</div>
+                        <ul class="budget-features">
+                            <li>Melhores categorias (SEO)</li>
+                            <li>Máx. 8 anúncios separados</li>
+                            <li>Modelo Universal Meta Ads</li>
+                        </ul>
+                        <button class="prompt-btn copy-prompt-btn" data-budget="1000" data-platform="meta">Copiar Prompt 1000€</button>
+                    </div>
+                    
+                    <div class="budget-card">
+                        <div class="budget-price">1500€+</div>
+                        <ul class="budget-features">
+                            <li>Melhores categorias (SEO)</li>
+                            <li>Máx. 12 anúncios separados</li>
+                            <li>Modelo Universal Meta Ads</li>
+                        </ul>
+                        <button class="prompt-btn copy-prompt-btn" data-budget="1500" data-platform="meta">Copiar Prompt 1500€+</button>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Preview do Prompt:</h3>
+            <div class="prompt-text" id="promptText">
+                <button class="copy-btn" id="copyPromptBtn" title="Clique para copiar">Copiar Prompt</button>
+                Selecione uma plataforma e orçamento acima para visualizar e copiar o prompt correspondente.
+            </div>
+            
+            <p class="shortcut-info">Clique nos botões para copiar automaticamente cada prompt específico</p>
+        </div>
+    </div>
+    
+    <!-- Aba Calculadora ±20% -->
+    <div id="calculator-tab" class="tab-content">
+        <div class="container">
+            <div class="calculator-section">
+                <h2>Calculadora de Intervalo ±20%</h2>
+                
+                <div class="input-group">
+                    <label for="numberInput">Digite o valor estimado de cliques:</label>
+                    <input type="number" id="numberInput" placeholder="Ex: 0" min="0" step="any" autofocus>
+                </div>
+                
+                <button class="calculate-btn" id="calculateBtn">Calcular Intervalo</button>
+                
+                <div class="result-container" id="resultContainer">
+                    <div class="result-item">
+                        <span class="result-label">Valor original:</span>
+                        <span class="result-value" id="originalValue">0</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">20% do valor:</span>
+                        <span class="result-value" id="twentyPercent">0</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Valor mínimo (-20%):</span>
+                        <span class="result-value" id="minValue">0</span>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Valor máximo (+20%):</span>
+                        <span class="result-value" id="maxValue">0</span>
+                    </div>
+                    
+                    <div class="formula">
+                        <strong>Fórmula:</strong> Mínimo = Valor - (Valor × 20%) | Máximo = Valor + (Valor × 20%)
+                    </div>
+                </div>
+                
+                <p class="shortcut-info">Pressione Enter no campo numérico para calcular rapidamente</p>
+            </div>
+            
+            <div class="text-section">
+                <h2>Texto da Campanha</h2>
+                
+                <div class="generated-text" id="generatedText">
+                    <button class="copy-btn" id="copyCampaignBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    
+Boa tarde,
+
+A sua campanha está criada e encontra-se em anexo para que possa analisar.
+
+Estimamos que o potencial de cliques esperado por mês se situe entre <span id="minText">0</span> e <span id="maxText">0</span>.
+    • Nota: Esta projeção é feita sob a premissa de que a campanha e o seu website se mantêm integralmente elegíveis e em conformidade com as políticas das plataformas (Meta/Google). O número real de cliques poderá variar significativamente caso existam restrições políticas, limitações técnicas no website, ou outros fatores que possam impactar o desempenho.
+
+Por favor, analise os anúncios e responda a este email com a sua aprovação.
+
+<div class="alert-box">
+<strong>Alerta de Prazo Limite</strong>
+Informamos que tem dois (2) dias úteis a contar da data de envio deste email para nos enviar a sua resposta e aprovação.
+
+*Caso não recebamos qualquer resposta ou feedback dentro deste prazo, entenderemos por subentendido que os anúncios estão aceites e que a campanha pode ser ativada de imediato.
+</div>
+
+Ficamos a aguardar a sua resposta o mais breve possível para garantirmos o sucesso e a rapidez da ativação da sua campanha.
+
+Com os melhores cumprimentos,
+Equipa Vales Digitais
+                </div>
+                
+                <p class="shortcut-info">Pressione Ctrl+C para copiar o texto ou clique no botão "Copiar Tudo"</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Aba Ativação -->
+    <div id="activation-tab" class="tab-content">
+        <div class="activation-section">
+            <h2>Emails de Ativação de Campanha</h2>
+            
+            <div class="campaign-buttons">
+                <button class="generate-btn" id="generateOneCampaignBtn">Gerar Email - 1 Campanha</button>
+                <button class="generate-btn" id="generateTwoCampaignsBtn">Gerar Email - 2 Campanhas</button>
+            </div>
+            
+            <h3>Email Gerado:</h3>
+            <div class="activation-text" id="activationText">
+                <button class="copy-btn" id="copyActivationBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                Clique em um dos botões acima para gerar o email de ativação correspondente.
+            </div>
+            
+            <p class="shortcut-info">Pressione Ctrl+C para copiar o texto ou clique no botão "Copiar Tudo"</p>
+        </div>
+    </div>
+    
+    <!-- Aba Faturas -->
+    <div id="invoices-tab" class="tab-content">
+        <div class="invoices-section">
+            <h2>Emails para Faturas</h2>
+            
+            <div class="invoice-buttons">
+                <button class="invoice-btn" id="generateInvoiceBtn">Gerar Email de Fatura</button>
+                <button class="invoice-btn" id="generateConfirmationInvoiceBtn">Gerar Email de Confirmação</button>
+                <button class="invoice-btn" id="generateThanksBtn">Gerar Email de Agradecimento</button>
+            </div>
+            
+            <h3>Email Gerado:</h3>
+            <div class="invoice-text" id="invoiceText">
+                <button class="copy-btn" id="copyInvoiceBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                Clique em um dos botões acima para gerar o email correspondente.
+            </div>
+            
+            <p class="shortcut-info">Pressione Ctrl+C para copiar o texto ou clique no botão "Copiar Tudo"</p>
+        </div>
+    </div>
+    
+    <div class="footer">
+        Gerador de Fluxo de Trabalho 3000
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos das abas
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            // Elementos da aba Calculadora
+            const numberInput = document.getElementById('numberInput');
+            const calculateBtn = document.getElementById('calculateBtn');
+            const resultContainer = document.getElementById('resultContainer');
+            const originalValueElement = document.getElementById('originalValue');
+            const twentyPercentElement = document.getElementById('twentyPercent');
+            const minValueElement = document.getElementById('minValue');
+            const maxValueElement = document.getElementById('maxValue');
+            const minTextElement = document.getElementById('minText');
+            const maxTextElement = document.getElementById('maxText');
+            const copyCampaignBtn = document.getElementById('copyCampaignBtn');
+            const generatedText = document.getElementById('generatedText');
+            
+            // Elementos da aba Prompts
+            const platformButtons = document.querySelectorAll('#prompts-tab .platform-btn');
+            const platformPrompts = document.querySelectorAll('#prompts-tab .platform-prompts');
+            const promptButtons = document.querySelectorAll('.copy-prompt-btn');
+            const promptTextElement = document.getElementById('promptText');
+            const copyPromptBtn = document.getElementById('copyPromptBtn');
+            
+            // Elementos da aba Welcomes
+            const welcomePlatformButtons = document.querySelectorAll('.welcome-platform-btn');
+            const welcomePlatforms = document.querySelectorAll('.platform-welcomes');
+            const welcomeButtons = document.querySelectorAll('.copy-welcome-btn');
+            const welcomeTextElement = document.getElementById('welcomeText');
+            const copyWelcomeBtn = document.getElementById('copyWelcomeBtn');
+            let currentWelcomeText = '';
+            
+            // Elementos da aba Ativação
+            const generateOneCampaignBtn = document.getElementById('generateOneCampaignBtn');
+            const generateTwoCampaignsBtn = document.getElementById('generateTwoCampaignsBtn');
+            const activationTextElement = document.getElementById('activationText');
+            const copyActivationBtn = document.getElementById('copyActivationBtn');
+            
+            // Elementos da aba Anunciante
+            const confirmationEmailInput = document.getElementById('confirmationEmail');
+            const warningEmailInput = document.getElementById('warningEmail');
+            const generateConfirmationBtn = document.getElementById('generateConfirmationBtn');
+            const generateWarningBtn = document.getElementById('generateWarningBtn');
+            const copyConfirmationBtn = document.getElementById('copyConfirmationBtn');
+            const copyWarningBtn = document.getElementById('copyWarningBtn');
+            const confirmationEmailPlaceholder = document.getElementById('confirmationEmailPlaceholder');
+            const warningEmailPlaceholder = document.getElementById('warningEmailPlaceholder');
+            
+            // Elementos da aba Faturas
+            const generateInvoiceBtn = document.getElementById('generateInvoiceBtn');
+            const generateConfirmationInvoiceBtn = document.getElementById('generateConfirmationInvoiceBtn');
+            const generateThanksBtn = document.getElementById('generateThanksBtn');
+            const invoiceTextElement = document.getElementById('invoiceText');
+            const copyInvoiceBtn = document.getElementById('copyInvoiceBtn');
+            
+            // Emails de Ativação
+            const activationEmails = {
+                oneCampaign: `Caro cliente,
+
+Temos o prazer de informar que a sua campanha está ativa! Neste momento, a campanha entrou num período inicial de aprendizagem, onde o sistema está a aprender e a ajustar-se para alcançar os melhores resultados possíveis. Esta fase é essencial para que os anúncios se adaptem ao comportamento do público e ao conteúdo que tem mais sucesso.
+
+Durante alguns dias, os anúncios vão ser testados e ajustados automaticamente para assegurar que a campanha atinge o maior número de pessoas relevantes para o seu negócio. Assim que esta fase estiver completa, a campanha estará totalmente otimizada e em pleno funcionamento.
+
+Importa ainda esclarecer que os anúncios são criados e geridos dentro da plataforma da Leadzai, sob o nosso MCC (conta de gestão), não sendo realizados diretamente na conta Google Ads, Google Analytics ou Meta Ads do cliente. Esta abordagem permite-nos uma gestão centralizada e otimizada da campanha, assegurando um acompanhamento mais eficaz e consistente dos resultados. 
+
+Como previamente mencionado, a nossa equipa acompanhará de perto o desempenho da campanha ao longo do período em que estiver ativa. Iremos monitorar as principais métricas e ajustar elementos como as palavras-chave, de forma a otimizar os resultados e garantir que a sua campanha tenha o maior impacto possível.
+
+Além disso, disponibilizamos relatórios mensais para que possa acompanhar os resultados da sua campanha com total transparência.
+
+        ◦ Informamos também que a fatura referente ao IVA será enviada dentro de 7 dias úteis.
+
+Caso tenha alguma questão ou deseje mais informações, não hesite em contactar-nos. Estamos aqui para garantir que obtém o máximo valor do seu investimento.
+
+Agradecemos a sua confiança e desejamos muito sucesso com esta campanha!
+
+
+Votos de sucesso,
+Equipa Leadzai`,
+
+                twoCampaigns: `Caro cliente,
+
+Temos o prazer de informar que as suas duas campanhas estão ativas! Neste momento, ambas entraram num período inicial de aprendizagem, onde o sistema está a aprender e a ajustar-se para alcançar os melhores resultados possíveis. Esta fase é essencial para que os anúncios se adaptem ao comportamento do público e ao conteúdo que tem mais sucesso.
+
+Durante alguns dias, os anúncios vão ser testados e ajustados automaticamente para assegurar que cada campanha atinge o maior número de pessoas relevantes para o seu negócio. Assim que esta fase estiver complete, ambas as campanhas estarão totalmente otimizadas e em pleno funcionamento.
+
+Importa ainda esclarecer que os anúncios são criados e geridos dentro da plataforma da Leadzai, sob o nosso MCC (conta de gestão), não sendo realizados diretamente na conta Google Ads, Google Analytics ou Meta Ads do cliente. Esta abordagem permite-nos uma gestão centralizada e otimizada da campanha, assegurando um acompanhamento mais eficaz e consistente dos resultados. 
+
+Como previamente mencionado, a nossa equipa acompanhará de perto o desempenho das campanhas ao longo do período em que estiverem ativas. Iremos monitorar as principais métricas e ajustar elementos como as palavras-chave, de forma a otimizar os resultados e garantir que cada campanha tenha o maior impacto possível.
+
+Além disso, disponibilizamos relatórios mensais para que possa acompanhar os resultados com total transparência.
+
+        ◦ Informamos também que a fatura referente ao IVA será enviada dentro de 7 dias úteis.
+
+Caso tenha alguma questão ou deseje mais informações, não hesite em contactar-nos. Estamos aqui para garantir que obtém o máximo valor do seu investimento.
+
+Agradecemos a sua confiança e desejamos muito sucesso com estas campanhas!
+
+Votos de sucesso,
+Equipa Leadzai`
+            };
+            
+            // Templates Anunciante
+            const advertiserTemplates = {
+                confirmation: (email) => `Caro cliente,
+
+Gostaria apenas de confirmar se o endereço de e-mail associado à página de Facebook da vossa empresa é ${email}
+
+Se estiver correto, perfeito. Caso o contacto tenha sido alterado, agradeço que me indiquem o e-mail atual para que possa direcionar o meu pedido para o sítio certo.
+
+Obrigada pela ajuda.
+
+Com os melhores cumprimentos,
+Equipa Leadzai`,
+
+                warning: (email) => `Caro cliente,
+
+No seguimento do pedido enviado, foi encaminhado um e-mail para endereço e ${email}.
+
+Solicitamos, por favor, que verifique se este e-mail foi recebido. Caso não se encontre na caixa de entrada, pedimos que verifique também a pasta de Spam ou Lixo Eletrônico. 
+
+Ficamos a aguardar o vosso retorno.
+
+Com os melhores cumprimentos,
+Equipa Leadzai`
+            };
+            
+            // Emails para Faturas
+            const invoiceEmails = {
+                fatura: `Caro cliente,
+
+Em anexo, enviamos a fatura referente ao IVA.
+
+Conforme combinado, solicitamos o envio do comprovativo de pagamento assim que possível.
+
+Caso necessite de alguma informação adicional ou tenha alguma questão, não hesite em contactar-nos.
+
+Agradecemos pela confiança depositada em nosso trabalho.
+
+Melhores cumprimentos,
+Equipa Leadzai`,
+
+                confirmacao: `Bom dia,
+
+Exatamente.
+
+Confirmo que o valor a liquidar por vossa parte é apenas o correspondente ao IVA.
+
+O restante valor da fatura é coberto pelo incentivo do Voucher Digital (PRR).
+
+Ficamos a aguardar o envio do comprovativo de pagamento para concluirmos o processo administrativo.
+
+Qualquer dúvida, estou ao dispor.
+
+Melhores cumprimentos,
+Equipa Leadzai`,
+
+                agradecimento: `Boa tarde,
+
+Obrigada pelo envio do comprovativo.
+
+Confirmamos a receção do pagamento do IVA.
+
+Agradecemos a sua colaboração e desejamos os maiores sucessos para os seus projetos.
+
+Melhores cumprimentos,
+Equipa Leadzai`
+            };
+            
+            // Templates de Welcome - COM FORMATAÇÃO CORRETA DE EMAIL
+            const welcomeTemplates = {
+                google: {
+                    500: `Olá,
+
+É com grande satisfação que confirmamos a receção da sua subscrição e damos-lhe as boas-vindas! A partir de agora, poderá beneficiar dos nossos serviços através do Voucher Digital e usufruir de campanhas automatizadas e otimizadas para potenciar a visibilidade do seu negócio online.
+
+📈 Como Funciona o Nosso Serviço:
+
+1. 🛠️ Criação Automática com IA:
+   A nossa plataforma analisa automaticamente o seu website e cria anúncios otimizados, utilizando Inteligência Artificial para destacar os seus produtos e serviços mais relevantes.
+
+2. 📊 Acompanhamento Humano & Otimização Contínua:
+   A nossa equipa especialista monitoriza o desempenho da campanha 24/7, fazendo ajustes estratégicos em palavras-chave, orçamentos e criativos para garantir os melhores resultados possíveis.
+
+3. 📋 Relatórios Mensais de Desempenho:
+   Receberá relatórios detalhados todos os meses com todas as métricas-chave (como cliques, impressões e conversões), garantindo total transparência sobre o retorno do seu investimento.
+
+4. 💰 Taxa de Gestão Incluída:
+   Todo o trabalho de gestão, optimização e reporte está incluído no valor do plano. Não existem custos adicionais ou surpresas.
+
+5. 🧾 Pagamento do IVA (Pré-ativação):
+   Para cumprirmos com as obrigações fiscais, o valor do IVA deve ser liquidado antes da ativação da campanha. Para finalizar o processo, é necessário que nos envie o comprovativo deste pagamento.
+
+Estrutura do seu plano (Voucher de 500€):
+
+- [5 anúncios criados] para otimizar o alcance da sua campanha.
+- [2 categorias] de anúncios distintas, permitindo segmentação e teste de diferentes abordagens.
+
+Informações necessárias para a campanha:
+
+1. Nome comercial?
+2. Link do website?
+3. Número de contacto a constar no anúncio?
+4. Duração da campanha (aconselhamos 3 meses)?
+5. Segmentação geográfica (apenas Portugal)?
+6. Qual o público que deseja atingir (Idade, Género, Interesses)?
+7. Área de negócio a divulgar?
+8. Canais da campanha: GA e Meta.
+9. Há alguma promoção ou oferta a destacar nesta campanha?
+
+⚠️ Prazo legal:
+Não perca a oportunidade de expandir o seu negócio com uma campanha personalizada! Ao enviar as informações no prazo, garante que os anúncios estão 100% alinhados com a sua visão. Após o prazo, a criação será automática.
+
+Estamos ao seu dispor para esclarecer qualquer dúvida ou necessidade adicional.
+
+Agradecemos a confiança depositada em nós e estamos entusiasmados para trabalhar consigo e impulsionar o sucesso digital do seu negócio.
+
+Com os melhores cumprimentos,
+Equipa Leadzai`,
+
+                    1000: `Olá,
+
+É com grande satisfação que confirmamos a receção da sua subscrição e damos-lhe as boas-vindas! A partir de agora, poderá beneficiar dos nossos serviços através do Voucher Digital e usufruir de campanhas automatizadas e otimizadas para potenciar a visibilidade do seu negócio online.
+
+📈 Como Funciona o Nosso Serviço:
+
+1. 🛠️ Criação Automática com IA:
+   A nossa plataforma analisa automaticamente o seu website e cria anúncios otimizados, utilizando Inteligência Artificial para destacar os seus produtos e serviços mais relevantes.
+
+2. 📊 Acompanhamento Humano & Otimização Contínua:
+   A nossa equipa especialista monitoriza o desempenho da campanha 24/7, fazendo ajustes estratégicos em palavras-chave, orçamentos e criativos para garantir os melhores resultados possíveis.
+
+3. 📋 Relatórios Mensais de Desempenho:
+   Receberá relatórios detalhados todos os meses com todas as métricas-chave (como cliques, impressões e conversões), garantindo total transparência sobre o retorno do seu investimento.
+
+4. 💰 Taxa de Gestão Incluída:
+   Todo o trabalho de gestão, optimização e reporte está incluído no valor do plano. Não existem custos adicionais ou surpresas.
+
+5. 🧾 Pagamento do IVA (Pré-ativação):
+   Para cumprirmos com as obrigações fiscais, o valor do IVA deve ser liquidado antes da ativação da campanha. Para finalizar o processo, é necessário que nos envie o comprovativo deste pagamento.
+
+Estrutura do seu plano (Voucher de 1000€):
+
+- [8 anúncios criados] para otimizar o alcance da sua campanha.
+- [3 categorias] de anúncios distintas, permitindo segmentação e teste de diferentes abordagens.
+
+Informações necessárias para a campanha:
+
+1. Nome comercial?
+2. Link do website?
+3. Número de contacto a constar no anúncio?
+4. Duração da campanha (aconselhamos 3 meses)?
+5. Segmentação geográfica (apenas Portugal)?
+6. Qual o público que deseja atingir (Idade, Género, Interesses)?
+7. Área de negócio a divulgar?
+8. Objetivos específicos da campanha?
+9. Canais da campanha: GA e Meta.
+10. Há alguma promoção ou oferta a destacar nesta campanha?
+
+⚠️ Prazo legal:
+Não perca a oportunidade de expandir o seu negócio com uma campanha personalizada! Ao enviar as informações no prazo, garante que os anúncios estão 100% alinhados com a sua visão. Após o prazo, a criação será automática.
+
+Estamos ao seu dispor para esclarecer qualquer dúvida ou necessidade adicional.
+
+Agradecemos a confiança depositada em nós e estamos entusiasmados para trabalhar consigo e impulsionar o sucesso digital do seu negócio.
+
+Com os melhores cumprimentos,
+Equipa Leadzai`,
+
+                    1500: `Olá,
+
+É com grande satisfação que confirmamos a receção da sua subscrição e damos-lhe as boas-vindas! A partir de agora, poderá beneficiar dos nossos serviços através do Voucher Digital e usufruir de campanhas automatizadas e otimizadas para potenciar a visibilidade do seu negócio online.
+
+📈 Como Funciona o Nosso Serviço:
+
+1. 🛠️ Criação Automática com IA:
+   A nossa plataforma analisa automaticamente o seu website e cria anúncios otimizados, utilizando Inteligência Artificial para destacar os seus produtos e serviços mais relevantes.
+
+2. 📊 Acompanhamento Humano & Otimização Contínua:
+   A nossa equipa especialista monitoriza o desempenho da campanha 24/7, fazendo ajustes estratégicos em palavras-chave, orçamentos e criativos para garantir os melhores resultados possíveis.
+
+3. 📋 Relatórios Mensais de Desempenho:
+   Receberá relatórios detalhados todos os meses com todas as métricas-chave (como cliques, impressões e conversões), garantindo total transparência sobre o retorno do seu investimento.
+
+4. 💰 Taxa de Gestão Incluída:
+   Todo o trabalho de gestão, optimização e reporte está incluído no valor do plano. Não existem custos adicionais ou surpresas.
+
+5. 🧾 Pagamento do IVA (Pré-ativação):
+   Para cumprirmos com as obrigações fiscais, o valor do IVA deve ser liquidado antes da ativação da campanha. Para finalizar o processo, é necessário que nos envie o comprovativo deste pagamento.
+
+Estrutura do seu plano (Voucher de 1500€+):
+
+- [12 anúncios criados] para otimizar o alcance da sua campanha.
+- [4 categorias] de anúncios distintas, permitindo segmentação e teste de diferentes abordagens.
+- Estratégia avançada com análise de concorrência e mercado.
+
+Informações necessárias para a campanha:
+
+1. Nome comercial?
+2. Link do website?
+3. Número de contacto a constar no anúncio?
+4. Duração da campanha (aconselhamos 3 meses)?
+5. Segmentação geográfica (apenas Portugal)?
+6. Qual o público que deseja atingir (Idade, Género, Interesses)?
+7. Área de negócio a divulgar?
+8. Objetivos específicos da campanha?
+9. Orçamento adicional para testes?
+10. KPIs específicos a medir?
+11. Canais da campanha: GA e Meta.
+12. Há alguma promoção ou oferta a destacar nesta campanha?
+
+⚠️ Prazo legal:
+Não perca a oportunidade de expandir o seu negócio com uma campanha personalizada! Ao enviar as informações no prazo, garante que os anúncios estão 100% alinhados com a sua visão. Após o prazo, a criação será automática.
+
+Estamos ao seu dispor para esclarecer qualquer dúvida ou necessidade adicional.
+
+Agradecemos a confiança depositada em nós e estamos entusiasmados para trabalhar consigo e impulsionar o sucesso digital do seu negócio.
+
+Com os melhores cumprimentos,
+Equipa Leadzai`
+                },
+                meta: {
+                    500: `Olá,
+
+É com grande satisfação que confirmamos a receção da sua subscrição e damos-lhe as boas-vindas! A partir de agora, poderá beneficiar dos nossos serviços através do Voucher Digital e usufruir de campanhas automatizadas e otimizadas para potenciar a visibilidade do seu negócio online.
+
+📈 Como Funciona o Nosso Serviço:
+1. 🛠️ Criação Automática com IA:
+A nossa plataforma analisa automaticamente o seu website e cria anúncios otimizados, utilizando Inteligência Artificial para destacar os seus produtos e serviços mais relevantes.
+2. 📊 Acompanhamento Humano & Otimização Contínua:
+A nossa equipa especialista monitoriza o desempenho da campanha 24/7, fazendo ajustes estratégicos em palavras-chave, orçamentos e criativos para garantir os melhores resultados possíveis.
+3. 📋 Relatórios Mensais de Desempenho:
+Receberá relatórios detalhados todos os meses com todas as métricas-chave (como cliques, impressões e conversões), garantindo total transparência sobre o retorno do seu investimento.
+4. 💰 Taxa de Gestão Incluída:
+Todo o trabalho de gestão, optimização e reporte está incluído no valor do plano. Não existem custos adicionais ou surpresas.
+5. 🧾 Pagamento do IVA (Pré-ativação):
+Para cumprirmos com as obrigações fiscais, o valor do IVA deve ser liquidado antes da ativação da campanha. Para finalizar o processo, é necessário que nos envie o comprovativo deste pagamento.
+
+Estrutura do seu plano (Voucher de 500€):
+• 5 anúncios criados para otimizar o alcance da sua campanha.
+• 2 categorias de anúncios distintas, permitindo segmentação e teste de diferentes abordagens.
+
+Informações necessárias para a campanha:
+1. Nome comercial?
+2. Link do website?
+3. Qual é o endereço de e-mail que é administrador/owner da página?
+4. Número de contacto a constar no anúncio?
+5. Duração da campanha (aconselhamos 3 meses)?
+6. Segmentação geográfica (apenas Portugal)?
+7. Qual é a sua persona/público-alvo (idade, sexo, interesses)
+8. Que serviço e/ou produto gostaria de destacar? Necessitamos que nos envie imagens e logo.
+9. Canais da campanha: GA e Meta.
+10. Há alguma promoção ou oferta a destacar nesta campanha?
+
+⚠️ Prazo legal:
+Não perca a oportunidade de expandir o seu negócio com uma campanha personalizada! Ao enviar as informações no prazo, garante que os anúncios estão 100% alinhados com a sua visão. Após o prazo, a criação será automática.
+
+Estamos ao seu dispor para esclarecer qualquer dúvida ou necessidade adicional.
+Agradecemos a confiança depositada em nós e estamos entusiasmados para trabalhar consigo e impulsionar o sucesso digital do seu negócio.
+
+Com os melhores cumprimentos,
+Equipa Leadzai`,
+
+                    1000: `Olá,
+
+É com grande satisfação que confirmamos a receção da sua subscrição e damos-lhe as boas-vindas! A partir de agora, poderá beneficiar dos nossos serviços através do Voucher Digital e usufruir de campanhas automatizadas e otimizadas para potenciar a visibilidade do seu negócio online.
+
+📈 Como Funciona o Nosso Serviço:
+1. 🛠️ Criação Automática com IA:
+A nossa plataforma analisa automaticamente o seu website e cria anúncios otimizados, utilizando Inteligência Artificial para destacar os seus produtos e serviços mais relevantes.
+2. 📊 Acompanhamento Humano & Otimização Contínua:
+A nossa equipa especialista monitoriza o desempenho da campanha 24/7, fazendo ajustes estratégicos em palavras-chave, orçamentos e criativos para garantir os melhores resultados possíveis.
+3. 📋 Relatórios Mensais de Desempenho:
+Receberá relatórios detalhados todos os meses com todas as métricas-chave (como cliques, impressões e conversões), garantindo total transparência sobre o retorno do seu investimento.
+4. 💰 Taxa de Gestão Incluída:
+Todo o trabalho de gestão, optimização e reporte está incluído no valor do plano. Não existem custos adicionais ou surpresas.
+5. 🧾 Pagamento do IVA (Pré-ativação):
+Para cumprirmos com as obrigações fiscais, o valor do IVA deve ser liquidado antes da ativação da campanha. Para finalizar o processo, é necessário que nos envie o comprovativo deste pagamento.
+
+Estrutura do seu plano (Voucher de 1000€):
+• 8 anúncios criados para otimizar o alcance da sua campanha.
+• 3 categorias de anúncios distintas, permitindo segmentação e teste de diferentes abordagens.
+
+Informações necessárias para a campanha:
+1. Nome comercial?
+2. Link do website?
+3. Qual é o endereço de e-mail que é administrador/owner da página?
+4. Número de contacto a constar no anúncio?
+5. Duração da campanha (aconselhamos 3 meses)?
+6. Segmentação geográfica (apenas Portugal)?
+7. Qual é a sua persona/público-alvo (idade, sexo, interesses)?
+8. Que serviço e/ou produto gostaria de destacar? Necessitamos que nos envie imagens e logo.
+9. Há alguma promoção ou oferta a destacar nesta campanha?
+10. Canais da campanha: GA e Meta.
+
+⚠️ Prazo legal:
+Não perca a oportunidade de expandir o seu negócio com uma campanha personalizada! Ao enviar as informações no prazo, garante que os anúncios estão 100% alinhados com a sua visão. Após o prazo, a criação será automática.
+
+Estamos ao seu dispor para esclarecer qualquer dúvida ou necessidade adicional.
+Agradecemos a confiança depositada em nós e estamos entusiasmados para trabalhar consigo e impulsionar o sucesso digital do seu negócio.
+
+Com os melhores cumprimentos,
+Equipa Leadzai`,
+
+                    1500: `Olá,
+
+É com grande satisfação que confirmamos a receção da sua subscrição e damos-lhe as boas-vindas! A partir de agora, poderá beneficiar dos nossos serviços através do Voucher Digital e usufruir de campanhas automatizadas e otimizadas para potenciar a visibilidade do seu negócio online.
+
+📈 Como Funciona o Nosso Serviço:
+1. 🛠️ Criação Automática com IA:
+A nossa plataforma analisa automaticamente o seu website e cria anúncios otimizados, utilizando Inteligência Artificial para destacar os seus produtos e serviços mais relevantes.
+2. 📊 Acompanhamento Humano & Otimização Contínua:
+A nossa equipa especialista monitoriza o desempenho da campanha 24/7, fazendo ajustes estratégicos em palavras-chave, orçamentos e criativos para garantir os melhores resultados possíveis.
+3. 📋 Relatórios Mensais de Desempenho:
+Receberá relatórios detalhados todos os meses com todas as métricas-chave (como cliques, impressões e conversões), garantindo total transparência sobre o retorno do seu investimento.
+4. 💰 Taxa de Gestão Incluída:
+Todo o trabalho de gestão, optimização e reporte está incluído no valor do plano. Não existem custos adicionais ou surpresas.
+5. 🧾 Pagamento do IVA (Pré-ativação):
+Para cumprirmos com as obrigações fiscais, o valor do IVA deve ser liquidado antes da ativação da campanha. Para finalizar o processo, é necessário que nos envie o comprovativo deste pagamento.
+
+Estrutura do seu plano (Voucher de 1500€+):
+• 12 anúncios criados para otimizar o alcance da sua campanha.
+• 4 categorias de anúncios distintas, permitindo segmentação e teste de diferentes abordagens.
+
+Informações necessárias para a campanha:
+1. Nome comercial?
+2. Link do website?
+3. Qual é o endereço de e-mail que é administrador/owner da página?
+4. Número de contacto a constar no anúncio?
+5. Duração da campanha (aconselhamos 3 meses)?
+6. Segmentação geográfica (apenas Portugal)?
+7. Qual é a sua persona/público-alvo (idade, sexo, interesses)?
+8. Que serviço e/ou produto gostaria de destacar? Necessitamos que nos envie imagens e logo.
+9. Canais da campanha: GA e Meta.
+10. Há alguma promoção ou oferta a destacar nesta campanha?
+
+⚠️ Prazo legal:
+Não perca a oportunidade de expandir o seu negócio com uma campanha personalizada! Ao enviar as informações no prazo, garante que os anúncios estão 100% alinhados com a sua visão. Após o prazo, a criação será automática.
+
+Estamos ao seu dispor para esclarecer qualquer dúvida ou necessidade adicional.
+Agradecemos a confiança depositada em nós e estamos entusiasmados para trabalhar consigo e impulsionar o sucesso digital do seu negócio.
+
+Com os melhores cumprimentos,
+Equipa Leadzai`
+                }
+            };
+            
+            // Prompts predefinidos Google Ads
+            const googlePrompts = {
+                500: `Cria anúncios Google Ads em português de Portugal, com base nas fontes do Cliente.
+
+Regras:
+Escreve na 3ª pessoa
+Tom profissional e apelativo
+Usa apenas informações nas fontes
+Respeita os limites de caracteres (espaços, pontuação e acentuação contam como caracteres)
+
+Orçamento: 500€
+• Encontrar até 2 categorias mais importantes de realçar pelo SEO.
+• Cria no máximo 5 anúncios separados pelas categorias.
+• Apenas 1 Responsivo por categoria.
+
+Estrutura dos anúncios:
+🟢 Anúncios Dinâmicos
+2 frases por anúncio
+com mais de 75 e menos de 85 caracteres por frase
+Linguagem direta e focada na conversão.
+
+🔵 Anúncio Responsivo
+7 headlines (máx. 20 caracteres cada, sem car. especiais)
+2 descrições (mais 75 - menos 85 caracteres cada)
+Destacar benefícios principais.
+
+Mais as melhores (SEO) palavras-chave para cada categoria separadas por vírgulas.`,
+
+                1000: `Cria anúncios Google Ads em português de Portugal, com base nas fontes do Cliente.
+
+Regras:
+Escreve na 3ª pessoa
+Tom profissional e apelativo
+Usa apenas informações nas fontes
+Respeita os limites de caracteres (espaços, pontuação e acentuação contam como caracteres)
+
+Orçamento: 1000€
+• Encontrar até 3 categorias mais importantes de realçar pelo SEO.
+• Cria no máximo 8 anúncios separados pelas categorias.
+• Apenas 1 Responsivo por categoria.
+• E 1 anúncio Display em 1 categoria estratégica apenas.
+
+Estrutura dos anúncios:
+🟢 Anúncios Dinâmicos
+2 frases por anúncio
+com mais de 75 e menos de 85 caracteres por frase
+Linguagem direta e focada na conversão.
+
+🔵 Anúncio Responsivo
+7 headlines (máx. 20 caracteres cada, sem car. especiais)
+2 descrições (mais 75 - menos 85 caracteres cada)
+Destacar benefícios principais.
+
+🟠 Anúncio Display
+1 Título curto até 25 car
+1 Título longo até 80 car
+Descrição 1 até 80 car
+
+Mais as melhores (SEO) palavras-chave para cada categoria separadas por vírgulas.`,
+
+                1500: `Cria anúncios Google Ads em português de Portugal, com base nas fontes do Cliente.
+
+Regras:
+Escreve na 3ª pessoa
+Tom profissional e apelativo
+Usa apenas informações nas fontes
+Respeita os limites de caracteres (espaços, pontuação e acentuação contam como caracteres)
+
+Orçamento: 1500€+
+• Encontrar até 4 categorias mais importantes de realçar pelo SEO.
+• Cria no máximo 12 anúncios separados pelas categorias.
+• Apenas 1 Responsivo por categoria.
+• E 1 anúncio Display em 1 categoria estratégica apenas.
+
+Estrutura dos anúncios:
+🟢 Anúncios Dinâmicos
+2 frases por anúncio
+com mais de 75 e menos de 85 caracteres por frase
+Linguagem direta e focada na conversão.
+
+🔵 Anúncio Responsivo
+7 headlines (máx. 20 caracteres cada, sem car. especiais)
+2 descrições (mais 75 - menos 85 caracteres cada)
+Destacar benefícios principais.
+
+🟠 Anúncio Display
+1 Título curto até 25 car
+1 Título longo até 80 car
+Descrição 1 até 80 car
+
+Mais as melhores (SEO) palavras-chave para cada categoria separadas por vírgulas.`
+            };
+            
+            // Prompts predefinidos Meta Ads
+            const metaPrompts = {
+                500: `Cria anúncios Meta Ads em português de Portugal, com base no briefing do cliente.
+
+Regras:
+Escrever na 3.ª pessoa
+Tom profissional, informativo e com um bom SEO
+Usar apenas dados do briefing
+Respeitar os limites de caracteres
+Respeita a linguagem e comunicação do site do cliente
+
+Orçamento: 500€
+• Encontrar as melhores categorias mais importantes de realçar pelo SEO
+• Cria no máximo 5 anúncios separados pelas categorias.
+
+Modelo Universal para Meta Ads
+Headline (23-25 car.):
+[Solução Principal]
+Sub-headline (28-30 car.):
+[Benefício Diferenciador] 
+Descrição (100-300 car.):
+["Problema" do cliente] A nossa solução oferece [Benefício 1], [Benefício 2] e [Benefício 3].  [Chamada para ação clara]!
+Escolhe ou sugere as melhores imagens para cada ad.`,
+
+                1000: `Cria anúncios Meta Ads em português de Portugal, com base no briefing do cliente.
+
+Regras:
+Escrever na 3.ª pessoa
+Tom profissional, informativo e com um bom SEO
+Usar apenas dados do briefing
+Respeitar os limites de caracteres
+Respeita a linguagem e comunicação do site do cliente
+
+Orçamento: 1000€
+• Encontrar as melhores categorias mais importantes de realçar pelo SEO
+• Cria no máximo 8 anúncios separados pelas categorias.
+
+Modelo Universal para Meta Ads
+Headline (23-25 car.):
+[Solução Principal]
+Sub-headline (28-30 car.):
+[Benefício Diferenciador] 
+Descrição (100-300 car.):
+["Problema" do cliente] A nossa solução oferece [Benefício 1], [Benefício 2] e [Benefício 3].  [Chamada para ação clara]!
+Escolhe ou sugere as melhores imagens para cada ad.`,
+
+                1500: `Cria anúncios Meta Ads em português de Portugal, com base no briefing do cliente.
+
+Regras:
+Escrever na 3.ª pessoa
+Tom profissional, informativo e com um bom SEO
+Usar apenas dados do briefing
+Respeitar os limites de caracteres
+Respeita a linguagem e comunicação do site do cliente
+
+Orçamento: 1500€+
+• Encontrar as melhores categorias mais importantes de realçar pelo SEO
+• Cria no máximo 12 anúncios separados pelas categorias.
+
+Modelo Universal para Meta Ads
+Headline (23-25 car.):
+[Solução Principal]
+Sub-headline (28-30 car.):
+[Benefício Diferenciador] 
+Descrição (100-300 car.):
+["Problema" do cliente] A nossa solução oferece [Benefício 1], [Benefício 2] e [Benefício 3].  [Chamada para ação clara]!
+Escolhe ou sugere as melhores imagens para cada ad.`
+            };
+            
+            // Sistema de abas
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    
+                    // Remove classe active de todos os botões e conteúdos
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Adiciona active ao botão clicado e conteúdo correspondente
+                    button.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Sistema de plataformas (Google/Meta)
+            platformButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const platform = button.getAttribute('data-platform');
+                    
+                    // Remove classe active de todos os botões
+                    platformButtons.forEach(btn => btn.classList.remove('active'));
+                    platformPrompts.forEach(prompt => prompt.classList.remove('active'));
+                    
+                    // Adiciona active ao botão clicado
+                    button.classList.add('active');
+                    
+                    // Mostra os prompts da plataforma selecionada
+                    document.getElementById(`${platform}-prompts`).classList.add('active');
+                    
+                    // Atualiza o preview do prompt
+                    promptTextElement.innerHTML = `
+                        <button class="copy-btn" id="copyPromptBtn" title="Clique para copiar">Copiar Prompt</button>
+                        Selecione uma plataforma e orçamento acima para visualizar e copiar o prompt correspondente.
+                    `;
+                });
+            });
+
+            welcomePlatformButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const platform = button.getAttribute('data-welcome-platform');
+
+                    welcomePlatformButtons.forEach(btn => btn.classList.remove('active'));
+                    welcomePlatforms.forEach(welcome => welcome.classList.remove('active'));
+
+                    button.classList.add('active');
+                    document.getElementById(`${platform}-welcomes`).classList.add('active');
+
+                    currentWelcomeText = '';
+                    welcomeTextElement.innerHTML = `
+                        <button class="copy-btn" id="copyWelcomeBtn" title="Clique para copiar">Copiar Welcome</button>
+                        Selecione uma plataforma e orçamento acima para visualizar e copiar o template de welcome correspondente.
+                    `;
+                });
+            });
+            
+            // Função para copiar para clipboard
+            function normalizeMessageText(text) {
+                if (!text) {
+                    return '';
+                }
+
+                return text
+                    .replace(/\\n/g, '\n')
+                    .replace(/\r\n/g, '\n')
+                    .replace(/\u00a0/g, ' ')
+                    .trim();
+            }
+
+            function copyToClipboard(text, buttonElement = null) {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        if (buttonElement) {
+                            const originalText = buttonElement.textContent;
+                            buttonElement.textContent = '✓ Copiado!';
+                            buttonElement.classList.add('copied');
+                            
+                            setTimeout(() => {
+                                buttonElement.textContent = originalText;
+                                buttonElement.classList.remove('copied');
+                            }, 1500);
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Erro ao copiar: ', err);
+                        // Fallback
+                        const textArea = document.createElement('textarea');
+                        textArea.value = text;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        
+                        if (buttonElement) {
+                            const originalText = buttonElement.textContent;
+                            buttonElement.textContent = 'Copiado!';
+                            buttonElement.classList.add('copied');
+                            
+                            setTimeout(() => {
+                                buttonElement.textContent = originalText;
+                                buttonElement.classList.remove('copied');
+                            }, 1500);
+                        }
+                    });
+            }
+            
+            // Configurar botões de copiar welcome
+            welcomeButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const budget = this.getAttribute('data-budget');
+                    const platform = this.getAttribute('data-platform') || 'google';
+                    
+                    // Seleciona o welcome correto baseado na plataforma e orçamento
+                    const welcome = normalizeMessageText(welcomeTemplates[platform]?.[budget]);
+                    if (!welcome) {
+                        return;
+                    }
+
+                    currentWelcomeText = welcome;
+                    
+                    // Atualizar o preview
+                    welcomeTextElement.innerHTML = `
+                        <button class="copy-btn" id="copyWelcomeBtn" title="Clique para copiar">Copiar Welcome</button>
+                        ${welcome.replace(/\n/g, '<br>')}
+                    `;
+                    
+                    // Copiar para clipboard
+                    copyToClipboard(welcome, this);
+                });
+            });
+            
+            // Configurar botão de copiar welcome do preview
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.id === 'copyWelcomeBtn') {
+                    if (currentWelcomeText) {
+                        copyToClipboard(currentWelcomeText, e.target);
+                    }
+                }
+            });
+            
+            // Configurar botões de copiar prompt
+            promptButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const budget = this.getAttribute('data-budget');
+                    const platform = this.getAttribute('data-platform');
+                    
+                    // Seleciona o prompt correto baseado na plataforma
+                    let prompt;
+                    if (platform === 'google') {
+                        prompt = googlePrompts[budget];
+                    } else if (platform === 'meta') {
+                        prompt = metaPrompts[budget];
+                    }
+                    
+                    // Atualizar o preview
+                    promptTextElement.innerHTML = `
+                        <button class="copy-btn" id="copyPromptBtn" title="Clique para copiar">Copiar Prompt</button>
+                        ${prompt.replace(/\n/g, '<br>')}
+                    `;
+                    
+                    // Copiar para clipboard
+                    copyToClipboard(prompt, this);
+                });
+            });
+            
+            // Configurar botão de copiar prompt do preview
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.id === 'copyPromptBtn') {
+                    const promptText = promptTextElement.innerText.replace('Copiar Prompt', '').trim();
+                    if (promptText !== 'Selecione uma plataforma e orçamento acima para visualizar e copiar o prompt correspondente.') {
+                        copyToClipboard(promptText, e.target);
+                    }
+                }
+            });
+            
+            // Configurar botão de copiar texto da campanha
+            copyCampaignBtn.addEventListener('click', function() {
+                const textToCopy = generatedText.innerText.replace('Copiar Tudo', '').trim();
+                copyToClipboard(textToCopy, this);
+            });
+            
+            // Configurar botões de geração de emails de ativação
+            generateOneCampaignBtn.addEventListener('click', function() {
+                activationTextElement.innerHTML = `
+                    <button class="copy-btn" id="copyActivationBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${activationEmails.oneCampaign}
+                `;
+                
+                // Copiar automaticamente para clipboard
+                copyToClipboard(activationEmails.oneCampaign, this);
+            });
+            
+            generateTwoCampaignsBtn.addEventListener('click', function() {
+                activationTextElement.innerHTML = `
+                    <button class="copy-btn" id="copyActivationBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${activationEmails.twoCampaigns}
+                `;
+                
+                // Copiar automaticamente para clipboard
+                copyToClipboard(activationEmails.twoCampaigns, this);
+            });
+            
+            // Configurar botão de copiar email de ativação
+            copyActivationBtn.addEventListener('click', function() {
+                const textToCopy = activationTextElement.innerText.replace('Copiar Tudo', '').trim();
+                copyToClipboard(textToCopy, this);
+            });
+            
+            // Configurar botões da aba Anunciante
+            generateConfirmationBtn.addEventListener('click', function() {
+                const email = confirmationEmailInput.value.trim();
+                if (!email) {
+                    alert('Por favor, insira um email válido.');
+                    confirmationEmailInput.focus();
+                    return;
+                }
+                
+                // Atualizar o placeholder no template
+                confirmationEmailPlaceholder.textContent = email;
+                
+                // Gerar o texto completo
+                const fullText = advertiserTemplates.confirmation(email);
+                
+                // Atualizar o botão de copiar
+                copyConfirmationBtn.onclick = function() {
+                    copyToClipboard(fullText, this);
+                };
+                
+                // Copiar automaticamente para clipboard
+                copyToClipboard(fullText, this);
+            });
+            
+            generateWarningBtn.addEventListener('click', function() {
+                const email = warningEmailInput.value.trim();
+                if (!email) {
+                    alert('Por favor, insira um email válido.');
+                    warningEmailInput.focus();
+                    return;
+                }
+                
+                // Atualizar o placeholder no template
+                warningEmailPlaceholder.textContent = email;
+                
+                // Gerar o texto completo
+                const fullText = advertiserTemplates.warning(email);
+                
+                // Atualizar o botão de copiar
+                copyWarningBtn.onclick = function() {
+                    copyToClipboard(fullText, this);
+                };
+                
+                // Copiar automaticamente para clipboard
+                copyToClipboard(fullText, this);
+            });
+            
+            // Configurar botões de copiar da aba Anunciante
+            copyConfirmationBtn.addEventListener('click', function() {
+                const email = confirmationEmailInput.value.trim();
+                if (!email) {
+                    alert('Por favor, insira um email e clique em "Gerar Email de Confirmação" primeiro.');
+                    return;
+                }
+                
+                const fullText = advertiserTemplates.confirmation(email);
+                copyToClipboard(fullText, this);
+            });
+            
+            copyWarningBtn.addEventListener('click', function() {
+                const email = warningEmailInput.value.trim();
+                if (!email) {
+                    alert('Por favor, insira um email e clique em "Gerar Email de Confirmação do Envio" primeiro.');
+                    return;
+                }
+                
+                const fullText = advertiserTemplates.warning(email);
+                copyToClipboard(fullText, this);
+            });
+            
+            // Configurar botões da aba Faturas
+            generateInvoiceBtn.addEventListener('click', function() {
+                invoiceTextElement.innerHTML = `
+                    <button class="copy-btn" id="copyInvoiceBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${invoiceEmails.fatura}
+                `;
+                
+                // Copiar automaticamente para clipboard
+                copyToClipboard(invoiceEmails.fatura, this);
+            });
+            
+            generateConfirmationInvoiceBtn.addEventListener('click', function() {
+                invoiceTextElement.innerHTML = `
+                    <button class="copy-btn" id="copyInvoiceBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${invoiceEmails.confirmacao}
+                `;
+                
+                // Copiar automaticamente para clipboard
+                copyToClipboard(invoiceEmails.confirmacao, this);
+            });
+            
+            generateThanksBtn.addEventListener('click', function() {
+                invoiceTextElement.innerHTML = `
+                    <button class="copy-btn" id="copyInvoiceBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${invoiceEmails.agradecimento}
+                `;
+                
+                // Copiar automaticamente para clipboard
+                copyToClipboard(invoiceEmails.agradecimento, this);
+            });
+            
+            // Configurar botão de copiar email de fatura
+            copyInvoiceBtn.addEventListener('click', function() {
+                const textToCopy = invoiceTextElement.innerText.replace('Copiar Tudo', '').trim();
+                copyToClipboard(textToCopy, this);
+            });
+            
+            // Função para arredondar números
+            function roundNumber(num) {
+                return Math.round(num);
+            }
+            
+            // Função para formatar números no formato português
+            function formatNumber(num) {
+                return num.toLocaleString('pt-PT', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+            }
+            
+            // Função para calcular o intervalo
+            function calculateInterval() {
+                const value = parseFloat(numberInput.value);
+                
+                if (isNaN(value) || value < 0) {
+                    alert('Por favor, insira um número válido (maior ou igual a zero).');
+                    numberInput.focus();
+                    return;
+                }
+                
+                const twentyPercent = value * 0.2;
+                const minValue = roundNumber(value - twentyPercent);
+                const maxValue = roundNumber(value + twentyPercent);
+                
+                originalValueElement.textContent = formatNumber(value);
+                twentyPercentElement.textContent = formatNumber(twentyPercent);
+                minValueElement.textContent = formatNumber(minValue);
+                maxValueElement.textContent = formatNumber(maxValue);
+                
+                minTextElement.textContent = formatNumber(minValue);
+                maxTextElement.textContent = formatNumber(maxValue);
+                
+                minTextElement.classList.add('highlight');
+                maxTextElement.classList.add('highlight');
+                
+                resultContainer.style.display = 'block';
+            }
+            
+            // Event listeners da aba Calculadora
+            calculateBtn.addEventListener('click', calculateInterval);
+            
+            numberInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    calculateInterval();
+                }
+            });
+            
+            // Event listeners para Enter nos emails da aba Anunciante
+            confirmationEmailInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    generateConfirmationBtn.click();
+                }
+            });
+            
+            warningEmailInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    generateWarningBtn.click();
+                }
+            });
+            
+            // Atalho de teclado para copiar
+            document.addEventListener('keydown', function(event) {
+                if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
+                    const selection = window.getSelection();
+                    if (selection.toString().length === 0) {
+                        event.preventDefault();
+                        const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+                        
+                        if (activeTab === 'calculator-tab') {
+                            const textToCopy = generatedText.innerText.replace('Copiar Tudo', '').trim();
+                            copyToClipboard(textToCopy, copyCampaignBtn);
+                        } else if (activeTab === 'prompts-tab') {
+                            const promptText = promptTextElement.innerText.replace('Copiar Prompt', '').trim();
+                            if (promptText !== 'Selecione uma plataforma e orçamento acima para visualizar e copiar o prompt correspondente.') {
+                                copyToClipboard(promptText, copyPromptBtn);
+                            }
+                        } else if (activeTab === 'welcomes-tab') {
+                            if (currentWelcomeText) {
+                                copyToClipboard(currentWelcomeText, copyWelcomeBtn);
+                            }
+                        } else if (activeTab === 'hello-tab') {
+                            // Não copia nada da aba Olá Equipa
+                        } else if (activeTab === 'activation-tab') {
+                            const textToCopy = activationTextElement.innerText.replace('Copiar Tudo', '').trim();
+                            if (textToCopy !== 'Clique em um dos botões acima para gerar o email de ativação correspondente.') {
+                                copyToClipboard(textToCopy, copyActivationBtn);
+                            }
+                        } else if (activeTab === 'advertiser-tab') {
+                            // Verificar qual template está visível
+                            const confirmationEmail = confirmationEmailInput.value.trim();
+                            const warningEmail = warningEmailInput.value.trim();
+                            
+                            if (confirmationEmail) {
+                                const fullText = advertiserTemplates.confirmation(confirmationEmail);
+                                copyToClipboard(fullText, copyConfirmationBtn);
+                            } else if (warningEmail) {
+                                const fullText = advertiserTemplates.warning(warningEmail);
+                                copyToClipboard(fullText, copyWarningBtn);
+                            }
+                        } else if (activeTab === 'invoices-tab') {
+                            const textToCopy = invoiceTextElement.innerText.replace('Copiar Tudo', '').trim();
+                            if (textToCopy !== 'Clique em um dos botões acima para gerar o email correspondente.') {
+                                copyToClipboard(textToCopy, copyInvoiceBtn);
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Calcular automaticamente ao carregar
+            if (numberInput && numberInput.value) {
+                calculateInterval();
+            } else if (numberInput) {
+                numberInput.value = "0";
+                calculateInterval();
+            }
+            
+            // Focar no input da calculadora se estiver na aba certa
+            setTimeout(() => {
+                if (numberInput && document.getElementById('calculator-tab').classList.contains('active')) {
+                    numberInput.focus();
+                }
+                
+                // Focar no input de confirmação se estiver na aba Anunciante
+                if (confirmationEmailInput && document.getElementById('advertiser-tab').classList.contains('active')) {
+                    confirmationEmailInput.focus();
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
