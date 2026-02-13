@@ -656,7 +656,7 @@
             <button class="tab-btn" data-tab="welcomes-tab">Welcomes</button>
             <button class="tab-btn" data-tab="advertiser-tab">Anunciante</button>
             <button class="tab-btn" data-tab="prompts-tab">Prompts</button>
-            <button class="tab-btn" data-tab="calculator-tab">Calculadora ±20%</button>
+            <button class="tab-btn" data-tab="calculator-tab">Calculadora</button>
             <button class="tab-btn" data-tab="activation-tab">Ativação</button>
             <button class="tab-btn" data-tab="invoices-tab">Faturas</button>
         </div>
@@ -976,7 +976,7 @@ Equipa Leadzai
         </div>
     </div>
     
-    <!-- Aba Calculadora ±20% -->
+    <!-- Aba Calculadora -->
     <div id="calculator-tab" class="tab-content">
         <div class="container">
             <div class="calculator-section">
@@ -1014,12 +1014,41 @@ Equipa Leadzai
                         <strong>Fórmula:</strong> Mínimo = Valor - (Valor × 20%) | Máximo = Valor + (Valor × 20%)
                     </div>
                 </div>
+
+                <h3 style="margin-top: 30px;">Calculadora de orçamento × 55%</h3>
+                <div class="input-group">
+                    <label for="dividerInput">Dividir por:</label>
+                    <select id="dividerInput">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+
+                <div class="result-container" id="fiftyFiveContainer" style="display: block; margin-top: 15px;">
+                    <div class="result-item">
+                        <span class="result-label">500€ × 55% ÷ <span id="selectedDivider">1</span>:</span>
+                        <span class="result-value" id="calc500">275,00€</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">1000€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
+                        <span class="result-value" id="calc1000">550,00€</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">1500€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
+                        <span class="result-value" id="calc1500">825,00€</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">2000€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
+                        <span class="result-value" id="calc2000">1100,00€</span>
+                    </div>
+                </div>
                 
                 <p class="shortcut-info">Pressione Enter no campo numérico para calcular rapidamente</p>
             </div>
             
             <div class="text-section">
-                <h2>Texto da Campanha</h2>
+                <h2>Email gerado</h2>
                 
                 <div class="generated-text" id="generatedText">
                     <button class="copy-btn" id="copyCampaignBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
@@ -1114,6 +1143,13 @@ Equipa Vales Digitais
             const maxTextElement = document.getElementById('maxText');
             const copyCampaignBtn = document.getElementById('copyCampaignBtn');
             const generatedText = document.getElementById('generatedText');
+            const dividerInput = document.getElementById('dividerInput');
+            const selectedDividerElement = document.getElementById('selectedDivider');
+            const selectedDividerCopies = document.querySelectorAll('.selected-divider-copy');
+            const calc500Element = document.getElementById('calc500');
+            const calc1000Element = document.getElementById('calc1000');
+            const calc1500Element = document.getElementById('calc1500');
+            const calc2000Element = document.getElementById('calc2000');
             
             // Elementos da aba Prompts
             const platformButtons = document.querySelectorAll('#prompts-tab .platform-btn');
@@ -1574,7 +1610,7 @@ Respeita os limites de caracteres (espaços, pontuação e acentuação contam c
 
 Orçamento: 500€
 • Encontrar até 2 categorias mais importantes de realçar pelo SEO.
-• Cria no máximo 5 anúncios separados pelas categorias.
+• Cria 5 anúncios separados pelas categorias.
 • Apenas 1 Responsivo por categoria.
 
 Estrutura dos anúncios:
@@ -1600,7 +1636,7 @@ Respeita os limites de caracteres (espaços, pontuação e acentuação contam c
 
 Orçamento: 1000€
 • Encontrar até 3 categorias mais importantes de realçar pelo SEO.
-• Cria no máximo 8 anúncios separados pelas categorias.
+• Cria 8 anúncios separados pelas categorias.
 • Apenas 1 Responsivo por categoria.
 • E 1 anúncio Display em 1 categoria estratégica apenas.
 
@@ -1632,7 +1668,7 @@ Respeita os limites de caracteres (espaços, pontuação e acentuação contam c
 
 Orçamento: 1500€+
 • Encontrar até 4 categorias mais importantes de realçar pelo SEO.
-• Cria no máximo 12 anúncios separados pelas categorias.
+• Cria 12 anúncios separados pelas categorias.
 • Apenas 1 Responsivo por categoria.
 • E 1 anúncio Display em 1 categoria estratégica apenas.
 
@@ -1668,7 +1704,7 @@ Respeita a linguagem e comunicação do site do cliente
 
 Orçamento: 500€
 • Encontrar as melhores categorias mais importantes de realçar pelo SEO
-• Cria no máximo 5 anúncios separados pelas categorias.
+• Cria 5 anúncios separados pelas categorias.
 
 Modelo Universal para Meta Ads
 Headline (23-25 car.):
@@ -1690,7 +1726,7 @@ Respeita a linguagem e comunicação do site do cliente
 
 Orçamento: 1000€
 • Encontrar as melhores categorias mais importantes de realçar pelo SEO
-• Cria no máximo 8 anúncios separados pelas categorias.
+• Cria 8 anúncios separados pelas categorias.
 
 Modelo Universal para Meta Ads
 Headline (23-25 car.):
@@ -1712,7 +1748,7 @@ Respeita a linguagem e comunicação do site do cliente
 
 Orçamento: 1500€+
 • Encontrar as melhores categorias mais importantes de realçar pelo SEO
-• Cria no máximo 12 anúncios separados pelas categorias.
+• Cria 12 anúncios separados pelas categorias.
 
 Modelo Universal para Meta Ads
 Headline (23-25 car.):
@@ -2053,6 +2089,29 @@ Escolhe ou sugere as melhores imagens para cada ad.`
                     maximumFractionDigits: 0
                 });
             }
+
+            function formatEuro(num) {
+                return `${num.toLocaleString('pt-PT', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                })}€`;
+            }
+
+            function calculateFiftyFive() {
+                const divider = parseInt(dividerInput.value, 10) || 1;
+                const baseValues = [500, 1000, 1500, 2000];
+                const results = baseValues.map(value => (value * 0.55) / divider);
+
+                selectedDividerElement.textContent = divider;
+                selectedDividerCopies.forEach(element => {
+                    element.textContent = divider;
+                });
+
+                calc500Element.textContent = formatEuro(results[0]);
+                calc1000Element.textContent = formatEuro(results[1]);
+                calc1500Element.textContent = formatEuro(results[2]);
+                calc2000Element.textContent = formatEuro(results[3]);
+            }
             
             // Função para calcular o intervalo
             function calculateInterval() {
@@ -2090,6 +2149,8 @@ Escolhe ou sugere as melhores imagens para cada ad.`
                     calculateInterval();
                 }
             });
+
+            dividerInput.addEventListener('change', calculateFiftyFive);
             
             // Event listeners para Enter nos emails da aba Anunciante
             confirmationEmailInput.addEventListener('keyup', function(event) {
@@ -2159,6 +2220,11 @@ Escolhe ou sugere as melhores imagens para cada ad.`
             } else if (numberInput) {
                 numberInput.value = "0";
                 calculateInterval();
+            }
+
+
+            if (dividerInput) {
+                calculateFiftyFive();
             }
             
             // Focar no input da calculadora se estiver na aba certa
