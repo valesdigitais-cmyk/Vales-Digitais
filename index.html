@@ -1817,97 +1817,132 @@ Equipa Leadzai`
             
             // Prompts predefinidos Google Ads
             const googlePrompts = {
-                500: `Cria anúncios Google Ads em português de Portugal, com base nas fontes do Cliente.
+                500: `Cria anúncios Google Ads em português de Portugal, exclusivamente com base
+nas informações fornecidas nas fontes do Cliente (não inferir, não inventar).
 
-Regras:
-Escreve na 3ª pessoa
-Tom profissional e apelativo
-Usa apenas informações nas fontes
-Respeita os limites de caracteres (espaços, pontuação e acentuação contam como caracteres)
+Regras obrigatórias:
+- Escrever sempre na 3.ª pessoa
+- Tom profissional, claro e orientado à conversão
+- Utilizar apenas informação presente nas fontes do Cliente
+- Não adicionar claims, preços, garantias ou dados não fornecidos
+- Respeitar rigorosamente os limites de caracteres
+  (espaços, pontuação e acentuação contam como caracteres)
+- Caso não seja possível cumprir um requisito, indicar claramente qual
 
 Orçamento: 500€
-• Encontrar até 2 categorias mais importantes de realçar pelo SEO.
-• Cria 5 anúncios separados pelas categorias.
-• Apenas 1 Responsivo por categoria.
+
+Objetivo:
+- Identificar até 2 categorias principais com maior relevância SEO
+- Criar 5 anúncios separados por categorias
 
 Estrutura dos anúncios:
+
 🟢 Anúncios Dinâmicos
-2 frases por anúncio
-com mais de 75 e menos de 85 caracteres por frase
-Linguagem direta e focada na conversão.
+- 2 frases por anúncio
+- Cada frase deve ter entre 76 e 84 caracteres
+- Linguagem direta, clara e focada na conversão
 
 🔵 Anúncio Responsivo
-7 headlines (máx. 20 caracteres cada, sem car. especiais)
-2 descrições (mais 75 - menos 85 caracteres cada)
-Destacar benefícios principais.
+- 7 headlines (máximo 20 caracteres cada)
+  • Apenas letras, números e espaços (sem símbolos especiais)
+- 2 descrições
+  • Cada descrição entre 76 e 84 caracteres
+  • Foco nos principais benefícios do serviço
 
-Mais as melhores (SEO) palavras-chave para cada categoria separadas por vírgulas.`,
+SEO:
+- Listar as melhores palavras-chave SEO para cada categoria
+- Separar palavras-chave por vírgulas
 
-                1000: `Cria anúncios Google Ads em português de Portugal, com base nas fontes do Cliente.
+Formato de saída obrigatório:
+- Títulos e descrições claramente identificados
+- Cada categoria separada por um cabeçalho
+- Palavras-chave listadas no final de cada categoria`,
 
-Regras:
-Escreve na 3ª pessoa
-Tom profissional e apelativo
-Usa apenas informações nas fontes
-Respeita os limites de caracteres (espaços, pontuação e acentuação contam como caracteres)
+                1000: `Cria anúncios Google Ads em português de Portugal, exclusivamente com base
+nas informações fornecidas nas fontes do Cliente (não inferir, não inventar).
+
+Regras obrigatórias:
+- Escrever sempre na 3.ª pessoa
+- Tom profissional, claro e orientado à conversão
+- Utilizar apenas informação presente nas fontes do Cliente
+- Não adicionar claims, preços, garantias ou dados não fornecidos
+- Respeitar rigorosamente os limites de caracteres
+  (espaços, pontuação e acentuação contam como caracteres)
+- Caso não seja possível cumprir um requisito, indicar claramente qual
 
 Orçamento: 1000€
-• Encontrar até 3 categorias mais importantes de realçar pelo SEO.
-• Cria 8 anúncios separados pelas categorias.
-• Apenas 1 Responsivo por categoria.
-• E 1 anúncio Display em 1 categoria estratégica apenas.
+
+Objetivo:
+- Identificar até 3 categorias principais com maior relevância SEO
+- Criar 8 anúncios separados por categorias
+- Criar apenas 1 anúncio responsivo por categoria
 
 Estrutura dos anúncios:
+
 🟢 Anúncios Dinâmicos
-2 frases por anúncio
-com mais de 75 e menos de 85 caracteres por frase
-Linguagem direta e focada na conversão.
+- 2 frases por anúncio
+- Cada frase deve ter entre 76 e 84 caracteres
+- Linguagem direta, clara e focada na conversão
 
 🔵 Anúncio Responsivo
-7 headlines (máx. 20 caracteres cada, sem car. especiais)
-2 descrições (mais 75 - menos 85 caracteres cada)
-Destacar benefícios principais.
+- 7 headlines (máximo 20 caracteres cada)
+  • Apenas letras, números e espaços (sem símbolos especiais)
+- 2 descrições
+  • Cada descrição entre 76 e 84 caracteres
+  • Foco nos principais benefícios do serviço
 
-🟠 Anúncio Display
-1 Título curto até 25 car
-1 Título longo até 80 car
-Descrição 1 até 80 car
+SEO:
+- Listar as melhores palavras-chave SEO para cada categoria
+- Separar palavras-chave por vírgulas
 
-Mais as melhores (SEO) palavras-chave para cada categoria separadas por vírgulas.`,
+Formato de saída obrigatório:
+- Títulos e descrições claramente identificados
+- Cada categoria separada por um cabeçalho
+- Palavras-chave listadas no final de cada categoria`,
 
-                1500: `Cria anúncios Google Ads em português de Portugal, com base nas fontes do Cliente.
+                1500: `Cria anúncios Google Ads em português de Portugal, exclusivamente com base
+nas informações fornecidas nas fontes do Cliente (não inferir, não inventar).
 
-Regras:
-Escreve na 3ª pessoa
-Tom profissional e apelativo
-Usa apenas informações nas fontes
-Respeita os limites de caracteres (espaços, pontuação e acentuação contam como caracteres)
+Regras obrigatórias:
+- Escrever sempre na 3.ª pessoa
+- Tom profissional, claro e orientado à conversão
+- Utilizar apenas informação presente nas fontes do Cliente
+- Não adicionar claims, preços, garantias ou dados não fornecidos
+- Respeitar rigorosamente os limites de caracteres
+  (espaços, pontuação e acentuação contam como caracteres)
+- Caso não seja possível cumprir um requisito, indicar claramente qual
 
 Orçamento: 1500€+
-• Encontrar até 4 categorias mais importantes de realçar pelo SEO.
-• Cria 12 anúncios separados pelas categorias.
-• Apenas 1 Responsivo por categoria.
-• E 1 anúncio Display em 1 categoria estratégica apenas.
+
+Objetivo:
+- Identificar até 4 categorias principais com maior relevância SEO
+- Criar 12 anúncios separados por categorias
+- Criar apenas 2 anúncio responsivo por categoria
 
 Estrutura dos anúncios:
+
 🟢 Anúncios Dinâmicos
-2 frases por anúncio
-com mais de 75 e menos de 85 caracteres por frase
-Linguagem direta e focada na conversão.
+- 2 frases por anúncio
+- Cada frase deve ter entre 76 e 84 caracteres
+- Linguagem direta, clara e focada na conversão
 
 🔵 Anúncio Responsivo
-7 headlines (máx. 20 caracteres cada, sem car. especiais)
-2 descrições (mais 75 - menos 85 caracteres cada)
-Destacar benefícios principais.
+- 7 headlines (máximo 20 caracteres cada)
+  • Apenas letras, números e espaços (sem símbolos especiais)
+- 2 descrições
+  • Cada descrição entre 76 e 84 caracteres
+  • Foco nos principais benefícios do serviço
 
-🟠 Anúncio Display
-1 Título curto até 25 car
-1 Título longo até 80 car
-Descrição 1 até 80 car
+SEO:
+- Listar as melhores palavras-chave SEO para cada categoria
+- Separar palavras-chave por vírgulas
 
-Mais as melhores (SEO) palavras-chave para cada categoria separadas por vírgulas.`
+Formato de saída obrigatório:
+- Títulos e descrições claramente identificados
+- Cada categoria separada por um cabeçalho
+- Palavras-chave listadas no final de cada categoria`
             };
-            
+
             // Prompts predefinidos Meta Ads
             const metaPrompts = {
                 500: `Cria anúncios Meta Ads em português de Portugal, com base no briefing do cliente.
