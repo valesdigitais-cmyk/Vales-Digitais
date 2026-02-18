@@ -1271,9 +1271,23 @@ Equipa Leadzai
             <h2>Emails para Faturas</h2>
             
             <div class="invoice-buttons">
-                <button class="invoice-btn" id="generateInvoiceBtn">Gerar Email de Fatura</button>
-                <button class="invoice-btn" id="generateConfirmationInvoiceBtn">Gerar Email de Confirmação</button>
-                <button class="invoice-btn" id="generateThanksBtn">Gerar Email de Agradecimento</button>
+                <div class="budget-card">
+                    <div class="budget-price">Envio da Fatura</div>
+                    <ul class="budget-features">
+                        <li>Email para envio da fatura de IVA</li>
+                        <li>Explica que o valor base está no Voucher Digital</li>
+                    </ul>
+                    <button class="prompt-btn" id="generateInvoiceBtn">Copiar Envio da Fatura</button>
+                </div>
+
+                <div class="budget-card">
+                    <div class="budget-price">Confirmação de Pagamento</div>
+                    <ul class="budget-features">
+                        <li>Confirmação da boa receção do pagamento</li>
+                        <li>Processo regularizado e mensagem de fecho</li>
+                    </ul>
+                    <button class="prompt-btn" id="generateConfirmationInvoiceBtn">Copiar Confirmação de Pagamento</button>
+                </div>
             </div>
             
             <h3>Email Gerado:</h3>
@@ -1350,7 +1364,6 @@ Equipa Leadzai
             // Elementos da aba Faturas
             const generateInvoiceBtn = document.getElementById('generateInvoiceBtn');
             const generateConfirmationInvoiceBtn = document.getElementById('generateConfirmationInvoiceBtn');
-            const generateThanksBtn = document.getElementById('generateThanksBtn');
             const invoiceTextElement = document.getElementById('invoiceText');
             const themeToggleBtn = document.getElementById('themeToggleBtn');
 
@@ -1450,43 +1463,28 @@ Equipa Leadzai`
             
             // Emails para Faturas
             const invoiceEmails = {
-                fatura: `Caro cliente,
+                fatura: `Caro Beneficiário,
 
-Em anexo, enviamos a fatura referente ao IVA.
+Em anexo, enviamos a fatura referente **exclusivamente ao valor do IVA**.
 
-Conforme combinado, solicitamos o envio do comprovativo de pagamento assim que possível.
+Relembramos que o valor base do serviço se encontra abrangido pelo incentivo do Voucher Digital, sendo apenas necessário o pagamento do IVA indicado na fatura.
 
-Caso necessite de alguma informação adicional ou tenha alguma questão, não hesite em contactar-nos.
+Conforme combinado, agradecemos o envio do comprovativo de pagamento assim que possível, de forma a dar seguimento ao processo administrativo.
 
-Agradecemos pela confiança depositada em nosso trabalho.
+Caso necessite de algum esclarecimento adicional, ficamos ao dispor.
 
-Melhores cumprimentos,
+Com os melhores cumprimentos,
 Equipa Leadzai`,
 
-                confirmacao: `Bom dia,
+                confirmacao: `Caro Beneficiário,
 
-Exatamente.
+Agradecemos o envio do comprovativo.
 
-Confirmo que o valor a liquidar por vossa parte é apenas o correspondente ao IVA.
-
-O restante valor da fatura é coberto pelo incentivo do Voucher Digital (PRR).
-
-Ficamos a aguardar o envio do comprovativo de pagamento para concluirmos o processo administrativo.
-
-Qualquer dúvida, estou ao dispor.
-
-Melhores cumprimentos,
-Equipa Leadzai`,
-
-                agradecimento: `Boa tarde,
-
-Obrigada pelo envio do comprovativo.
-
-Confirmamos a receção do pagamento do IVA.
+Confirmamos a boa receção do pagamento do IVA, ficando o processo devidamente regularizado da nossa parte.
 
 Agradecemos a sua colaboração e desejamos os maiores sucessos para os seus projetos.
 
-Melhores cumprimentos,
+Com os melhores cumprimentos,
 Equipa Leadzai`
             };
             
@@ -2386,17 +2384,6 @@ Para cada categoria:
             
             generateConfirmationInvoiceBtn.addEventListener('click', function() {
                 currentInvoiceText = normalizeMessageText(invoiceEmails.confirmacao);
-                invoiceTextElement.innerHTML = `
-                    <button class="copy-btn" data-action="copy-invoice" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
-                    ${currentInvoiceText}
-                `;
-                
-                // Copiar automaticamente para clipboard
-                copyToClipboard(currentInvoiceText, this);
-            });
-            
-            generateThanksBtn.addEventListener('click', function() {
-                currentInvoiceText = normalizeMessageText(invoiceEmails.agradecimento);
                 invoiceTextElement.innerHTML = `
                     <button class="copy-btn" data-action="copy-invoice" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
                     ${currentInvoiceText}
