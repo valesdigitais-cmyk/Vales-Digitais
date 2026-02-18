@@ -1945,71 +1945,122 @@ Formato de saída obrigatório:
 
             // Prompts predefinidos Meta Ads
             const metaPrompts = {
-                500: `Cria anúncios Meta Ads em português de Portugal, com base no briefing do cliente.
+                500: `Cria anúncios para Meta Ads em português de Portugal, com base EXCLUSIVAMENTE
+nas fontes do cliente (não inferir, não inventar, não adicionar dados externos).
 
-Regras:
-Escrever na 3.ª pessoa
-Tom profissional, informativo e com um bom SEO
-Usar apenas dados do briefing
-Respeitar os limites de caracteres
-Respeita a linguagem e comunicação do site do cliente
+Regras obrigatórias:
+- Escrever sempre na 3.ª pessoa
+- Tom profissional e informativo, orientado à conversão
+- Manter a linguagem, termos e estilo do site do cliente (se o briefing incluir exemplos)
+- Usar apenas informação presente no briefing (serviços, localização, preços, claims, etc.)
+- Não incluir promessas, garantias, superlativos vagos (“o melhor”, “único”) ou comparações
+  se isso não estiver explicitamente no briefing
+- Respeitar rigorosamente os limites de caracteres (espaços, pontuação e acentuação contam)
+- Se faltar informação nas fontes para cumprir algum campo, indicar.
 
+Objetivo e estrutura:
 Orçamento: 500€
-• Encontrar as melhores categorias mais importantes de realçar pelo SEO
-• Cria 5 anúncios separados pelas categorias.
+- Identificar as 2 categorias/serviços mais relevantes para SEO e intenção de compra
+- Criar 5 anúncios separados por categorias
 
-Modelo Universal para Meta Ads
-Headline (23-25 car.):
-[Solução Principal]
-Sub-headline (28-30 car.):
-[Benefício Diferenciador] 
-Descrição (100-300 car.):
-["Problema" do cliente] A nossa solução oferece [Benefício 1], [Benefício 2] e [Benefício 3].  [Chamada para ação clara]!
-Escolhe ou sugere as melhores imagens para cada ad.`,
+Modelo Universal Meta Ads (por anúncio):
+1) Headline: 23–25 caracteres
+2) Sub-headline: 28–30 caracteres
+3) Descrição: 100–300 caracteres
 
-                1000: `Cria anúncios Meta Ads em português de Portugal, com base no briefing do cliente.
+Formato da descrição (sem inventar):
+["Problema" do cliente] A solução oferece [Benefício 1], [Benefício 2] e [Benefício 3]. [CTA clara]!
 
-Regras:
-Escrever na 3.ª pessoa
-Tom profissional, informativo e com um bom SEO
-Usar apenas dados do briefing
-Respeitar os limites de caracteres
-Respeita a linguagem e comunicação do site do cliente
+Imagens:
+- Para cada anúncio, sugerir imagem coerentes com as fontes e com o site
+- Se não houver assets, sugerir apenas conceitos (ex: “foto real do serviço”, “antes/depois”,
+  “equipa em ação”, “produto em destaque”, “close-up do detalhe”, etc.) sem mencionar marcas
 
+Formato de saída obrigatório:
+Para cada categoria:
+- Categoria:
+- Headline (com contagem de caracteres):
+- Sub-headline (com contagem de caracteres):
+- Descrição (com contagem de caracteres):
+- Sugestões de imagem:`,
+
+                1000: `Cria anúncios para Meta Ads em português de Portugal, com base EXCLUSIVAMENTE
+nas fontes do cliente (não inferir, não inventar, não adicionar dados externos).
+
+Regras obrigatórias:
+- Escrever sempre na 3.ª pessoa
+- Tom profissional e informativo, orientado à conversão
+- Manter a linguagem, termos e estilo do site do cliente (se o briefing incluir exemplos)
+- Usar apenas informação presente no briefing (serviços, localização, preços, claims, etc.)
+- Não incluir promessas, garantias, superlativos vagos (“o melhor”, “único”) ou comparações
+  se isso não estiver explicitamente no briefing
+- Respeitar rigorosamente os limites de caracteres (espaços, pontuação e acentuação contam)
+- Se faltar informação nas fontes para cumprir algum campo, indicar.
+
+Objetivo e estrutura:
 Orçamento: 1000€
-• Encontrar as melhores categorias mais importantes de realçar pelo SEO
-• Cria 8 anúncios separados pelas categorias.
+- Identificar as 3 categorias/serviços mais relevantes para SEO e intenção de compra
+- Criar 8 anúncios separados por categorias
 
-Modelo Universal para Meta Ads
-Headline (23-25 car.):
-[Solução Principal]
-Sub-headline (28-30 car.):
-[Benefício Diferenciador] 
-Descrição (100-300 car.):
-["Problema" do cliente] A nossa solução oferece [Benefício 1], [Benefício 2] e [Benefício 3].  [Chamada para ação clara]!
-Escolhe ou sugere as melhores imagens para cada ad.`,
+Modelo Universal Meta Ads (por anúncio):
+1) Headline: 23–25 caracteres
+2) Sub-headline: 28–30 caracteres
+3) Descrição: 100–300 caracteres
 
-                1500: `Cria anúncios Meta Ads em português de Portugal, com base no briefing do cliente.
+Formato da descrição (sem inventar):
+["Problema" do cliente] A solução oferece [Benefício 1], [Benefício 2] e [Benefício 3]. [CTA clara]!
 
-Regras:
-Escrever na 3.ª pessoa
-Tom profissional, informativo e com um bom SEO
-Usar apenas dados do briefing
-Respeitar os limites de caracteres
-Respeita a linguagem e comunicação do site do cliente
+Imagens:
+- Para cada anúncio, sugerir imagem coerentes com as fontes e com o site
+- Se não houver assets, sugerir apenas conceitos (ex: “foto real do serviço”, “antes/depois”,
+  “equipa em ação”, “produto em destaque”, “close-up do detalhe”, etc.) sem mencionar marcas
 
+Formato de saída obrigatório:
+Para cada categoria:
+- Categoria:
+- Headline (com contagem de caracteres):
+- Sub-headline (com contagem de caracteres):
+- Descrição (com contagem de caracteres):
+- Sugestões de imagem:`,
+
+                1500: `Cria anúncios para Meta Ads em português de Portugal, com base EXCLUSIVAMENTE
+nas fontes do cliente (não inferir, não inventar, não adicionar dados externos).
+
+Regras obrigatórias:
+- Escrever sempre na 3.ª pessoa
+- Tom profissional e informativo, orientado à conversão
+- Manter a linguagem, termos e estilo do site do cliente (se o briefing incluir exemplos)
+- Usar apenas informação presente no briefing (serviços, localização, preços, claims, etc.)
+- Não incluir promessas, garantias, superlativos vagos (“o melhor”, “único”) ou comparações
+  se isso não estiver explicitamente no briefing
+- Respeitar rigorosamente os limites de caracteres (espaços, pontuação e acentuação contam)
+- Se faltar informação nas fontes para cumprir algum campo, indicar.
+
+Objetivo e estrutura:
 Orçamento: 1500€+
-• Encontrar as melhores categorias mais importantes de realçar pelo SEO
-• Cria 12 anúncios separados pelas categorias.
+- Identificar as 4 categorias/serviços mais relevantes para SEO e intenção de compra
+- Criar 12 anúncios separados por categorias
 
-Modelo Universal para Meta Ads
-Headline (23-25 car.):
-[Solução Principal]
-Sub-headline (28-30 car.):
-[Benefício Diferenciador] 
-Descrição (100-300 car.):
-["Problema" do cliente] A nossa solução oferece [Benefício 1], [Benefício 2] e [Benefício 3].  [Chamada para ação clara]!
-Escolhe ou sugere as melhores imagens para cada ad.`
+Modelo Universal Meta Ads (por anúncio):
+1) Headline: 23–25 caracteres
+2) Sub-headline: 28–30 caracteres
+3) Descrição: 100–300 caracteres
+
+Formato da descrição (sem inventar):
+["Problema" do cliente] A solução oferece [Benefício 1], [Benefício 2] e [Benefício 3]. [CTA clara]!
+
+Imagens:
+- Para cada anúncio, sugerir imagem coerentes com as fontes e com o site
+- Se não houver assets, sugerir apenas conceitos (ex: “foto real do serviço”, “antes/depois”,
+  “equipa em ação”, “produto em destaque”, “close-up do detalhe”, etc.) sem mencionar marcas
+
+Formato de saída obrigatório:
+Para cada categoria:
+- Categoria:
+- Headline (com contagem de caracteres):
+- Sub-headline (com contagem de caracteres):
+- Descrição (com contagem de caracteres):
+- Sugestões de imagem:`
             };
             
             // Sistema de abas
