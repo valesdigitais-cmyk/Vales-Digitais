@@ -939,7 +939,7 @@
 
             <h3>Preview do Welcome:</h3>
             <div class="welcome-text" id="welcomeText">
-                <button class="copy-btn" id="copyWelcomeBtn" title="Clique para copiar">Copiar Welcome</button>
+                <button class="copy-btn" data-action="copy-welcome" title="Clique para copiar">Copiar Welcome</button>
                 Selecione uma plataforma e orçamento acima para visualizar e copiar o template de welcome correspondente.
             </div>
 
@@ -964,7 +964,7 @@
                 <button class="template-btn" id="generateConfirmationBtn">Gerar Email de Confirmação</button>
                 
                 <div class="template-text" id="confirmationText">
-                    <button class="copy-btn" id="copyConfirmationBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    <button class="copy-btn" data-action="copy-confirmation" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
                     
 Caro cliente,
 
@@ -991,7 +991,7 @@ Equipa Leadzai
                 <button class="template-btn" id="generateWarningBtn">Gerar Email de Confirmação do Envio</button>
                 
                 <div class="template-text" id="warningText">
-                    <button class="copy-btn" id="copyWarningBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    <button class="copy-btn" data-action="copy-warning" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
                     
 Caro cliente,
 
@@ -1095,7 +1095,7 @@ Equipa Leadzai
             
             <h3>Preview do Prompt:</h3>
             <div class="prompt-text" id="promptText">
-                <button class="copy-btn" id="copyPromptBtn" title="Clique para copiar">Copiar Prompt</button>
+                <button class="copy-btn" data-action="copy-prompt" title="Clique para copiar">Copiar Prompt</button>
                 Selecione uma plataforma e orçamento acima para visualizar e copiar o prompt correspondente.
             </div>
             
@@ -1178,7 +1178,7 @@ Equipa Leadzai
                 <h2>Email gerado</h2>
                 
                 <div class="generated-text" id="generatedText">
-                    <button class="copy-btn" id="copyCampaignBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    <button class="copy-btn" data-action="copy-campaign" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
                     
 Boa tarde,
 
@@ -1220,7 +1220,7 @@ Equipa Leadzai
             
             <h3>Email Gerado:</h3>
             <div class="activation-text" id="activationText">
-                <button class="copy-btn" id="copyActivationBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                <button class="copy-btn" data-action="copy-activation" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
                 Clique em um dos botões acima para gerar o email de ativação correspondente.
             </div>
             
@@ -1241,7 +1241,7 @@ Equipa Leadzai
             
             <h3>Email Gerado:</h3>
             <div class="invoice-text" id="invoiceText">
-                <button class="copy-btn" id="copyInvoiceBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                <button class="copy-btn" data-action="copy-invoice" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
                 Clique em um dos botões acima para gerar o email correspondente.
             </div>
             
@@ -1269,7 +1269,7 @@ Equipa Leadzai
             const maxValueElement = document.getElementById('maxValue');
             const minTextElement = document.getElementById('minText');
             const maxTextElement = document.getElementById('maxText');
-            const copyCampaignBtn = document.getElementById('copyCampaignBtn');
+            const copyCampaignBtn = document.querySelector('[data-action="copy-campaign"]');
             const generatedText = document.getElementById('generatedText');
             const dividerInput = document.getElementById('dividerInput');
             const selectedDividerElement = document.getElementById('selectedDivider');
@@ -1284,29 +1284,29 @@ Equipa Leadzai
             const platformPrompts = document.querySelectorAll('#prompts-tab .platform-prompts');
             const promptButtons = document.querySelectorAll('.copy-prompt-btn');
             const promptTextElement = document.getElementById('promptText');
-            const copyPromptBtn = document.getElementById('copyPromptBtn');
             
             // Elementos da aba Welcomes
             const welcomePlatformButtons = document.querySelectorAll('.welcome-platform-btn');
             const welcomePlatforms = document.querySelectorAll('.platform-welcomes');
             const welcomeButtons = document.querySelectorAll('.copy-welcome-btn');
             const welcomeTextElement = document.getElementById('welcomeText');
-            const copyWelcomeBtn = document.getElementById('copyWelcomeBtn');
             let currentWelcomeText = '';
+            let currentPromptText = '';
+            let currentActivationText = '';
+            let currentInvoiceText = '';
             
             // Elementos da aba Ativação
             const generateOneCampaignBtn = document.getElementById('generateOneCampaignBtn');
             const generateTwoCampaignsBtn = document.getElementById('generateTwoCampaignsBtn');
             const activationTextElement = document.getElementById('activationText');
-            const copyActivationBtn = document.getElementById('copyActivationBtn');
             
             // Elementos da aba Anunciante
             const confirmationEmailInput = document.getElementById('confirmationEmail');
             const warningEmailInput = document.getElementById('warningEmail');
             const generateConfirmationBtn = document.getElementById('generateConfirmationBtn');
             const generateWarningBtn = document.getElementById('generateWarningBtn');
-            const copyConfirmationBtn = document.getElementById('copyConfirmationBtn');
-            const copyWarningBtn = document.getElementById('copyWarningBtn');
+            const copyConfirmationBtn = document.querySelector('[data-action="copy-confirmation"]');
+            const copyWarningBtn = document.querySelector('[data-action="copy-warning"]');
             const confirmationEmailPlaceholder = document.getElementById('confirmationEmailPlaceholder');
             const warningEmailPlaceholder = document.getElementById('warningEmailPlaceholder');
             
@@ -1315,7 +1315,6 @@ Equipa Leadzai
             const generateConfirmationInvoiceBtn = document.getElementById('generateConfirmationInvoiceBtn');
             const generateThanksBtn = document.getElementById('generateThanksBtn');
             const invoiceTextElement = document.getElementById('invoiceText');
-            const copyInvoiceBtn = document.getElementById('copyInvoiceBtn');
             const themeToggleBtn = document.getElementById('themeToggleBtn');
 
             function updateThemeButtonLabel() {
@@ -1913,19 +1912,34 @@ Escolhe ou sugere as melhores imagens para cada ad.`
             };
             
             // Sistema de abas
+            const activeTabStorageKey = 'active-tab';
+
+            function activateTab(tabId) {
+                const targetButton = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+                const targetContent = document.getElementById(tabId);
+
+                if (!targetButton || !targetContent) {
+                    return;
+                }
+
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                targetButton.classList.add('active');
+                targetContent.classList.add('active');
+                localStorage.setItem(activeTabStorageKey, tabId);
+            }
+
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    const tabId = button.getAttribute('data-tab');
-                    
-                    // Remove classe active de todos os botões e conteúdos
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Adiciona active ao botão clicado e conteúdo correspondente
-                    button.classList.add('active');
-                    document.getElementById(tabId).classList.add('active');
+                    activateTab(button.getAttribute('data-tab'));
                 });
             });
+
+            const savedActiveTab = localStorage.getItem(activeTabStorageKey);
+            if (savedActiveTab) {
+                activateTab(savedActiveTab);
+            }
             
             // Sistema de plataformas (Google/Meta)
             platformButtons.forEach(button => {
@@ -1944,9 +1958,10 @@ Escolhe ou sugere as melhores imagens para cada ad.`
                     
                     // Atualiza o preview do prompt
                     promptTextElement.innerHTML = `
-                        <button class="copy-btn" id="copyPromptBtn" title="Clique para copiar">Copiar Prompt</button>
+                        <button class="copy-btn" data-action="copy-prompt" title="Clique para copiar">Copiar Prompt</button>
                         Selecione uma plataforma e orçamento acima para visualizar e copiar o prompt correspondente.
                     `;
+                    currentPromptText = '';
                 });
             });
 
@@ -1962,7 +1977,7 @@ Escolhe ou sugere as melhores imagens para cada ad.`
 
                     currentWelcomeText = '';
                     welcomeTextElement.innerHTML = `
-                        <button class="copy-btn" id="copyWelcomeBtn" title="Clique para copiar">Copiar Welcome</button>
+                        <button class="copy-btn" data-action="copy-welcome" title="Clique para copiar">Copiar Welcome</button>
                         Selecione uma plataforma e orçamento acima para visualizar e copiar o template de welcome correspondente.
                     `;
                 });
@@ -2035,7 +2050,7 @@ Escolhe ou sugere as melhores imagens para cada ad.`
                     
                     // Atualizar o preview
                     welcomeTextElement.innerHTML = `
-                        <button class="copy-btn" id="copyWelcomeBtn" title="Clique para copiar">Copiar Welcome</button>
+                        <button class="copy-btn" data-action="copy-welcome" title="Clique para copiar">Copiar Welcome</button>
                         ${welcome.replace(/\n/g, '<br>')}
                     `;
                     
@@ -2044,15 +2059,24 @@ Escolhe ou sugere as melhores imagens para cada ad.`
                 });
             });
             
-            // Configurar botão de copiar welcome do preview
             document.addEventListener('click', function(e) {
-                if (e.target && e.target.id === 'copyWelcomeBtn') {
-                    if (currentWelcomeText) {
-                        copyToClipboard(currentWelcomeText, e.target);
-                    }
+                if (!e.target || !e.target.matches('.copy-btn[data-action]')) {
+                    return;
+                }
+
+                const action = e.target.getAttribute('data-action');
+
+                if (action === 'copy-welcome' && currentWelcomeText) {
+                    copyToClipboard(currentWelcomeText, e.target);
+                } else if (action === 'copy-prompt' && currentPromptText) {
+                    copyToClipboard(currentPromptText, e.target);
+                } else if (action === 'copy-activation' && currentActivationText) {
+                    copyToClipboard(currentActivationText, e.target);
+                } else if (action === 'copy-invoice' && currentInvoiceText) {
+                    copyToClipboard(currentInvoiceText, e.target);
                 }
             });
-            
+
             // Configurar botões de copiar prompt
             promptButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
@@ -2068,25 +2092,17 @@ Escolhe ou sugere as melhores imagens para cada ad.`
                         prompt = metaPrompts[budget];
                     }
                     
+                    currentPromptText = normalizeMessageText(prompt);
+
                     // Atualizar o preview
                     promptTextElement.innerHTML = `
-                        <button class="copy-btn" id="copyPromptBtn" title="Clique para copiar">Copiar Prompt</button>
-                        ${prompt.replace(/\n/g, '<br>')}
+                        <button class="copy-btn" data-action="copy-prompt" title="Clique para copiar">Copiar Prompt</button>
+                        ${currentPromptText.replace(/\n/g, '<br>')}
                     `;
                     
                     // Copiar para clipboard
-                    copyToClipboard(prompt, this);
+                    copyToClipboard(currentPromptText, this);
                 });
-            });
-            
-            // Configurar botão de copiar prompt do preview
-            document.addEventListener('click', function(e) {
-                if (e.target && e.target.id === 'copyPromptBtn') {
-                    const promptText = promptTextElement.innerText.replace('Copiar Prompt', '').trim();
-                    if (promptText !== 'Selecione uma plataforma e orçamento acima para visualizar e copiar o prompt correspondente.') {
-                        copyToClipboard(promptText, e.target);
-                    }
-                }
             });
             
             // Configurar botão de copiar texto da campanha
@@ -2097,30 +2113,27 @@ Escolhe ou sugere as melhores imagens para cada ad.`
             
             // Configurar botões de geração de emails de ativação
             generateOneCampaignBtn.addEventListener('click', function() {
+                currentActivationText = normalizeMessageText(activationEmails.oneCampaign);
                 activationTextElement.innerHTML = `
-                    <button class="copy-btn" id="copyActivationBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
-                    ${activationEmails.oneCampaign}
+                    <button class="copy-btn" data-action="copy-activation" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${currentActivationText}
                 `;
                 
                 // Copiar automaticamente para clipboard
-                copyToClipboard(activationEmails.oneCampaign, this);
+                copyToClipboard(currentActivationText, this);
             });
             
             generateTwoCampaignsBtn.addEventListener('click', function() {
+                currentActivationText = normalizeMessageText(activationEmails.twoCampaigns);
                 activationTextElement.innerHTML = `
-                    <button class="copy-btn" id="copyActivationBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
-                    ${activationEmails.twoCampaigns}
+                    <button class="copy-btn" data-action="copy-activation" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${currentActivationText}
                 `;
                 
                 // Copiar automaticamente para clipboard
-                copyToClipboard(activationEmails.twoCampaigns, this);
+                copyToClipboard(currentActivationText, this);
             });
             
-            // Configurar botão de copiar email de ativação
-            copyActivationBtn.addEventListener('click', function() {
-                const textToCopy = activationTextElement.innerText.replace('Copiar Tudo', '').trim();
-                copyToClipboard(textToCopy, this);
-            });
             
             // Configurar botões da aba Anunciante
             generateConfirmationBtn.addEventListener('click', function() {
@@ -2194,40 +2207,38 @@ Escolhe ou sugere as melhores imagens para cada ad.`
             
             // Configurar botões da aba Faturas
             generateInvoiceBtn.addEventListener('click', function() {
+                currentInvoiceText = normalizeMessageText(invoiceEmails.fatura);
                 invoiceTextElement.innerHTML = `
-                    <button class="copy-btn" id="copyInvoiceBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
-                    ${invoiceEmails.fatura}
+                    <button class="copy-btn" data-action="copy-invoice" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${currentInvoiceText}
                 `;
                 
                 // Copiar automaticamente para clipboard
-                copyToClipboard(invoiceEmails.fatura, this);
+                copyToClipboard(currentInvoiceText, this);
             });
             
             generateConfirmationInvoiceBtn.addEventListener('click', function() {
+                currentInvoiceText = normalizeMessageText(invoiceEmails.confirmacao);
                 invoiceTextElement.innerHTML = `
-                    <button class="copy-btn" id="copyInvoiceBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
-                    ${invoiceEmails.confirmacao}
+                    <button class="copy-btn" data-action="copy-invoice" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${currentInvoiceText}
                 `;
                 
                 // Copiar automaticamente para clipboard
-                copyToClipboard(invoiceEmails.confirmacao, this);
+                copyToClipboard(currentInvoiceText, this);
             });
             
             generateThanksBtn.addEventListener('click', function() {
+                currentInvoiceText = normalizeMessageText(invoiceEmails.agradecimento);
                 invoiceTextElement.innerHTML = `
-                    <button class="copy-btn" id="copyInvoiceBtn" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
-                    ${invoiceEmails.agradecimento}
+                    <button class="copy-btn" data-action="copy-invoice" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${currentInvoiceText}
                 `;
                 
                 // Copiar automaticamente para clipboard
-                copyToClipboard(invoiceEmails.agradecimento, this);
+                copyToClipboard(currentInvoiceText, this);
             });
             
-            // Configurar botão de copiar email de fatura
-            copyInvoiceBtn.addEventListener('click', function() {
-                const textToCopy = invoiceTextElement.innerText.replace('Copiar Tudo', '').trim();
-                copyToClipboard(textToCopy, this);
-            });
             
             // Função para arredondar números
             function roundNumber(num) {
@@ -2329,20 +2340,21 @@ Escolhe ou sugere as melhores imagens para cada ad.`
                             const textToCopy = generatedText.innerText.replace('Copiar Tudo', '').trim();
                             copyToClipboard(textToCopy, copyCampaignBtn);
                         } else if (activeTab === 'prompts-tab') {
-                            const promptText = promptTextElement.innerText.replace('Copiar Prompt', '').trim();
-                            if (promptText !== 'Selecione uma plataforma e orçamento acima para visualizar e copiar o prompt correspondente.') {
-                                copyToClipboard(promptText, copyPromptBtn);
+                            if (currentPromptText) {
+                                const promptCopyButton = document.querySelector('[data-action="copy-prompt"]');
+                                copyToClipboard(currentPromptText, promptCopyButton);
                             }
                         } else if (activeTab === 'welcomes-tab') {
                             if (currentWelcomeText) {
-                                copyToClipboard(currentWelcomeText, copyWelcomeBtn);
+                                const welcomeCopyButton = document.querySelector('[data-action="copy-welcome"]');
+                                copyToClipboard(currentWelcomeText, welcomeCopyButton);
                             }
                         } else if (activeTab === 'hello-tab') {
                             // Não copia nada da aba Olá Equipa
                         } else if (activeTab === 'activation-tab') {
-                            const textToCopy = activationTextElement.innerText.replace('Copiar Tudo', '').trim();
-                            if (textToCopy !== 'Clique em um dos botões acima para gerar o email de ativação correspondente.') {
-                                copyToClipboard(textToCopy, copyActivationBtn);
+                            if (currentActivationText) {
+                                const activationCopyButton = document.querySelector('[data-action="copy-activation"]');
+                                copyToClipboard(currentActivationText, activationCopyButton);
                             }
                         } else if (activeTab === 'advertiser-tab') {
                             // Verificar qual template está visível
@@ -2357,9 +2369,9 @@ Escolhe ou sugere as melhores imagens para cada ad.`
                                 copyToClipboard(fullText, copyWarningBtn);
                             }
                         } else if (activeTab === 'invoices-tab') {
-                            const textToCopy = invoiceTextElement.innerText.replace('Copiar Tudo', '').trim();
-                            if (textToCopy !== 'Clique em um dos botões acima para gerar o email correspondente.') {
-                                copyToClipboard(textToCopy, copyInvoiceBtn);
+                            if (currentInvoiceText) {
+                                const invoiceCopyButton = document.querySelector('[data-action="copy-invoice"]');
+                                copyToClipboard(currentInvoiceText, invoiceCopyButton);
                             }
                         }
                     }
