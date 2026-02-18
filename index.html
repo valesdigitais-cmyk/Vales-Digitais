@@ -21,6 +21,129 @@
             color: #000000;
             max-width: 1000px;
             margin: 0 auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 999;
+            border: 1px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e7e7e7;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3,
+        body.dark-mode h4,
+        body.dark-mode label,
+        body.dark-mode .hello-message,
+        body.dark-mode .update-title,
+        body.dark-mode .update-subtitle,
+        body.dark-mode .update-list li,
+        body.dark-mode .budget-price {
+            color: #f3f3f3;
+        }
+
+        body.dark-mode .tabs,
+        body.dark-mode h1,
+        body.dark-mode .footer,
+        body.dark-mode .prompt-section,
+        body.dark-mode .template-container,
+        body.dark-mode .welcome-section h3 {
+            border-color: #333333;
+        }
+
+        body.dark-mode .calculator-section,
+        body.dark-mode .text-section,
+        body.dark-mode .prompts-section,
+        body.dark-mode .welcome-section,
+        body.dark-mode .activation-section,
+        body.dark-mode .advertiser-section,
+        body.dark-mode .invoices-section,
+        body.dark-mode .hello-section,
+        body.dark-mode .budget-card,
+        body.dark-mode .update-box {
+            background-color: #1b1b1b;
+            border-color: #333333;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode .result-container,
+        body.dark-mode .generated-text,
+        body.dark-mode .prompt-text,
+        body.dark-mode .welcome-text,
+        body.dark-mode .activation-text,
+        body.dark-mode .template-text,
+        body.dark-mode .invoice-text,
+        body.dark-mode .formula,
+        body.dark-mode .future-updates {
+            background-color: #242424;
+            border-color: #3a3a3a;
+            color: #ebebeb;
+        }
+
+        body.dark-mode .tab-btn,
+        body.dark-mode .platform-btn {
+            background-color: #2a2a2a;
+            color: #d7d7d7;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn:hover,
+        body.dark-mode .platform-btn:hover {
+            background-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn.active,
+        body.dark-mode .platform-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode input[type="number"],
+        body.dark-mode input[type="email"],
+        body.dark-mode input[type="text"] {
+            background-color: #1f1f1f;
+            color: #f3f3f3;
+            border-color: #3f3f3f;
+        }
+
+        body.dark-mode .result-label,
+        body.dark-mode .budget-features li,
+        body.dark-mode .shortcut-info,
+        body.dark-mode .footer {
+            color: #bdbdbd;
+        }
+
+        body.dark-mode .theme-toggle-btn {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode .theme-toggle-btn:hover {
+            background-color: #ffffff;
+            color: #121212;
         }
         
         .tabs-container {
@@ -648,6 +771,7 @@
     </style>
 </head>
 <body>
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">🌙 Modo noturno</button>
     <h1>Equipa Vales Digitais</h1>
     
     <div class="tabs-container">
@@ -1191,6 +1315,30 @@ Equipa Vales Digitais
             const generateThanksBtn = document.getElementById('generateThanksBtn');
             const invoiceTextElement = document.getElementById('invoiceText');
             const copyInvoiceBtn = document.getElementById('copyInvoiceBtn');
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+            function updateThemeButtonLabel() {
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggleBtn.textContent = '☀️ Modo claro';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo claro');
+                } else {
+                    themeToggleBtn.textContent = '🌙 Modo noturno';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo noturno');
+                }
+            }
+
+            const savedTheme = localStorage.getItem('theme-preference');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            updateThemeButtonLabel();
+
+            themeToggleBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                localStorage.setItem('theme-preference', currentTheme);
+                updateThemeButtonLabel();
+            });
             
             // Emails de Ativação
             const activationEmails = {
