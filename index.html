@@ -2166,40 +2166,90 @@ Para cada categoria:
                     .trim();
             }
 
+            function escapeHtml(text) {
+                return text
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function generateClipboardHtml(text) {
+                const normalizedText = normalizeMessageText(text);
+                if (!normalizedText) {
+                    return '';
+                }
+
+                const withStrongTags = escapeHtml(normalizedText)
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+                const htmlBody = withStrongTags
+                    .split(/\n{2,}/)
+                    .map(paragraph => paragraph.replace(/\n/g, '<br>'))
+                    .join('<br><br>');
+
+                return `<div style="font-family: 'Google Sans', Arial, sans-serif; font-size: 12px;">${htmlBody}</div>`;
+            }
+
+            function setCopyFeedback(buttonElement, successText = '✓ Copiado!') {
+                if (!buttonElement) {
+                    return;
+                }
+
+                const originalText = buttonElement.textContent;
+                buttonElement.textContent = successText;
+                buttonElement.classList.add('copied');
+
+                setTimeout(() => {
+                    buttonElement.textContent = originalText;
+                    buttonElement.classList.remove('copied');
+                }, 1500);
+            }
+
             function copyToClipboard(text, buttonElement = null) {
-                navigator.clipboard.writeText(text)
-                    .then(() => {
-                        if (buttonElement) {
-                            const originalText = buttonElement.textContent;
-                            buttonElement.textContent = '✓ Copiado!';
-                            buttonElement.classList.add('copied');
-                            
-                            setTimeout(() => {
-                                buttonElement.textContent = originalText;
-                                buttonElement.classList.remove('copied');
-                            }, 1500);
-                        }
-                    })
+                const normalizedText = normalizeMessageText(text);
+                const htmlText = generateClipboardHtml(normalizedText);
+
+                if (!normalizedText) {
+                    return;
+                }
+
+                const canWriteHtml = typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write;
+
+                if (canWriteHtml) {
+                    const clipboardItem = new ClipboardItem({
+                        'text/plain': new Blob([normalizedText], { type: 'text/plain' }),
+                        'text/html': new Blob([htmlText], { type: 'text/html' })
+                    });
+
+                    navigator.clipboard.write([clipboardItem])
+                        .then(() => setCopyFeedback(buttonElement))
+                        .catch(err => {
+                            console.error('Erro ao copiar HTML: ', err);
+                            const textArea = document.createElement('textarea');
+                            textArea.value = normalizedText;
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textArea);
+                            setCopyFeedback(buttonElement, 'Copiado!');
+                        });
+
+                    return;
+                }
+
+                navigator.clipboard.writeText(normalizedText)
+                    .then(() => setCopyFeedback(buttonElement))
                     .catch(err => {
                         console.error('Erro ao copiar: ', err);
-                        // Fallback
                         const textArea = document.createElement('textarea');
-                        textArea.value = text;
+                        textArea.value = normalizedText;
                         document.body.appendChild(textArea);
                         textArea.select();
                         document.execCommand('copy');
                         document.body.removeChild(textArea);
-                        
-                        if (buttonElement) {
-                            const originalText = buttonElement.textContent;
-                            buttonElement.textContent = 'Copiado!';
-                            buttonElement.classList.add('copied');
-                            
-                            setTimeout(() => {
-                                buttonElement.textContent = originalText;
-                                buttonElement.classList.remove('copied');
-                            }, 1500);
-                        }
+                        setCopyFeedback(buttonElement, 'Copiado!');
                     });
             }
             
