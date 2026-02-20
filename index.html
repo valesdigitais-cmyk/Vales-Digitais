@@ -2599,7 +2599,9 @@ Para cada categoria:
 ${total}`;
                 });
 
-                const allTotalsText = `${divider}\n${lines.join('\n')}`;
+                const allTotalsText = `${divider}
+${lines.join('
+')}`;
 
                 copyTextWithFallback(allTotalsText)
                     .then(() => {
