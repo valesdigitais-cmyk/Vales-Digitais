@@ -2595,13 +2595,10 @@ Para cada categoria:
                 const baseValues = [500, 1000, 1500, 2000];
                 const lines = baseValues.map(value => {
                     const total = formatEuro((value * 0.55) / divider);
-                    return `${value}€ × 55% ÷ ${divider}:
-${total}`;
+                    return `${value}€ × 55% ÷ ${divider}:\n${total}`;
                 });
 
-                const allTotalsText = `${divider}
-${lines.join('
-')}`;
+                const allTotalsText = `${divider}\n${lines.join('\n')}`;
 
                 copyTextWithFallback(allTotalsText)
                     .then(() => {
