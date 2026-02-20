@@ -1182,21 +1182,23 @@ Equipa Leadzai
                 <div class="result-container" id="fiftyFiveContainer" style="display: block; margin-top: 15px;">
                     <div class="result-item">
                         <span class="result-label">500€ × 55% ÷ <span id="selectedDivider">1</span>:</span>
-                        <span class="result-value" id="calc500">275.00€</span>
+                        <span class="result-value copyable-total" id="calc500" title="Clique para copiar o total">275.00€</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">1000€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
-                        <span class="result-value" id="calc1000">550.00€</span>
+                        <span class="result-value copyable-total" id="calc1000" title="Clique para copiar o total">550.00€</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">1500€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
-                        <span class="result-value" id="calc1500">825.00€</span>
+                        <span class="result-value copyable-total" id="calc1500" title="Clique para copiar o total">825.00€</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">2000€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
                         <span class="result-value copyable-total" id="calc2000" title="Clique para copiar o total">1100.00€</span>
                     </div>
                 </div>
+
+                <button class="calculate-btn" id="copyAllTotalsBtn" style="margin-top: 15px;">Copiar todos os totais</button>
                 
                 <p class="shortcut-info">Pressione Enter no campo numérico para calcular rapidamente</p>
             </div>
@@ -1334,6 +1336,8 @@ Equipa Leadzai
             const calc1000Element = document.getElementById('calc1000');
             const calc1500Element = document.getElementById('calc1500');
             const calc2000Element = document.getElementById('calc2000');
+            const copyAllTotalsBtn = document.getElementById('copyAllTotalsBtn');
+            const copyableTotals = document.querySelectorAll('.copyable-total');
             
             // Elementos da aba Prompts
             const platformButtons = document.querySelectorAll('#prompts-tab .platform-btn');
@@ -2510,10 +2514,10 @@ Para cada categoria:
                 });
             }
 
-            function flashCopiedTotal() {
-                calc2000Element.classList.add('copied');
+            function flashCopiedTotal(element) {
+                element.classList.add('copied');
                 setTimeout(() => {
-                    calc2000Element.classList.remove('copied');
+                    element.classList.remove('copied');
                 }, 1000);
             }
 
@@ -2572,15 +2576,39 @@ Para cada categoria:
 
             dividerInput.addEventListener('change', calculateFiftyFive);
 
-            calc2000Element.addEventListener('click', function() {
-                const totalValue = calc2000Element.textContent.replace('€', '').trim();
+            copyableTotals.forEach(totalElement => {
+                totalElement.addEventListener('click', function() {
+                    const totalValue = totalElement.textContent.replace('€', '').trim();
 
-                copyTextWithFallback(totalValue)
+                    copyTextWithFallback(totalValue)
+                        .then(() => {
+                            flashCopiedTotal(totalElement);
+                        })
+                        .catch(err => {
+                            console.error('Erro ao copiar o total: ', err);
+                        });
+                });
+            });
+
+            copyAllTotalsBtn.addEventListener('click', function() {
+                const divider = parseInt(dividerInput.value, 10) || 1;
+                const baseValues = [500, 1000, 1500, 2000];
+                const lines = baseValues.map(value => {
+                    const total = formatEuro((value * 0.55) / divider);
+                    return `${value}€ × 55% ÷ ${divider}:
+${total}`;
+                });
+
+                const allTotalsText = `${divider}
+${lines.join('
+')}`;
+
+                copyTextWithFallback(allTotalsText)
                     .then(() => {
-                        flashCopiedTotal();
+                        flashCopiedButton(copyAllTotalsBtn, 'Copiado!');
                     })
                     .catch(err => {
-                        console.error('Erro ao copiar o total: ', err);
+                        console.error('Erro ao copiar todos os totais: ', err);
                     });
             });
             
