@@ -369,6 +369,15 @@
             font-weight: 700;
             font-size: 15px;
         }
+
+        .copyable-total {
+            cursor: pointer;
+            transition: color 0.25s ease;
+        }
+
+        .copyable-total.copied {
+            color: #0f9d58;
+        }
         
         .formula {
             background-color: #f0f0f0;
@@ -1173,19 +1182,19 @@ Equipa Leadzai
                 <div class="result-container" id="fiftyFiveContainer" style="display: block; margin-top: 15px;">
                     <div class="result-item">
                         <span class="result-label">500€ × 55% ÷ <span id="selectedDivider">1</span>:</span>
-                        <span class="result-value" id="calc500">275,00€</span>
+                        <span class="result-value" id="calc500">275.00€</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">1000€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
-                        <span class="result-value" id="calc1000">550,00€</span>
+                        <span class="result-value" id="calc1000">550.00€</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">1500€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
-                        <span class="result-value" id="calc1500">825,00€</span>
+                        <span class="result-value" id="calc1500">825.00€</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">2000€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
-                        <span class="result-value" id="calc2000">1100,00€</span>
+                        <span class="result-value copyable-total" id="calc2000" title="Clique para copiar o total">1100.00€</span>
                     </div>
                 </div>
                 
@@ -2453,19 +2462,59 @@ Para cada categoria:
                 return Math.round(num);
             }
             
-            // Função para formatar números no formato português
+            // Função para formatar números com separador decimal por ponto
             function formatNumber(num) {
-                return num.toLocaleString('pt-PT', {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                });
+                return String(Math.round(num));
             }
 
             function formatEuro(num) {
-                return `${num.toLocaleString('pt-PT', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                })}€`;
+                return `${Number(num).toFixed(2)}€`;
+            }
+
+            function copyTextWithFallback(textToCopy) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(textToCopy)
+                        .catch(() => {
+                            const textArea = document.createElement('textarea');
+                            textArea.value = textToCopy;
+                            textArea.style.position = 'fixed';
+                            textArea.style.opacity = '0';
+                            document.body.appendChild(textArea);
+                            textArea.focus();
+                            textArea.select();
+                            const copied = document.execCommand('copy');
+                            document.body.removeChild(textArea);
+
+                            if (!copied) {
+                                throw new Error('Não foi possível copiar.');
+                            }
+                        });
+                }
+
+                return new Promise((resolve, reject) => {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = textToCopy;
+                    textArea.style.position = 'fixed';
+                    textArea.style.opacity = '0';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    const copied = document.execCommand('copy');
+                    document.body.removeChild(textArea);
+
+                    if (copied) {
+                        resolve();
+                    } else {
+                        reject(new Error('Não foi possível copiar.'));
+                    }
+                });
+            }
+
+            function flashCopiedTotal() {
+                calc2000Element.classList.add('copied');
+                setTimeout(() => {
+                    calc2000Element.classList.remove('copied');
+                }, 1000);
             }
 
             function calculateFiftyFive() {
@@ -2522,6 +2571,18 @@ Para cada categoria:
             });
 
             dividerInput.addEventListener('change', calculateFiftyFive);
+
+            calc2000Element.addEventListener('click', function() {
+                const totalValue = calc2000Element.textContent.replace('€', '').trim();
+
+                copyTextWithFallback(totalValue)
+                    .then(() => {
+                        flashCopiedTotal();
+                    })
+                    .catch(err => {
+                        console.error('Erro ao copiar o total: ', err);
+                    });
+            });
             
             // Event listeners para Enter nos emails da aba Anunciante
             confirmationEmailInput.addEventListener('keyup', function(event) {
