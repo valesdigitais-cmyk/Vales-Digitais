@@ -696,6 +696,71 @@
             border-bottom: 1px solid #e0e0e0;
             padding-bottom: 5px;
         }
+
+        .template-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .template-card {
+            border: 1px solid #e0e0e0;
+            padding: 16px;
+            margin-bottom: 16px;
+            background: #fff;
+        }
+
+        .template-card h3 {
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .template-card textarea {
+            width: 100%;
+            min-height: 320px;
+            border: 1px solid #d0d0d0;
+            padding: 10px;
+            resize: vertical;
+            background: #fff;
+            color: #000;
+            line-height: 1.45;
+            font-family: 'Google Sans', Arial, sans-serif;
+            font-size: 11px;
+        }
+
+        .template-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .toast {
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            font-size: 10px;
+            color: #333;
+            min-width: 70px;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        body.dark-mode .template-card {
+            background: #1b1b1b;
+            border-color: #333;
+        }
+
+        body.dark-mode .template-card textarea {
+            background: #242424;
+            border-color: #3a3a3a;
+            color: #ebebeb;
+        }
+
+        body.dark-mode .toast {
+            color: #bdbdbd;
+        }
     </style>
 </head>
 <body>
@@ -788,6 +853,76 @@ IMPORTANTE: Ambas as partes do código são necessárias para o funcionamento co
 
 Com os melhores cumprimentos,
 Equipa Leadzai
+                </div>
+            </div>
+
+            <div class="template-section">
+                <h2>Templates</h2>
+
+                <div class="template-card">
+                    <h3>📋 Briefing para campanha de Leads</h3>
+                    <textarea id="leadsBriefingTemplate">📋 Briefing para campanha de Leads
+1. Informação da Empresa
+Nome Comercial (Marca): xxx
+Nome Legal/Empresa: xxx
+Site: x
+Contacto: +351 xxx
+
+2. Orçamento e Duração
+Orçamento Total Disponível: xxx €
+Duração da Campanha: x Meses
+Objetivo da Campanha: Geração de Leads
+
+3. Público-Alvo (Persona)
+Perfil Demográfico: x
+Estilo de Vida/Hábitos: x
+Interesses: x
+
+4. Segmentação Geográfica
+xxx
+
+5. Detalhes da Campanhas
+xxx
+
+6. Notas
+xxx</textarea>
+                    <div class="template-actions">
+                        <button class="copy-btn" id="copyLeadsBriefingTemplateBtn">Copiar Briefing</button>
+                        <button class="copy-btn" id="resetLeadsBriefingTemplateBtn">Reset</button>
+                        <span class="toast" id="leadsBriefingToast">Copiado ✅</span>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <h3>🧩 Script (GTM)</h3>
+                    <textarea id="leadsScriptTemplate">Script
+
+Caro cliente,
+
+Conforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.
+
+CÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO
+Este código deve ser instalado em TODAS as páginas do website:
+
+---
+1ª PARTE - Colar no <head> (o mais alto possível, idealmente como primeiro item):
+xxx
+
+---
+2ª PARTE - Colar imediatamente após a abertura da tag <body>:
+xxx
+
+NOTA: Algumas plataformas de hospedagem de websites não exigem a instalação dos scripts completos no código do site, necessitando apenas do ID do Google Tag Manager. Aqui está o seu ID GTM: xxx
+
+IMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto. O código deve ser implementado em todas as páginas do site. Após a instalação, podemos prosseguir com a configuração das tags e eventos. Fico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.
+
+Com os melhores cumprimentos,
+Equipa Leadzai</textarea>
+                    <div class="template-actions">
+                        <button class="copy-btn" id="copyLeadsScriptTemplateBtn">Copiar Script</button>
+                        <button class="copy-btn" id="resetLeadsScriptTemplateBtn">Reset</button>
+                        <span class="toast" id="leadsScriptToast">Copiado ✅</span>
+                    </div>
                 </div>
             </div>
 
@@ -1334,6 +1469,14 @@ Equipa Leadzai
             const leadsScriptTextElement = document.getElementById('leadsScriptText');
             const copyLeadsBriefingBtn = document.querySelector('[data-action="copy-leads-briefing"]');
             const copyLeadsScriptBtn = document.querySelector('[data-action="copy-leads-script"]');
+            const leadsBriefingTemplate = document.getElementById('leadsBriefingTemplate');
+            const leadsScriptTemplate = document.getElementById('leadsScriptTemplate');
+            const copyLeadsBriefingTemplateBtn = document.getElementById('copyLeadsBriefingTemplateBtn');
+            const resetLeadsBriefingTemplateBtn = document.getElementById('resetLeadsBriefingTemplateBtn');
+            const copyLeadsScriptTemplateBtn = document.getElementById('copyLeadsScriptTemplateBtn');
+            const resetLeadsScriptTemplateBtn = document.getElementById('resetLeadsScriptTemplateBtn');
+            const leadsBriefingToast = document.getElementById('leadsBriefingToast');
+            const leadsScriptToast = document.getElementById('leadsScriptToast');
             
             // Elementos da aba Faturas
             const generateInvoiceBtn = document.getElementById('generateInvoiceBtn');
@@ -2429,6 +2572,57 @@ Para cada categoria:
                     const scriptText = getTemplateText(leadsScriptTextElement);
                     currentLeadsText = scriptText;
                     copyToClipboard(scriptText, this);
+                });
+            }
+
+            const initialLeadsBriefingTemplate = leadsBriefingTemplate ? leadsBriefingTemplate.value : '';
+            const initialLeadsScriptTemplate = leadsScriptTemplate ? leadsScriptTemplate.value : '';
+
+            function showTemplateToast(toastElement) {
+                if (!toastElement) {
+                    return;
+                }
+
+                toastElement.classList.add('show');
+                setTimeout(() => {
+                    toastElement.classList.remove('show');
+                }, 800);
+            }
+
+            async function copyTemplateTextarea(textarea, toastElement) {
+                if (!textarea) {
+                    return;
+                }
+
+                try {
+                    await navigator.clipboard.writeText(textarea.value);
+                    showTemplateToast(toastElement);
+                } catch (error) {
+                    console.error('Erro ao copiar template:', error);
+                }
+            }
+
+            if (copyLeadsBriefingTemplateBtn) {
+                copyLeadsBriefingTemplateBtn.addEventListener('click', function() {
+                    copyTemplateTextarea(leadsBriefingTemplate, leadsBriefingToast);
+                });
+            }
+
+            if (copyLeadsScriptTemplateBtn) {
+                copyLeadsScriptTemplateBtn.addEventListener('click', function() {
+                    copyTemplateTextarea(leadsScriptTemplate, leadsScriptToast);
+                });
+            }
+
+            if (resetLeadsBriefingTemplateBtn) {
+                resetLeadsBriefingTemplateBtn.addEventListener('click', function() {
+                    leadsBriefingTemplate.value = initialLeadsBriefingTemplate;
+                });
+            }
+
+            if (resetLeadsScriptTemplateBtn) {
+                resetLeadsScriptTemplateBtn.addEventListener('click', function() {
+                    leadsScriptTemplate.value = initialLeadsScriptTemplate;
                 });
             }
             
