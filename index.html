@@ -11,7 +11,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Google Sans', Arial, sans-serif;
-            font-size: 10.5px;
+            font-size: 11px;
         }
         
         body {
@@ -72,6 +72,7 @@
         body.dark-mode .text-section,
         body.dark-mode .prompts-section,
         body.dark-mode .welcome-section,
+        body.dark-mode .leads-section,
         body.dark-mode .activation-section,
         body.dark-mode .advertiser-section,
         body.dark-mode .invoices-section,
@@ -242,7 +243,7 @@
             font-weight: 600;
         }
         
-        .calculator-section, .text-section, .prompts-section, .welcome-section, .activation-section, .advertiser-section, .invoices-section {
+        .calculator-section, .text-section, .prompts-section, .welcome-section, .leads-section, .activation-section, .advertiser-section, .invoices-section {
             background-color: #ffffff;
             border-radius: 0;
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
@@ -705,10 +706,82 @@
         <div class="tabs">
             <button class="tab-btn active" data-tab="welcomes-tab">Welcomes</button>
             <button class="tab-btn" data-tab="advertiser-tab">Anunciante</button>
+            <button class="tab-btn" data-tab="leads-tab">Leads</button>
             <button class="tab-btn" data-tab="prompts-tab">Prompts</button>
             <button class="tab-btn" data-tab="calculator-tab">Calculadora</button>
             <button class="tab-btn" data-tab="activation-tab">Ativação</button>
             <button class="tab-btn" data-tab="invoices-tab">Faturas</button>
+        </div>
+    </div>
+
+    <!-- Aba Leads -->
+    <div id="leads-tab" class="tab-content">
+        <div class="leads-section">
+            <h2>Templates de Leads</h2>
+
+            <div class="template-container">
+                <h3>1. Briefing para Campanha de Leads</h3>
+                <div class="template-text" id="leadsBriefingText">
+                    <button class="copy-btn" data-action="copy-leads-briefing" title="Clique para copiar ou pressione Ctrl+C">Copiar Briefing</button>
+📋 Briefing para campanha de Leads
+_______________________________
+1. Informação da Empresa
+Nome Comercial (Marca):
+Nome Legal/Empresa:
+Site:
+Contacto: +351
+
+2. Orçamento e Duração
+Orçamento Total Disponível: ___________€
+Duração da Campanha: ___ Meses
+Objetivo da Campanha: Geração de Leads
+
+3. Público-Alvo (Persona)
+Perfil Demográfico:
+Estilo de Vida/Hábitos:
+Interesses:
+
+4. Segmentação Geográfica
+________________________________
+
+5. Detalhes da Campanhas
+________________________________
+
+6. Notas
+_________________________________
+                </div>
+            </div>
+
+            <div class="template-container">
+                <h3>2. Script de Implementação GTM</h3>
+                <div class="template-text" id="leadsScriptText">
+                    <button class="copy-btn" data-action="copy-leads-script" title="Clique para copiar ou pressione Ctrl+C">Copiar Script</button>
+Script
+
+Caro cliente,
+
+Conforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.
+
+CÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO
+Este código deve ser instalado em TODAS as páginas do website:
+---
+1ª PARTE - Colar no &lt;head&gt; (o mais alto possível, idealmente como primeiro item):
+__________________________________________________________________
+
+---
+2ª PARTE - Colar imediatamente após a abertura da tag &lt;body&gt;:
+___________________________________________________________________
+
+NOTA: Algumas plataformas de hospedagem de websites não exigem a instalação dos scripts completos no código do site, necessitando apenas do ID do Google Tag Manager. Aqui está o seu ID GTM: __________________
+
+IMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto. O código deve ser implementado em todas as páginas do site. Após a instalação, podemos prosseguir com a configuração das tags e eventos. Fico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.
+
+Com os melhores cumprimentos,
+Equipa Leadzai
+                </div>
+            </div>
+
+            <p class="shortcut-info">Pressione Ctrl+C para copiar o template selecionado ou clique no botão de cópia.</p>
         </div>
     </div>
 
@@ -1229,6 +1302,7 @@ Equipa Leadzai
             let currentPromptText = '';
             let currentActivationText = '';
             let currentInvoiceText = '';
+            let currentLeadsText = '';
             
             // Elementos da aba Ativação
             const generateOneCampaignBtn = document.getElementById('generateOneCampaignBtn');
@@ -1244,6 +1318,12 @@ Equipa Leadzai
             const copyWarningBtn = document.querySelector('[data-action="copy-warning"]');
             const confirmationEmailPlaceholder = document.getElementById('confirmationEmailPlaceholder');
             const warningEmailPlaceholder = document.getElementById('warningEmailPlaceholder');
+
+            // Elementos da aba Leads
+            const leadsBriefingTextElement = document.getElementById('leadsBriefingText');
+            const leadsScriptTextElement = document.getElementById('leadsScriptText');
+            const copyLeadsBriefingBtn = document.querySelector('[data-action="copy-leads-briefing"]');
+            const copyLeadsScriptBtn = document.querySelector('[data-action="copy-leads-script"]');
             
             // Elementos da aba Faturas
             const generateInvoiceBtn = document.getElementById('generateInvoiceBtn');
@@ -2076,7 +2156,21 @@ Para cada categoria:
                     .map(paragraph => paragraph.replace(/\n/g, '<br>'))
                     .join('<br><br>');
 
-                return `<div style="font-family: 'Google Sans', Arial, sans-serif; font-size: 12px;">${htmlBody}</div>`;
+                return `<div style="font-family: 'Google Sans', Arial, sans-serif; font-size: 11px;">${htmlBody}</div>`;
+            }
+
+            function getTemplateText(element) {
+                if (!element) {
+                    return '';
+                }
+
+                const clone = element.cloneNode(true);
+                const copyButton = clone.querySelector('.copy-btn');
+                if (copyButton) {
+                    copyButton.remove();
+                }
+
+                return normalizeMessageText(clone.innerText);
             }
 
             function setCopyFeedback(buttonElement, successText = '✓ Copiado!') {
@@ -2311,6 +2405,22 @@ Para cada categoria:
                 const fullText = advertiserTemplates.warning(email);
                 copyToClipboard(fullText, this);
             });
+
+            if (copyLeadsBriefingBtn) {
+                copyLeadsBriefingBtn.addEventListener('click', function() {
+                    const briefingText = getTemplateText(leadsBriefingTextElement);
+                    currentLeadsText = briefingText;
+                    copyToClipboard(briefingText, this);
+                });
+            }
+
+            if (copyLeadsScriptBtn) {
+                copyLeadsScriptBtn.addEventListener('click', function() {
+                    const scriptText = getTemplateText(leadsScriptTextElement);
+                    currentLeadsText = scriptText;
+                    copyToClipboard(scriptText, this);
+                });
+            }
             
             // Configurar botões da aba Faturas
             generateInvoiceBtn.addEventListener('click', function() {
@@ -2534,6 +2644,11 @@ Para cada categoria:
                             } else if (warningEmail) {
                                 const fullText = advertiserTemplates.warning(warningEmail);
                                 copyToClipboard(fullText, copyWarningBtn);
+                            }
+                        } else if (activeTab === 'leads-tab') {
+                            if (currentLeadsText) {
+                                const leadsCopyButton = document.querySelector('[data-action="copy-leads-script"]');
+                                copyToClipboard(currentLeadsText, leadsCopyButton);
                             }
                         } else if (activeTab === 'invoices-tab') {
                             if (currentInvoiceText) {
