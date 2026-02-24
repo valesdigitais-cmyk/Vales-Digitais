@@ -725,12 +725,13 @@
         }
         
         .update-box {
-            background-color: #f9f9f9;
+            background-color: #f5f5f5;
             border-radius: 0;
-            padding: 25px;
+            padding: 35px 20px;
             margin: 25px 0;
             border: 1px solid #e0e0e0;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: none;
+            text-align: center;
         }
         
         .update-title {
@@ -751,39 +752,49 @@
         .update-list {
             list-style-type: none;
             padding-left: 0;
-            margin: 15px 0;
-        }
-        
-        .update-list li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-            font-size: 13px;
-            color: #333;
-        }
-        
-        .update-list li:before {
-            content: "•";
-            position: absolute;
-            left: 10px;
-            color: #000;
-            font-size: 16px;
-        }
-        
-        .update-list li.no-dot {
-            padding-left: 0;
+            margin: 18px 0;
         }
 
-        .update-list li.no-dot:before {
-            content: none;
+        .update-list li {
+            font-size: 13px;
+            color: #111;
+            line-height: 1.35;
+            margin: 9px 0;
+        }
+
+        .update-list li strong {
+            display: block;
+            font-size: 35px;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .update-list li span {
+            display: block;
+            font-size: 31px;
+            color: #111;
+            margin-top: 2px;
         }
         
         .future-updates {
-            background-color: #f0f8ff;
-            border-left: 4px solid #0066cc;
-            padding: 15px;
-            margin: 20px 0;
+            background-color: transparent;
+            border-left: none;
+            padding: 0;
+            margin: 28px 0 0;
             border-radius: 0;
+            font-size: 38px;
+            line-height: 1.35;
+            color: #111;
+            text-align: center;
+        }
+
+        .future-updates strong {
+            font-size: 42px;
+        }
+
+        .future-updates .name {
+            display: inline-block;
+            margin-top: 6px;
         }
     </style>
 </head>
@@ -809,19 +820,19 @@
             <div class="update-box">
                 <div class="update-title">🚀 UPDATE 3.0 já chegou!</div>
                 <ul class="update-list">
-                    <li class="no-dot"><strong>🎨 Mais templates</strong> — porque personalizar é tudo!</li>
-                    <li class="no-dot"><strong>🧮 Novas ferramentas de cálculo</strong> — agora a matemática ainda mais fácil</li>
-                    <li class="no-dot"><strong>⚡ Prompts otimizados</strong> — respostas mais rápidas e certeiras</li>
-                    <li class="no-dot"><strong>📝 Textos formatados como deve ser</strong> — mais clean, menos confuso</li>
-                    <li class="no-dot"><strong>🎛️ Ajustes de design</strong> — ficou ainda mais clean</li>
-                    <li class="no-dot"><strong>🌙 Modo Noturno</strong> — porque há quem trabalhe até tarde</li>
+                    <li><strong>🎨 Mais templates</strong><span>porque personalizar é tudo!</span></li>
+                    <li><strong>🧮 Novas ferramentas de cálculo</strong><span>agora a matemática ainda mais fácil</span></li>
+                    <li><strong>⚡ Prompts otimizados</strong><span>respostas mais rápidas e certeiras</span></li>
+                    <li><strong>📝 Textos formatados como deve ser</strong><span>mais clean, menos confuso</span></li>
+                    <li><strong>🎛️ Ajustes de design</strong><span>ficou ainda mais clean</span></li>
+                    <li><strong>🌙 Modo Noturno</strong><span>porque há quem trabalhe até tarde</span></li>
                 </ul>
 
                 <div class="future-updates">
-                    💻 Se encontrarem algum erro, falem comigo. É que… não há mais ninguém.<br>
-                    Da vossa suporte, dev e a vítima.<br>
-                    Com carinho (e sono),<br>
-                    Constança 💕
+                    💻 <strong>Se encontrarem algum erro, digam-me só a mim,</strong> por que não há mais<br>
+                    ninguém para dizer. 💻<br><br>
+                    Da vossa Dev solidaria,<br>
+                    <span class="name">Constança 💕</span>
                 </div>
             </div>
         </div>
