@@ -55,10 +55,6 @@
         body.dark-mode h3,
         body.dark-mode h4,
         body.dark-mode label,
-        body.dark-mode .hello-message,
-        body.dark-mode .update-title,
-        body.dark-mode .update-subtitle,
-        body.dark-mode .update-list li,
         body.dark-mode .budget-price {
             color: #f3f3f3;
         }
@@ -79,9 +75,7 @@
         body.dark-mode .activation-section,
         body.dark-mode .advertiser-section,
         body.dark-mode .invoices-section,
-        body.dark-mode .hello-section,
-        body.dark-mode .budget-card,
-        body.dark-mode .update-box {
+        body.dark-mode .budget-card {
             background-color: #1b1b1b;
             border-color: #333333;
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
@@ -94,8 +88,7 @@
         body.dark-mode .activation-text,
         body.dark-mode .template-text,
         body.dark-mode .invoice-text,
-        body.dark-mode .formula,
-        body.dark-mode .future-updates {
+        body.dark-mode .formula {
             background-color: #242424;
             border-color: #3a3a3a;
             color: #ebebeb;
@@ -256,16 +249,7 @@
             padding: 30px;
             border: 1px solid #e0e0e0;
         }
-        
-        .hello-section {
-            background-color: #ffffff;
-            border-radius: 0;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-            border: 1px solid #e0e0e0;
-            text-align: center;
-        }
-        
+                
         .input-group {
             margin-bottom: 25px;
         }
@@ -711,91 +695,6 @@
             border-bottom: 1px solid #e0e0e0;
             padding-bottom: 5px;
         }
-        
-        .hello-message {
-            font-size: 14px;
-            line-height: 1.8;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        
-        .emoji {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        
-        .update-box {
-            background-color: #f5f5f5;
-            border-radius: 0;
-            padding: 35px 20px;
-            margin: 25px 0;
-            border: 1px solid #e0e0e0;
-            box-shadow: none;
-            text-align: center;
-        }
-        
-        .update-title {
-            color: #000;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .update-subtitle {
-            color: #555;
-            font-size: 14px;
-            font-weight: 600;
-            margin: 20px 0 10px 0;
-        }
-        
-        .update-list {
-            list-style-type: none;
-            padding-left: 0;
-            margin: 18px 0;
-        }
-
-        .update-list li {
-            font-size: 13px;
-            color: #111;
-            line-height: 1.35;
-            margin: 9px 0;
-        }
-
-        .update-list li strong {
-            display: block;
-            font-size: 35px;
-            font-weight: 700;
-            line-height: 1.1;
-        }
-
-        .update-list li span {
-            display: block;
-            font-size: 31px;
-            color: #111;
-            margin-top: 2px;
-        }
-        
-        .future-updates {
-            background-color: transparent;
-            border-left: none;
-            padding: 0;
-            margin: 28px 0 0;
-            border-radius: 0;
-            font-size: 38px;
-            line-height: 1.35;
-            color: #111;
-            text-align: center;
-        }
-
-        .future-updates strong {
-            font-size: 42px;
-        }
-
-        .future-updates .name {
-            display: inline-block;
-            margin-top: 6px;
-        }
     </style>
 </head>
 <body>
@@ -804,8 +703,7 @@
     
     <div class="tabs-container">
         <div class="tabs">
-            <button class="tab-btn active" data-tab="hello-tab">Olá colegas</button>
-            <button class="tab-btn" data-tab="welcomes-tab">Welcomes</button>
+            <button class="tab-btn active" data-tab="welcomes-tab">Welcomes</button>
             <button class="tab-btn" data-tab="advertiser-tab">Anunciante</button>
             <button class="tab-btn" data-tab="prompts-tab">Prompts</button>
             <button class="tab-btn" data-tab="calculator-tab">Calculadora</button>
@@ -813,33 +711,9 @@
             <button class="tab-btn" data-tab="invoices-tab">Faturas</button>
         </div>
     </div>
-    
-    <!-- Aba Olá colegas -->
-    <div id="hello-tab" class="tab-content active">
-        <div class="hello-section">
-            <div class="update-box">
-                <div class="update-title">🚀 UPDATE 3.0 já chegou!</div>
-                <ul class="update-list">
-                    <li><strong>🎨 Mais templates</strong><span>porque personalizar é tudo!</span></li>
-                    <li><strong>🧮 Novas ferramentas de cálculo</strong><span>agora a matemática ainda mais fácil</span></li>
-                    <li><strong>⚡ Prompts otimizados</strong><span>respostas mais rápidas e certeiras</span></li>
-                    <li><strong>📝 Textos formatados como deve ser</strong><span>mais clean, menos confuso</span></li>
-                    <li><strong>🎛️ Ajustes de design</strong><span>ficou ainda mais clean</span></li>
-                    <li><strong>🌙 Modo Noturno</strong><span>porque há quem trabalhe até tarde</span></li>
-                </ul>
 
-                <div class="future-updates">
-                    💻 <strong>Se encontrarem algum erro, digam-me só a mim,</strong> por que não há mais<br>
-                    ninguém para dizer. 💻<br><br>
-                    Da vossa Dev solidaria,<br>
-                    <span class="name">Constança 💕</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     <!-- Aba Welcomes -->
-    <div id="welcomes-tab" class="tab-content">
+    <div id="welcomes-tab" class="tab-content active">
         <div class="welcome-section">
             <h2>Templates de Welcome</h2>
 
@@ -2644,8 +2518,6 @@ Para cada categoria:
                                 const welcomeCopyButton = document.querySelector('[data-action="copy-welcome"]');
                                 copyToClipboard(currentWelcomeText, welcomeCopyButton);
                             }
-                        } else if (activeTab === 'hello-tab') {
-                            // Não copia nada da aba Olá Equipa
                         } else if (activeTab === 'activation-tab') {
                             if (currentActivationText) {
                                 const activationCopyButton = document.querySelector('[data-action="copy-activation"]');
