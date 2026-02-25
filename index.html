@@ -735,6 +735,23 @@
             align-items: center;
         }
 
+        .template-action-btn {
+            position: static;
+            padding: 8px 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .template-action-btn:hover {
+            background-color: #333333;
+        }
+
         .toast {
             opacity: 0;
             transition: opacity 0.15s ease;
@@ -756,6 +773,15 @@
             background: #242424;
             border-color: #3a3a3a;
             color: #ebebeb;
+        }
+
+        body.dark-mode .template-action-btn {
+            background-color: #ffffff;
+            color: #111111;
+        }
+
+        body.dark-mode .template-action-btn:hover {
+            background-color: #dcdcdc;
         }
 
         body.dark-mode .toast {
@@ -887,8 +913,8 @@ xxx
 6. Notas
 xxx</textarea>
                     <div class="template-actions">
-                        <button class="copy-btn" id="copyLeadsBriefingTemplateBtn">Copiar Briefing</button>
-                        <button class="copy-btn" id="resetLeadsBriefingTemplateBtn">Reset</button>
+                        <button class="template-action-btn" id="copyLeadsBriefingTemplateBtn">Copiar Briefing</button>
+                        <button class="template-action-btn" id="resetLeadsBriefingTemplateBtn">Reset</button>
                         <span class="toast" id="leadsBriefingToast">Copiado ✅</span>
                     </div>
                 </div>
@@ -919,8 +945,8 @@ IMPORTANTE: Ambas as partes do código são necessárias para o funcionamento co
 Com os melhores cumprimentos,
 Equipa Leadzai</textarea>
                     <div class="template-actions">
-                        <button class="copy-btn" id="copyLeadsScriptTemplateBtn">Copiar Script</button>
-                        <button class="copy-btn" id="resetLeadsScriptTemplateBtn">Reset</button>
+                        <button class="template-action-btn" id="copyLeadsScriptTemplateBtn">Copiar Script</button>
+                        <button class="template-action-btn" id="resetLeadsScriptTemplateBtn">Reset</button>
                         <span class="toast" id="leadsScriptToast">Copiado ✅</span>
                     </div>
                 </div>
@@ -2595,7 +2621,7 @@ Para cada categoria:
                 }
 
                 try {
-                    await navigator.clipboard.writeText(textarea.value);
+                    await copyTextWithFallback(textarea.value);
                     showTemplateToast(toastElement);
                 } catch (error) {
                     console.error('Erro ao copiar template:', error);
