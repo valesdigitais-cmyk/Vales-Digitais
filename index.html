@@ -787,6 +787,49 @@
         body.dark-mode .toast {
             color: #bdbdbd;
         }
+
+        .leads-form-group {
+            margin-bottom: 14px;
+        }
+
+        .leads-form-group label {
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .leads-form-group textarea {
+            width: 100%;
+            border: 1px solid #b0b0b0;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 10px 12px;
+            font-size: 13px;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .leads-form-group textarea:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        .leads-script-text {
+            min-height: 170px !important;
+        }
+
+        .leads-code-textarea {
+            min-height: 160px !important;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 11px;
+        }
+
+        body.dark-mode .leads-form-group textarea,
+        body.dark-mode .leads-form-group input[type="text"] {
+            background-color: #242424;
+            border-color: #3a3a3a;
+            color: #ebebeb;
+        }
     </style>
 </head>
 <body>
@@ -810,149 +853,94 @@
         <div class="leads-section">
             <h2>Templates de Leads</h2>
 
-            <div class="template-container">
-                <h3>1. Briefing para Campanha de Leads</h3>
-                <div class="template-text" id="leadsBriefingText">
-                    <button class="copy-btn" data-action="copy-leads-briefing" title="Clique para copiar ou pressione Ctrl+C">Copiar Briefing</button>
-📋 Briefing para campanha de Leads
-_______________________________
-1. Informação da Empresa
-Nome Comercial (Marca):
-Nome Legal/Empresa:
-Site:
-Contacto: +351
+            <div class="template-card">
+                <h3>1. Template de Briefing para Campanha de Leads</h3>
 
-2. Orçamento e Duração
-Orçamento Total Disponível: ___________€
-Duração da Campanha: ___ Meses
-Objetivo da Campanha: Geração de Leads
+                <div class="leads-form-group">
+                    <label for="leadBrandName">1. Nome Comercial (Marca)</label>
+                    <input type="text" id="leadBrandName" placeholder="Ex: Marca XPTO">
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadLegalName">2. Nome Legal/Empresa</label>
+                    <input type="text" id="leadLegalName" placeholder="Ex: XPTO, Lda.">
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadWebsite">3. Site</label>
+                    <input type="text" id="leadWebsite" placeholder="https://...">
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadContact">4. Contacto</label>
+                    <input type="text" id="leadContact" placeholder="+351 ...">
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadBudget">5. Orçamento Total Disponível</label>
+                    <input type="text" id="leadBudget" placeholder="Ex: 1500€">
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadDuration">6. Duração da Campanha</label>
+                    <input type="text" id="leadDuration" placeholder="Ex: 3 meses">
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadDemographic">7. Perfil Demográfico</label>
+                    <textarea id="leadDemographic" placeholder="Idade, género, profissão, etc."></textarea>
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadLifestyle">8. Estilo de Vida/Hábitos</label>
+                    <textarea id="leadLifestyle" placeholder="Rotinas, comportamentos, hábitos de consumo."></textarea>
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadInterests">9. Interesses</label>
+                    <textarea id="leadInterests" placeholder="Interesses principais do público-alvo."></textarea>
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadGeo">10. Segmentação Geográfica</label>
+                    <textarea id="leadGeo" placeholder="Cidades, regiões ou raio geográfico."></textarea>
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadCampaignDetails">11. Detalhes da Campanha</label>
+                    <textarea id="leadCampaignDetails" placeholder="Objetivos, oferta, canais e criativos."></textarea>
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadNotes">12. Notas</label>
+                    <textarea id="leadNotes" placeholder="Informação adicional relevante."></textarea>
+                </div>
 
-3. Público-Alvo (Persona)
-Perfil Demográfico:
-Estilo de Vida/Hábitos:
-Interesses:
-
-4. Segmentação Geográfica
-________________________________
-
-5. Detalhes da Campanhas
-________________________________
-
-6. Notas
-_________________________________
+                <div class="template-actions">
+                    <button class="template-action-btn" id="copyLeadBriefingBtn">Copiar Template</button>
+                    <span class="toast" id="leadBriefingToast">Copiado ✅</span>
                 </div>
             </div>
 
-            <div class="template-container">
-                <h3>2. Script de Implementação GTM</h3>
-                <div class="template-text" id="leadsScriptText">
-                    <button class="copy-btn" data-action="copy-leads-script" title="Clique para copiar ou pressione Ctrl+C">Copiar Script</button>
-Script
+            <div class="template-card">
+                <h3>2. Template de Script (Email GTM)</h3>
 
-Caro cliente,
+                <div class="leads-form-group">
+                    <label for="leadScriptIntro">Texto fixo editável</label>
+                    <textarea id="leadScriptIntro" class="leads-script-text">Caro cliente,
 
 Conforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.
 
 CÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO
-Este código deve ser instalado em TODAS as páginas do website:
----
-1ª PARTE - Colar no &lt;head&gt; (o mais alto possível, idealmente como primeiro item):
-┌──────────────────────────────────────────────────────────────────┐
-│                                                                  │
-│                                                                  │
-│                                                                  │
-│                                                                  │
-└──────────────────────────────────────────────────────────────────┘
+Este código deve ser instalado em TODAS as páginas do website:</textarea>
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadHeadCode">Código &lt;head&gt;</label>
+                    <textarea id="leadHeadCode" class="leads-code-textarea" placeholder="Cole aqui o código para a secção &lt;head&gt;."></textarea>
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadBodyCode">Código &lt;body&gt;</label>
+                    <textarea id="leadBodyCode" class="leads-code-textarea" placeholder="Cole aqui o código para a secção &lt;body&gt;."></textarea>
+                </div>
+                <div class="leads-form-group">
+                    <label for="leadGtmId">ID GTM</label>
+                    <input type="text" id="leadGtmId" placeholder="Ex: GTM-XXXXXXX">
+                </div>
 
----
-2ª PARTE - Colar imediatamente após a abertura da tag &lt;body&gt;:
-┌──────────────────────────────────────────────────────────────────┐
-│                                                                  │
-│                                                                  │
-│                                                                  │
-│                                                                  │
-└──────────────────────────────────────────────────────────────────┘
-
-NOTA: Algumas plataformas de hospedagem de websites não exigem a instalação dos scripts completos no código do site, necessitando apenas do ID do Google Tag Manager. Aqui está o seu ID GTM: __________________
-
-IMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto. O código deve ser implementado em todas as páginas do site. Após a instalação, podemos prosseguir com a configuração das tags e eventos. Fico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.
-
-Com os melhores cumprimentos,
-Equipa Leadzai
+                <div class="template-actions">
+                    <button class="template-action-btn" id="copyLeadScriptBtn">Copiar Script Completo</button>
+                    <span class="toast" id="leadScriptToast">Copiado ✅</span>
                 </div>
             </div>
-
-            <div class="template-section">
-                <h2>Templates</h2>
-
-                <div class="template-card">
-                    <h3>📋 Briefing para campanha de Leads</h3>
-                    <textarea id="leadsBriefingTemplate">📋 Briefing para campanha de Leads
-1. Informação da Empresa
-Nome Comercial (Marca): xxx
-Nome Legal/Empresa: xxx
-Site: x
-Contacto: +351 xxx
-
-2. Orçamento e Duração
-Orçamento Total Disponível: xxx €
-Duração da Campanha: x Meses
-Objetivo da Campanha: Geração de Leads
-
-3. Público-Alvo (Persona)
-Perfil Demográfico: x
-Estilo de Vida/Hábitos: x
-Interesses: x
-
-4. Segmentação Geográfica
-xxx
-
-5. Detalhes da Campanhas
-xxx
-
-6. Notas
-xxx</textarea>
-                    <div class="template-actions">
-                        <button class="template-action-btn" id="copyLeadsBriefingTemplateBtn">Copiar Briefing</button>
-                        <button class="template-action-btn" id="resetLeadsBriefingTemplateBtn">Reset</button>
-                        <span class="toast" id="leadsBriefingToast">Copiado ✅</span>
-                    </div>
-                </div>
-
-                <div class="template-card">
-                    <h3>🧩 Script (GTM)</h3>
-                    <textarea id="leadsScriptTemplate">Script
-
-Caro cliente,
-
-Conforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.
-
-CÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO
-Este código deve ser instalado em TODAS as páginas do website:
-
----
-1ª PARTE - Colar no <head> (o mais alto possível, idealmente como primeiro item):
-xxx
-
----
-2ª PARTE - Colar imediatamente após a abertura da tag <body>:
-xxx
-
-NOTA: Algumas plataformas de hospedagem de websites não exigem a instalação dos scripts completos no código do site, necessitando apenas do ID do Google Tag Manager. Aqui está o seu ID GTM: xxx
-
-IMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto. O código deve ser implementado em todas as páginas do site. Após a instalação, podemos prosseguir com a configuração das tags e eventos. Fico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.
-
-Com os melhores cumprimentos,
-Equipa Leadzai</textarea>
-                    <div class="template-actions">
-                        <button class="template-action-btn" id="copyLeadsScriptTemplateBtn">Copiar Script</button>
-                        <button class="template-action-btn" id="resetLeadsScriptTemplateBtn">Reset</button>
-                        <span class="toast" id="leadsScriptToast">Copiado ✅</span>
-                    </div>
-                </div>
-            </div>
-
-            <p class="shortcut-info">Pressione Ctrl+C para copiar o template selecionado ou clique no botão de cópia.</p>
         </div>
     </div>
 
@@ -1491,18 +1479,26 @@ Equipa Leadzai
             const warningEmailPlaceholder = document.getElementById('warningEmailPlaceholder');
 
             // Elementos da aba Leads
-            const leadsBriefingTextElement = document.getElementById('leadsBriefingText');
-            const leadsScriptTextElement = document.getElementById('leadsScriptText');
-            const copyLeadsBriefingBtn = document.querySelector('[data-action="copy-leads-briefing"]');
-            const copyLeadsScriptBtn = document.querySelector('[data-action="copy-leads-script"]');
-            const leadsBriefingTemplate = document.getElementById('leadsBriefingTemplate');
-            const leadsScriptTemplate = document.getElementById('leadsScriptTemplate');
-            const copyLeadsBriefingTemplateBtn = document.getElementById('copyLeadsBriefingTemplateBtn');
-            const resetLeadsBriefingTemplateBtn = document.getElementById('resetLeadsBriefingTemplateBtn');
-            const copyLeadsScriptTemplateBtn = document.getElementById('copyLeadsScriptTemplateBtn');
-            const resetLeadsScriptTemplateBtn = document.getElementById('resetLeadsScriptTemplateBtn');
-            const leadsBriefingToast = document.getElementById('leadsBriefingToast');
-            const leadsScriptToast = document.getElementById('leadsScriptToast');
+            const leadBrandName = document.getElementById('leadBrandName');
+            const leadLegalName = document.getElementById('leadLegalName');
+            const leadWebsite = document.getElementById('leadWebsite');
+            const leadContact = document.getElementById('leadContact');
+            const leadBudget = document.getElementById('leadBudget');
+            const leadDuration = document.getElementById('leadDuration');
+            const leadDemographic = document.getElementById('leadDemographic');
+            const leadLifestyle = document.getElementById('leadLifestyle');
+            const leadInterests = document.getElementById('leadInterests');
+            const leadGeo = document.getElementById('leadGeo');
+            const leadCampaignDetails = document.getElementById('leadCampaignDetails');
+            const leadNotes = document.getElementById('leadNotes');
+            const leadScriptIntro = document.getElementById('leadScriptIntro');
+            const leadHeadCode = document.getElementById('leadHeadCode');
+            const leadBodyCode = document.getElementById('leadBodyCode');
+            const leadGtmId = document.getElementById('leadGtmId');
+            const copyLeadBriefingBtn = document.getElementById('copyLeadBriefingBtn');
+            const copyLeadScriptBtn = document.getElementById('copyLeadScriptBtn');
+            const leadBriefingToast = document.getElementById('leadBriefingToast');
+            const leadScriptToast = document.getElementById('leadScriptToast');
             
             // Elementos da aba Faturas
             const generateInvoiceBtn = document.getElementById('generateInvoiceBtn');
@@ -2585,24 +2581,45 @@ Para cada categoria:
                 copyToClipboard(fullText, this);
             });
 
-            if (copyLeadsBriefingBtn) {
-                copyLeadsBriefingBtn.addEventListener('click', function() {
-                    const briefingText = getTemplateText(leadsBriefingTextElement);
-                    currentLeadsText = briefingText;
-                    copyToClipboard(briefingText, this);
-                });
+            function getValue(element) {
+                return element ? element.value.trim() : '';
             }
 
-            if (copyLeadsScriptBtn) {
-                copyLeadsScriptBtn.addEventListener('click', function() {
-                    const scriptText = getTemplateText(leadsScriptTextElement);
-                    currentLeadsText = scriptText;
-                    copyToClipboard(scriptText, this);
-                });
+            function generateBriefingTemplateText() {
+                return `📋 Template de Briefing para Campanha de Leads
+
+1. Nome Comercial (Marca): ${getValue(leadBrandName)}
+2. Nome Legal/Empresa: ${getValue(leadLegalName)}
+3. Site: ${getValue(leadWebsite)}
+4. Contacto: ${getValue(leadContact)}
+5. Orçamento Total Disponível: ${getValue(leadBudget)}
+6. Duração da Campanha: ${getValue(leadDuration)}
+7. Perfil Demográfico: ${getValue(leadDemographic)}
+8. Estilo de Vida/Hábitos: ${getValue(leadLifestyle)}
+9. Interesses: ${getValue(leadInterests)}
+10. Segmentação Geográfica: ${getValue(leadGeo)}
+11. Detalhes da Campanha: ${getValue(leadCampaignDetails)}
+12. Notas: ${getValue(leadNotes)}`;
             }
 
-            const initialLeadsBriefingTemplate = leadsBriefingTemplate ? leadsBriefingTemplate.value : '';
-            const initialLeadsScriptTemplate = leadsScriptTemplate ? leadsScriptTemplate.value : '';
+            function generateScriptTemplateText() {
+                return `${getValue(leadScriptIntro)}
+
+---
+1ª PARTE - Colar no <head> (o mais alto possível, idealmente como primeiro item):
+${getValue(leadHeadCode)}
+
+---
+2ª PARTE - Colar imediatamente após a abertura da tag <body>:
+${getValue(leadBodyCode)}
+
+NOTA: Algumas plataformas de hospedagem de websites não exigem a instalação dos scripts completos no código do site, necessitando apenas do ID do Google Tag Manager. Aqui está o seu ID GTM: ${getValue(leadGtmId)}
+
+IMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto. O código deve ser implementado em todas as páginas do site. Após a instalação, podemos prosseguir com a configuração das tags e eventos. Fico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.
+
+Com os melhores cumprimentos,
+Equipa Leadzai`;
+            }
 
             function showTemplateToast(toastElement) {
                 if (!toastElement) {
@@ -2615,40 +2632,27 @@ Para cada categoria:
                 }, 800);
             }
 
-            async function copyTemplateTextarea(textarea, toastElement) {
-                if (!textarea) {
-                    return;
-                }
-
-                try {
-                    await copyTextWithFallback(textarea.value);
-                    showTemplateToast(toastElement);
-                } catch (error) {
-                    console.error('Erro ao copiar template:', error);
-                }
-            }
-
-            if (copyLeadsBriefingTemplateBtn) {
-                copyLeadsBriefingTemplateBtn.addEventListener('click', function() {
-                    copyTemplateTextarea(leadsBriefingTemplate, leadsBriefingToast);
+            if (copyLeadBriefingBtn) {
+                copyLeadBriefingBtn.addEventListener('click', function() {
+                    const briefingText = generateBriefingTemplateText();
+                    currentLeadsText = briefingText;
+                    copyTextWithFallback(briefingText)
+                        .then(() => showTemplateToast(leadBriefingToast))
+                        .catch((error) => {
+                            console.error('Erro ao copiar briefing:', error);
+                        });
                 });
             }
 
-            if (copyLeadsScriptTemplateBtn) {
-                copyLeadsScriptTemplateBtn.addEventListener('click', function() {
-                    copyTemplateTextarea(leadsScriptTemplate, leadsScriptToast);
-                });
-            }
-
-            if (resetLeadsBriefingTemplateBtn) {
-                resetLeadsBriefingTemplateBtn.addEventListener('click', function() {
-                    leadsBriefingTemplate.value = initialLeadsBriefingTemplate;
-                });
-            }
-
-            if (resetLeadsScriptTemplateBtn) {
-                resetLeadsScriptTemplateBtn.addEventListener('click', function() {
-                    leadsScriptTemplate.value = initialLeadsScriptTemplate;
+            if (copyLeadScriptBtn) {
+                copyLeadScriptBtn.addEventListener('click', function() {
+                    const scriptText = generateScriptTemplateText();
+                    currentLeadsText = scriptText;
+                    copyTextWithFallback(scriptText)
+                        .then(() => showTemplateToast(leadScriptToast))
+                        .catch((error) => {
+                            console.error('Erro ao copiar script:', error);
+                        });
                 });
             }
             
@@ -2877,7 +2881,7 @@ Para cada categoria:
                             }
                         } else if (activeTab === 'leads-tab') {
                             if (currentLeadsText) {
-                                const leadsCopyButton = document.querySelector('[data-action="copy-leads-script"]');
+                                const leadsCopyButton = copyLeadScriptBtn || copyLeadBriefingBtn;
                                 copyToClipboard(currentLeadsText, leadsCopyButton);
                             }
                         } else if (activeTab === 'invoices-tab') {
