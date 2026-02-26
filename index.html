@@ -710,6 +710,29 @@
             background: #fff;
         }
 
+        .leads-section .template-card {
+            position: relative;
+            padding-top: 44px;
+        }
+
+        .leads-reset-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 10px;
+            border: 1px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .leads-reset-btn:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
         .template-card h3 {
             margin-bottom: 12px;
             font-size: 15px;
@@ -784,6 +807,17 @@
             background-color: #dcdcdc;
         }
 
+        body.dark-mode .leads-reset-btn {
+            background-color: #1f1f1f;
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        body.dark-mode .leads-reset-btn:hover {
+            background-color: #ffffff;
+            color: #121212;
+        }
+
         body.dark-mode .toast {
             color: #bdbdbd;
         }
@@ -853,7 +887,8 @@
         <div class="leads-section">
             <h2>Templates de Leads</h2>
 
-            <div class="template-card">
+            <div class="template-card" id="leadBriefingCard">
+                <button class="leads-reset-btn" data-reset-target="leadBriefingCard">Reset</button>
                 <h3>1. Template de Briefing para Campanha de Leads</h3>
 
                 <div class="leads-form-group">
@@ -911,7 +946,8 @@
                 </div>
             </div>
 
-            <div class="template-card">
+            <div class="template-card" id="leadScriptCard">
+                <button class="leads-reset-btn" data-reset-target="leadScriptCard">Reset</button>
                 <h3>2. Template de Script (Email GTM)</h3>
 
                 <div class="leads-form-group">
@@ -1499,6 +1535,7 @@ Equipa Leadzai
             const copyLeadScriptBtn = document.getElementById('copyLeadScriptBtn');
             const leadBriefingToast = document.getElementById('leadBriefingToast');
             const leadScriptToast = document.getElementById('leadScriptToast');
+            const leadResetButtons = document.querySelectorAll('.leads-reset-btn');
             
             // Elementos da aba Faturas
             const generateInvoiceBtn = document.getElementById('generateInvoiceBtn');
@@ -2653,6 +2690,27 @@ Equipa Leadzai`;
                         .catch((error) => {
                             console.error('Erro ao copiar script:', error);
                         });
+                });
+            }
+
+            if (leadResetButtons.length > 0) {
+                leadResetButtons.forEach((button) => {
+                    button.addEventListener('click', function() {
+                        const targetCardId = this.dataset.resetTarget;
+                        if (!targetCardId) {
+                            return;
+                        }
+
+                        const targetCard = document.getElementById(targetCardId);
+                        if (!targetCard) {
+                            return;
+                        }
+
+                        const fieldsToClear = targetCard.querySelectorAll('input[type="text"], textarea');
+                        fieldsToClear.forEach((field) => {
+                            field.value = '';
+                        });
+                    });
                 });
             }
             
