@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta de Anúncios • Oculista do Bairro</title>
+    <style>
+        /* ===== RESET E VARIÁVEIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #333;
+            --text-color: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --border-color: #e0e0e0;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --max-width: 1200px;
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--light-gray);
+            line-height: 1.5;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* ===== UTILITÁRIOS ===== */
+        .text-center { text-align: center; }
+        .mt-20 { margin-top: 20px; }
+        .mb-20 { margin-bottom: 20px; }
+        .w-100 { width: 100%; }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--primary-color);
+            color: white;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #666;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .header h2 {
+            font-size: 1.2em;
+            font-weight: 300;
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 40px;
+            font-size: 1em;
+            border-top: 1px solid #333;
+            padding-top: 25px;
+            margin-top: 10px;
+        }
+
+        .budget-box {
+            background: var(--secondary-color);
+            color: white;
+            padding: 8px 20px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+
+        /* ===== PDF CONTROLS ===== */
+        .pdf-controls {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-pdf {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 12px 25px;
+            font-size: 0.9em;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid white;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-pdf:hover {
+            background: transparent;
+            color: white;
+        }
+
+        .btn-edit-mode {
+            background: var(--secondary-color);
+            color: white;
+            border: 1px solid #666;
+            padding: 12px 25px;
+            font-size: 0.9em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-edit-mode:hover {
+            background: #444;
+        }
+
+        .btn-edit-mode.active {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        /* ===== SUMMARY GRID ===== */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: #ddd;
+            border: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+
+        .summary-item {
+            background: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .summary-item .label {
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .summary-item .value {
+            font-size: 2.2em;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            background: white;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .section-title {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-title h2 {
+            font-size: 1.5em;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .section-title .sub {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* ===== EDIT BUTTONS ===== */
+        .edit-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-edit {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 6px 15px;
+            font-size: 0.8em;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-edit:hover {
+            background: #f0f0f0;
+            border-color: #999;
+        }
+
+        /* ===== EDITABLE FIELDS ===== */
+        .editable-field {
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .editable-field.editing {
+            background: #fff9e6;
+            padding: 10px;
+            margin: -10px;
+            border: 2px solid var(--warning-color);
+        }
+
+        .edit-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+            font-size: inherit;
+            resize: vertical;
+        }
+
+        .char-counter-edit {
+            text-align: right;
+            font-size: 0.7em;
+            margin-top: 5px;
+            color: #666;
+        }
+
+        .char-counter-edit.valid {
+            color: var(--success-color);
+        }
+
+        .char-counter-edit.invalid {
+            color: var(--danger-color);
+        }
+
+        /* ===== ADS GRID ===== */
+        .ads-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .ad-card {
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            background: #fff;
+            position: relative;
+        }
+
+        .ad-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .ad-category {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+        }
+
+        .ad-type {
+            font-size: 0.7em;
+            background: #f5f5f5;
+            padding: 3px 8px;
+            color: #666;
+        }
+
+        .ad-text-block {
+            margin: 15px 0;
+            padding: 12px;
+            background: #fafafa;
+            border-left: 2px solid #ccc;
+            font-size: 0.9em;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .char-count {
+            font-size: 0.7em;
+            color: var(--success-color);
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        /* ===== HEADLINES GRID ===== */
+        .headlines-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .headline-item {
+            border: 1px solid var(--border-color);
+            padding: 12px 8px;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .headline-item .text {
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+            word-wrap: break-word;
+        }
+
+        .headline-item .count {
+            font-size: 0.7em;
+            color: #666;
+        }
+
+        /* ===== KEYWORDS ===== */
+        .keywords-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .keyword-block {
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            background: white;
+        }
+
+        .keyword-block h3 {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .keyword-item {
+            background: #f5f5f5;
+            padding: 4px 12px;
+            font-size: 0.85em;
+            color: #333;
+            border: 1px solid var(--border-color);
+        }
+
+        /* ===== GOOGLE PREVIEW ===== */
+        .google-preview {
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            background: #fff;
+            margin: 20px 0;
+        }
+
+        .google-url {
+            color: #006621;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+
+        .google-title {
+            color: #1a0dab;
+            font-size: 1.2em;
+            margin: 5px 0;
+            font-weight: 400;
+            word-wrap: break-word;
+        }
+
+        .google-description {
+            color: #545454;
+            font-size: 0.9em;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .google-extensions {
+            display: flex;
+            gap: 25px;
+            margin-top: 12px;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            border: 1px solid var(--border-color);
+            background: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .btn-download-pdf {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            margin: 20px 0;
+            border: 2px solid var(--primary-color);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-download-pdf:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid var(--primary-color);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border: 1px solid var(--primary-color);
+            background: white;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.2s;
+        }
+
+        .modal-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .modal-btn.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* ===== NOTE ===== */
+        .note {
+            background: #f9f9f9;
+            border-left: 3px solid #666;
+            padding: 15px 20px;
+            margin: 20px 0 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 20px 0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .summary-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .ads-grid,
+            .keywords-grid,
+            .headlines-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .pdf-controls {
+                position: static;
+                margin-top: 20px;
+                justify-content: flex-end;
+            }
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            .edit-controls,
+            .btn-edit,
+            .pdf-controls,
+            .btn-download-pdf,
+            .modal {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="proposalContainer">
+        <!-- HEADER -->
+        <div class="header">
+            <h1 id="companyName" class="editable-field" data-field="companyName">Oculista do Bairro</h1>
+            <h2 id="proposalSubtitle" class="editable-field" data-field="subtitle">Proposta de Anúncios • Estratégia de Marketing Digital</h2>
+            
+            <div class="contact-info">
+                <span class="editable-field" data-field="website">https://www.oculistadobairro.pt/</span>
+                <span class="editable-field" data-field="phone">911 742 580</span>
+                <span class="editable-field" data-field="location">Benfica, Lisboa</span>
+            </div>
+            
+            <div class="budget-box" id="budget" class="editable-field" data-field="budget">
+                ORÇAMENTO: 500€
+            </div>
+
+            <div class="pdf-controls">
+                <button class="btn-edit-mode" onclick="toggleEditMode()" id="editModeBtn">✎ EDITAR TUDO</button>
+                <button class="btn-pdf" onclick="previewPDF()">📄 VISUALIZAR PDF</button>
+            </div>
+        </div>
+
+        <!-- SUMMARY CARDS -->
+        <div class="summary-grid">
+            <div class="summary-item">
+                <div class="label">Categorias</div>
+                <div class="value" id="categoriesCount">2</div>
+                <div class="desc editable-field" data-field="categories" id="categoriesDesc">Controlo da Miopia<br>Óculos Graduados</div>
+            </div>
+            <div class="summary-item">
+                <div class="label">Anúncios Dinâmicos</div>
+                <div class="value" id="dynamicCount">8</div>
+                <div class="desc" id="dynamicDesc">4 por categoria<br>76-90 caracteres</div>
+            </div>
+            <div class="summary-item">
+                <div class="label">Anúncio Responsivo</div>
+                <div class="value" id="responsiveCount">1</div>
+                <div class="desc" id="responsiveDesc">7 headlines<br>2 descrições</div>
+            </div>
+            <div class="summary-item">
+                <div class="label">Palavras-chave SEO</div>
+                <div class="value" id="seoCount">24</div>
+                <div class="desc" id="seoDesc">Otimizadas para<br>conversão</div>
+            </div>
+        </div>
+
+        <!-- DYNAMIC ADS SECTION -->
+        <div class="section" id="dynamicAdsSection">
+            <div class="section-title">
+                <div>
+                    <h2>Anúncios Dinâmicos</h2>
+                    <div class="sub" id="dynamicSubtitle">8 anúncios • 2 frases cada • 76-90 caracteres</div>
+                </div>
+                <div class="edit-controls">
+                    <button class="btn-edit" onclick="editSection('dynamic-ads')">✎ EDITAR TUDO</button>
+                </div>
+            </div>
+
+            <div class="ads-grid" id="dynamic-ads">
+                <!-- Os anúncios serão inseridos aqui via JavaScript -->
+            </div>
+        </div>
+
+        <!-- RESPONSIVE AD SECTION -->
+        <div class="section" id="responsiveAdSection">
+            <div class="section-title">
+                <div>
+                    <h2>Anúncio Responsivo</h2>
+                    <div class="sub" id="responsiveSubtitle">7 headlines (20 caracteres) • 2 descrições (76-90 caracteres)</div>
+                </div>
+                <div class="edit-controls">
+                    <button class="btn-edit" onclick="editSection('responsive')">✎ EDITAR</button>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">Headlines</h3>
+            <div class="headlines-grid" id="headlines-grid"></div>
+
+            <h3 class="section-subtitle">Descrições</h3>
+            <div id="descriptions-container"></div>
+        </div>
+
+        <!-- GOOGLE PREVIEW SECTION -->
+        <div class="section" id="googlePreviewSection">
+            <div class="section-title">
+                <h2>Pré-visualização Google Ads</h2>
+                <div class="sub">Como os anúncios aparecerão nos resultados de busca</div>
+            </div>
+            <div id="googlePreviews"></div>
+        </div>
+
+        <!-- SEO KEYWORDS SECTION -->
+        <div class="section seo-section" id="seoSection">
+            <div class="section-title">
+                <div>
+                    <h2>Palavras-chave SEO</h2>
+                    <div class="sub">Estratégicas para rankeamento orgânico e anúncios</div>
+                </div>
+                <div class="edit-controls">
+                    <button class="btn-edit" onclick="editSection('seo')">✎ EDITAR</button>
+                </div>
+            </div>
+
+            <div class="keywords-grid" id="seo-content"></div>
+
+            <div class="note" id="seoLocal">
+                <strong>SEO Local:</strong> <span class="editable-field" data-field="seo-local">Benfica, Lisboa, Lumiar, Carnide</span>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <h3>Proposta pronta para download</h3>
+            
+            <button class="btn-download-pdf" onclick="downloadPDF()">
+                📄 BAIXAR PDF
+            </button>
+            
+            <hr>
+            
+            <div class="proposal-summary" id="proposalSummary"></div>
+            
+            <hr>
+            
+            <div class="footer-note">
+                Clique em "EDITAR" em qualquer seção para personalizar os textos.
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF MODAL -->
+    <div class="modal" id="pdfModal">
+        <div class="modal-content">
+            <h3>📄 GERAR PDF</h3>
+            <p>As alterações feitas serão incluídas no PDF.</p>
+            <p><strong>Máximo: 90 caracteres por frase</strong></p>
+            <div class="modal-buttons">
+                <button class="modal-btn" onclick="closeModal()">CANCELAR</button>
+                <button class="modal-btn primary" onclick="generatePDF()">GERAR PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== CONFIGURAÇÃO DO TEMPLATE =====
+        const TEMPLATE_CONFIG = {
+            maxChars: 90,
+            companyName: "Oculista do Bairro",
+            phone: "911 742 580",
+            website: "https://www.oculistadobairro.pt/",
+            location: "Benfica, Lisboa",
+            budget: "500€",
+            
+            // Anúncios dinâmicos
+            dynamicAds: [
+                {
+                    category: "CONTROLO MIOPIA #1",
+                    phrase1: "Avaliação especializada e plano personalizado de controlo da miopia em Benfica.",
+                    phrase2: "Marque consulta e proteja o futuro visual do seu filho. Agendamento online aqui."
+                },
+                {
+                    category: "CONTROLO MIOPIA #2",
+                    phrase1: "A miopia está a aumentar nas crianças. Existem soluções para controlar a evolução.",
+                    phrase2: "Exame visual completo com avaliação binocular e ocular. Marque já a sua consulta."
+                },
+                {
+                    category: "CONTROLO MIOPIA #3",
+                    phrase1: "Exame visual completo com avaliação binocular e ocular. Marque já a sua consulta.",
+                    phrase2: "Diagnóstico rigoroso e acompanhamento personalizado. Marque já a sua consulta."
+                },
+                {
+                    category: "CONTROLO MIOPIA #4",
+                    phrase1: "Avaliação para crianças e adultos. Cuidamos da sua visão com todo o rigor clínico.",
+                    phrase2: "A miopia está a aumentar nas crianças. Existem soluções para controlar a evolução."
+                },
+                {
+                    category: "ÓCULOS THE GUY #1",
+                    phrase1: "Armações exclusivas The Guy e óculos personalizados em Benfica. Agende online.",
+                    phrase2: "Ajustes e manutenção gratuita com serviço personalizado. Marque a sua consulta."
+                },
+                {
+                    category: "ÓCULOS GRADUADOS #2",
+                    phrase1: "Óculos graduados com precisão e acompanhamento clínico. Marque já a sua consulta.",
+                    phrase2: "Loja exclusiva The Guy em Benfica com modelos únicos. Marque já a sua consulta."
+                },
+                {
+                    category: "SERVIÇOS #3",
+                    phrase1: "Óculos graduados com acompanhamento clínico e garantia de adaptação em Benfica.",
+                    phrase2: "Ajustes e manutenção gratuita com serviço personalizado. Marque a sua consulta."
+                },
+                {
+                    category: "SINTOMAS #4",
+                    phrase1: "Dores de cabeça ou cansaço visual? Descubra a causa. Marque já a sua consulta.",
+                    phrase2: "Agendamento rápido e atendimento local em Benfica. Marque já a sua consulta."
+                }
+            ],
+            
+            // Headlines
+            headlines: [
+                "Oculista Benfica",
+                "Controlo Miopia",
+                "The Guy Lisboa",
+                "Marque Consulta",
+                "Exame Visual",
+                "Óculos Graduados",
+                "Agendamento Online"
+            ],
+            
+            // Descrições responsivas
+            responsiveDescriptions: [
+                "Avaliação especializada e plano personalizado de controlo da miopia em Benfica. Exame visual completo com avaliação binocular e ocular. Marque já a sua consulta.",
+                "Armações exclusivas The Guy e óculos personalizados em Benfica. Agende online. Ajustes e manutenção gratuita com serviço personalizado. Marque a sua consulta."
+            ],
+            
+            // Palavras-chave SEO
+            seoKeywords: {
+                miopia: [
+                    "controlo da miopia",
+                    "miopia infantil",
+                    "controlo miopia crianças",
+                    "exame visual",
+                    "avaliação binocular",
+                    "plano personalizado",
+                    "oftalmologista Benfica",
+                    "travar miopia"
+                ],
+                oculos: [
+                    "óculos graduados",
+                    "armações exclusivas",
+                    "the guy óculos",
+                    "óculos Benfica",
+                    "lentes progressivas",
+                    "ajuste óculos",
+                    "manutenção óculos",
+                    "oculista Benfica"
+                ]
+            },
+            
+            seoLocal: "Benfica, Lisboa, Lumiar, Carnide"
+        };
+
+        // ===== FUNÇÕES DE RENDERIZAÇÃO =====
+        function renderTemplate() {
+            renderDynamicAds();
+            renderHeadlines();
+            renderResponsiveDescriptions();
+            renderSEOKeywords();
+            renderGooglePreviews();
+            renderProposalSummary();
+        }
+
+        function renderDynamicAds() {
+            const container = document.getElementById('dynamic-ads');
+            container.innerHTML = TEMPLATE_CONFIG.dynamicAds.map((ad, index) => `
+                <div class="ad-card" data-ad="${index + 1}">
+                    <div class="ad-header">
+                        <span class="ad-category">${ad.category}</span>
+                        <span class="ad-type">DINÂMICO</span>
+                    </div>
+                    <div class="ad-text-block" data-field="ad${index + 1}-1">
+                        ${ad.phrase1}
+                        <div class="char-count" data-count="ad${index + 1}-1">${ad.phrase1.length}/${TEMPLATE_CONFIG.maxChars} ✓</div>
+                    </div>
+                    <div class="ad-text-block" data-field="ad${index + 1}-2">
+                        ${ad.phrase2}
+                        <div class="char-count" data-count="ad${index + 1}-2">${ad.phrase2.length}/${TEMPLATE_CONFIG.maxChars} ✓</div>
+                    </div>
+                    <button class="btn-edit w-100" onclick="editAd(${index + 1})">✎ EDITAR ANÚNCIO</button>
+                </div>
+            `).join('');
+        }
+
+        function renderHeadlines() {
+            const container = document.getElementById('headlines-grid');
+            container.innerHTML = TEMPLATE_CONFIG.headlines.map(headline => `
+                <div class="headline-item">
+                    <div class="text">${headline}</div>
+                    <div class="count">${headline.length}/20</div>
+                </div>
+            `).join('');
+        }
+
+        function renderResponsiveDescriptions() {
+            const container = document.getElementById('descriptions-container');
+            container.innerHTML = TEMPLATE_CONFIG.responsiveDescriptions.map((desc, index) => `
+                <div class="ad-text-block" data-field="resp-desc${index + 1}">
+                    <strong>Descrição ${index + 1}:</strong> ${desc}
+                    <div class="char-count">${desc.length}/${TEMPLATE_CONFIG.maxChars} ✓</div>
+                </div>
+            `).join('');
+        }
+
+        function renderSEOKeywords() {
+            const container = document.getElementById('seo-content');
+            container.innerHTML = `
+                <div class="keyword-block">
+                    <h3>Controlo da Miopia</h3>
+                    <div class="keyword-list">
+                        ${TEMPLATE_CONFIG.seoKeywords.miopia.map(kw => `<span class="keyword-item">${kw}</span>`).join('')}
+                    </div>
+                </div>
+                <div class="keyword-block">
+                    <h3>Óculos e Armações</h3>
+                    <div class="keyword-list">
+                        ${TEMPLATE_CONFIG.seoKeywords.oculos.map(kw => `<span class="keyword-item">${kw}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderGooglePreviews() {
+            const container = document.getElementById('googlePreviews');
+            container.innerHTML = `
+                <div class="google-preview">
+                    <div class="google-url">${TEMPLATE_CONFIG.website}</div>
+                    <div class="google-title">Oculista Benfica • Controlo da Miopia • Marque Consulta</div>
+                    <div class="google-description">${TEMPLATE_CONFIG.dynamicAds[0].phrase1} ${TEMPLATE_CONFIG.dynamicAds[0].phrase2}</div>
+                    <div class="google-extensions">
+                        <span>${TEMPLATE_CONFIG.phone}</span>
+                        <span>${TEMPLATE_CONFIG.location}</span>
+                        <span>Agendamento Online</span>
+                    </div>
+                </div>
+                <div class="google-preview">
+                    <div class="google-url">${TEMPLATE_CONFIG.website}</div>
+                    <div class="google-title">The Guy Lisboa • Óculos Exclusivos • Oculista Benfica</div>
+                    <div class="google-description">${TEMPLATE_CONFIG.dynamicAds[4].phrase1} ${TEMPLATE_CONFIG.dynamicAds[4].phrase2}</div>
+                    <div class="google-extensions">
+                        <span>${TEMPLATE_CONFIG.phone}</span>
+                        <span>Benfica</span>
+                        <span>Marca Exclusiva</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProposalSummary() {
+            const container = document.getElementById('proposalSummary');
+            container.innerHTML = `
+                <p><strong>Resumo da proposta:</strong></p>
+                <p>• 2 categorias principais com SEO otimizado</p>
+                <p>• ${TEMPLATE_CONFIG.dynamicAds.length} anúncios dinâmicos com 76-${TEMPLATE_CONFIG.maxChars} caracteres</p>
+                <p>• 1 anúncio responsivo com 7 headlines + 2 descrições</p>
+                <p>• ${TEMPLATE_CONFIG.seoKeywords.miopia.length + TEMPLATE_CONFIG.seoKeywords.oculos.length} palavras-chave SEO estratégicas</p>
+                <p>• Chamadas para ação e diferenciais incluídos</p>
+            `;
+        }
+
+        // ===== FUNÇÕES DE EDIÇÃO =====
+        let editMode = false;
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            const btn = document.getElementById('editModeBtn');
+            if (editMode) {
+                btn.classList.add('active');
+                btn.innerHTML = '✓ MODO EDIÇÃO ATIVO';
+                enableEditing();
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '✎ EDITAR TUDO';
+                disableEditing();
+            }
+        }
+
+        function enableEditing() {
+            document.querySelectorAll('[data-field]').forEach(field => {
+                field.setAttribute('contenteditable', 'true');
+                field.classList.add('editing');
+            });
+        }
+
+        function disableEditing() {
+            document.querySelectorAll('[data-field]').forEach(field => {
+                field.setAttribute('contenteditable', 'false');
+                field.classList.remove('editing');
+            });
+        }
+
+        function editSection(sectionId) {
+            // Implementar edição de seção específica
+            alert('Função de edição em desenvolvimento');
+        }
+
+        function editAd(adNumber) {
+            const adCard = document.querySelector(`[data-ad="${adNumber}"]`);
+            adCard.querySelectorAll('[data-field]').forEach(field => {
+                field.setAttribute('contenteditable', 'true');
+                field.classList.add('editing');
+            });
+        }
+
+        // ===== FUNÇÕES DE PDF =====
+        function previewPDF() {
+            document.getElementById('pdfModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('pdfModal').style.display = 'none';
+        }
+
+        function generatePDF() {
+            window.print();
+            closeModal();
+        }
+
+        function downloadPDF() {
+            previewPDF();
+        }
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', renderTemplate);
+
+        // Fechar modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('pdfModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
