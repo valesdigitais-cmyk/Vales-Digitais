@@ -44,6 +44,26 @@
         .mb-20 { margin-bottom: 20px; }
         .w-100 { width: 100%; }
 
+        .back-to-prompts {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .back-to-prompts a {
+            display: inline-block;
+            background: #f1f1f1;
+            border: 1px solid #ddd;
+            color: #333;
+            text-decoration: none;
+            padding: 6px 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .back-to-prompts a:hover {
+            background: #e7e7e7;
+        }
+
         /* ===== HEADER ===== */
         .header {
             background: var(--primary-color);
@@ -544,6 +564,10 @@
 </head>
 <body>
     <div class="container" id="proposalContainer">
+        <div class="back-to-prompts">
+            <a href="index.html#prompts-tab">PROMPTS</a>
+        </div>
+
         <!-- HEADER -->
         <div class="header">
             <h1 id="companyName" class="editable-field" data-field="companyName">Oculista do Bairro</h1>
