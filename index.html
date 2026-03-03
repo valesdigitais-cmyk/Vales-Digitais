@@ -867,8 +867,37 @@
             font-size: 11px;
         }
 
+        .script-section-title {
+            font-weight: 700;
+            margin: 22px 0 8px;
+            font-size: 12px;
+        }
+
+        .gtm-line {
+            margin-top: 20px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .gtm-line input {
+            margin-top: 8px;
+            width: 100%;
+            border: 1px solid #b0b0b0;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+
+        .gtm-line input:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
         body.dark-mode .leads-form-group textarea,
-        body.dark-mode .leads-form-group input[type="text"] {
+        body.dark-mode .leads-form-group input[type="text"],
+        body.dark-mode .gtm-line input {
             background-color: #242424;
             border-color: #3a3a3a;
             color: #ebebeb;
@@ -882,8 +911,8 @@
     <div class="tabs-container">
         <div class="tabs">
             <button class="tab-btn active" data-tab="welcomes-tab">Welcomes</button>
-            <button class="tab-btn" data-tab="advertiser-tab">Anunciante</button>
             <button class="tab-btn" data-tab="leads-tab">Leads</button>
+            <button class="tab-btn" data-tab="advertiser-tab">Anunciante</button>
             <button class="tab-btn" data-tab="prompts-tab">Prompts</button>
             <button class="tab-btn" data-tab="calculator-tab">Calculadora</button>
             <button class="tab-btn" data-tab="activation-tab">Ativação</button>
@@ -959,27 +988,35 @@
                 <button class="leads-reset-btn" data-reset-target="leadScriptCard">Reset</button>
                 <h3>2. Template de Script (Email GTM)</h3>
 
-                <div class="leads-form-group">
-                    <label for="leadScriptIntro">Texto fixo editável</label>
-                    <textarea id="leadScriptIntro" class="leads-script-text">Caro cliente,
+                <p>Caro cliente,</p>
 
-Conforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.
+                <p>Conforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.</p>
 
-CÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO
-Este código deve ser instalado em TODAS as páginas do website:</textarea>
-                </div>
+                <p><strong>CÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO</strong><br>
+                Este código deve ser instalado em TODAS as páginas do website:</p>
+
+                <div class="script-section-title">1ª PARTE - Colar no &lt;head&gt; (o mais alto possível, idealmente como primeiro item):</div>
                 <div class="leads-form-group">
-                    <label for="leadHeadCode">Código &lt;head&gt;</label>
-                    <textarea id="leadHeadCode" class="leads-code-textarea" placeholder="Cole aqui o código para a secção &lt;head&gt;."></textarea>
+                    <textarea id="leadHeadCode" class="leads-code-textarea" placeholder="Cole aqui o código do &lt;head&gt;"></textarea>
                 </div>
+
+                <div class="script-section-title">2ª PARTE - Colar imediatamente após a abertura da tag &lt;body&gt;:</div>
                 <div class="leads-form-group">
-                    <label for="leadBodyCode">Código &lt;body&gt;</label>
-                    <textarea id="leadBodyCode" class="leads-code-textarea" placeholder="Cole aqui o código para a secção &lt;body&gt;."></textarea>
+                    <textarea id="leadBodyCode" class="leads-code-textarea" placeholder="Cole aqui o código após &lt;body&gt;"></textarea>
                 </div>
-                <div class="leads-form-group">
-                    <label for="leadGtmId">ID GTM</label>
-                    <input type="text" id="leadGtmId" placeholder="Ex: GTM-XXXXXXX">
-                </div>
+
+                <p class="gtm-line"><strong>NOTA:</strong> Algumas plataformas necessitam apenas do ID do Google Tag Manager.
+                Aqui está o seu ID GTM:
+                <input type="text" id="leadGtmId" placeholder="GTM-XXXXXXX"></p>
+
+                <p><strong>IMPORTANTE:</strong> Ambas as partes do código são necessárias para o funcionamento correto.
+                O código deve ser implementado em todas as páginas do site.
+                Após a instalação, podemos prosseguir com a configuração das tags e eventos.</p>
+
+                <p>Fico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.</p>
+
+                <p>Com os melhores cumprimentos,<br>
+                Equipa Leadzai</p>
 
                 <div class="template-actions">
                     <button class="template-action-btn" id="copyLeadScriptBtn">Copiar Script Completo</button>
@@ -1557,7 +1594,6 @@ Equipa Leadzai
             const leadGeo = document.getElementById('leadGeo');
             const leadCampaignDetails = document.getElementById('leadCampaignDetails');
             const leadNotes = document.getElementById('leadNotes');
-            const leadScriptIntro = document.getElementById('leadScriptIntro');
             const leadHeadCode = document.getElementById('leadHeadCode');
             const leadBodyCode = document.getElementById('leadBodyCode');
             const leadGtmId = document.getElementById('leadGtmId');
@@ -2696,19 +2732,27 @@ Para cada categoria:
             }
 
             function generateScriptTemplateText() {
-                return `${getValue(leadScriptIntro)}
+                return `Caro cliente,
 
----
+Conforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.
+
+CÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO
+Este código deve ser instalado em TODAS as páginas do website:
+
 1ª PARTE - Colar no <head> (o mais alto possível, idealmente como primeiro item):
 ${getValue(leadHeadCode)}
 
----
 2ª PARTE - Colar imediatamente após a abertura da tag <body>:
 ${getValue(leadBodyCode)}
 
-NOTA: Algumas plataformas de hospedagem de websites não exigem a instalação dos scripts completos no código do site, necessitando apenas do ID do Google Tag Manager. Aqui está o seu ID GTM: ${getValue(leadGtmId)}
+NOTA: Algumas plataformas necessitam apenas do ID do Google Tag Manager.
+ID GTM: ${getValue(leadGtmId)}
 
-IMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto. O código deve ser implementado em todas as páginas do site. Após a instalação, podemos prosseguir com a configuração das tags e eventos. Fico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.
+IMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto.
+O código deve ser implementado em todas as páginas do site.
+Após a instalação, podemos prosseguir com a configuração das tags e eventos.
+
+Fico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.
 
 Com os melhores cumprimentos,
 Equipa Leadzai`;
