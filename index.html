@@ -927,7 +927,12 @@
 
             <div class="template-card" id="leadBriefingCard">
                 <button class="leads-reset-btn" data-reset-target="leadBriefingCard">Reset</button>
-                <h3>1. Template de Briefing para Campanha de Leads</h3>
+                <h3>1. Briefing para Campanha de Leads</h3>
+
+                <div class="leads-form-group">
+                    <label for="leadCampaignName">Nome da Campanha</label>
+                    <input type="text" id="leadCampaignName" placeholder="Ex: Campanha Primavera 2026">
+                </div>
 
                 <div class="leads-form-group">
                     <label for="leadBrandName">1. Nome Comercial (Marca)</label>
@@ -954,8 +959,8 @@
                     <input type="text" id="leadDuration" placeholder="Ex: 3 meses">
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadDemographic">7. Perfil Demográfico</label>
-                    <textarea id="leadDemographic" placeholder="Idade, género, profissão, etc."></textarea>
+                    <label for="leadGeo">7. Segmentação Geográfica</label>
+                    <textarea id="leadGeo" placeholder="Cidades, regiões ou raio geográfico."></textarea>
                 </div>
                 <div class="leads-form-group">
                     <label for="leadLifestyle">8. Estilo de Vida/Hábitos</label>
@@ -966,15 +971,11 @@
                     <textarea id="leadInterests" placeholder="Interesses principais do público-alvo."></textarea>
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadGeo">10. Segmentação Geográfica</label>
-                    <textarea id="leadGeo" placeholder="Cidades, regiões ou raio geográfico."></textarea>
-                </div>
-                <div class="leads-form-group">
-                    <label for="leadCampaignDetails">11. Detalhes da Campanha</label>
+                    <label for="leadCampaignDetails">10. Detalhes da Campanha</label>
                     <textarea id="leadCampaignDetails" placeholder="Objetivos, oferta, canais e criativos."></textarea>
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadNotes">12. Notas</label>
+                    <label for="leadNotes">11. Notas</label>
                     <textarea id="leadNotes" placeholder="Informação adicional relevante."></textarea>
                 </div>
 
@@ -1583,12 +1584,12 @@ Equipa Leadzai
 
             // Elementos da aba Leads
             const leadBrandName = document.getElementById('leadBrandName');
+            const leadCampaignName = document.getElementById('leadCampaignName');
             const leadLegalName = document.getElementById('leadLegalName');
             const leadWebsite = document.getElementById('leadWebsite');
             const leadContact = document.getElementById('leadContact');
             const leadBudget = document.getElementById('leadBudget');
             const leadDuration = document.getElementById('leadDuration');
-            const leadDemographic = document.getElementById('leadDemographic');
             const leadLifestyle = document.getElementById('leadLifestyle');
             const leadInterests = document.getElementById('leadInterests');
             const leadGeo = document.getElementById('leadGeo');
@@ -2715,7 +2716,7 @@ Para cada categoria:
             }
 
             function generateBriefingTemplateText() {
-                return `📋 Template de Briefing para Campanha de Leads
+                return `📋Briefing para Campanha de Leads [${getValue(leadCampaignName)}]
 
 1. Nome Comercial (Marca): ${getValue(leadBrandName)}
 2. Nome Legal/Empresa: ${getValue(leadLegalName)}
@@ -2723,12 +2724,11 @@ Para cada categoria:
 4. Contacto: ${getValue(leadContact)}
 5. Orçamento Total Disponível: ${getValue(leadBudget)}
 6. Duração da Campanha: ${getValue(leadDuration)}
-7. Perfil Demográfico: ${getValue(leadDemographic)}
+7. Segmentação Geográfica: ${getValue(leadGeo)}
 8. Estilo de Vida/Hábitos: ${getValue(leadLifestyle)}
 9. Interesses: ${getValue(leadInterests)}
-10. Segmentação Geográfica: ${getValue(leadGeo)}
-11. Detalhes da Campanha: ${getValue(leadCampaignDetails)}
-12. Notas: ${getValue(leadNotes)}`;
+10. Detalhes da Campanha: ${getValue(leadCampaignDetails)}
+11. Notas: ${getValue(leadNotes)}`;
             }
 
             function generateScriptTemplateText() {
