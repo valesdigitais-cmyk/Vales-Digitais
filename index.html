@@ -76,6 +76,7 @@
         body.dark-mode .activation-section,
         body.dark-mode .advertiser-section,
         body.dark-mode .invoices-section,
+        body.dark-mode .editor-section,
         body.dark-mode .budget-card {
             background-color: #1b1b1b;
             border-color: #333333;
@@ -89,6 +90,7 @@
         body.dark-mode .activation-text,
         body.dark-mode .template-text,
         body.dark-mode .invoice-text,
+        body.dark-mode .editor-workspace,
         body.dark-mode .formula {
             background-color: #242424;
             border-color: #3a3a3a;
@@ -196,6 +198,36 @@
             margin-top: 20px;
         }
         
+
+        .editor-section {
+            background-color: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .editor-workspace {
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            padding: 16px;
+            min-height: 500px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            outline: none;
+            line-height: 1.5;
+            font-size: 12px;
+        }
+
+        .editor-workspace:empty:before {
+            content: "Comece a escrever aqui...";
+            color: #80868b;
+        }
+
+        body.dark-mode .editor-workspace:empty:before {
+            color: #9aa0a6;
+        }
+
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -481,6 +513,7 @@
             margin-bottom: 20px;
         }
         
+
         @media (max-width: 768px) {
             .budget-grid {
                 grid-template-columns: 1fr;
@@ -663,6 +696,7 @@
             margin-bottom: 20px;
         }
         
+
         @media (max-width: 768px) {
             .campaign-buttons, .template-buttons, .invoice-buttons {
                 grid-template-columns: 1fr;
@@ -917,6 +951,7 @@
             <button class="tab-btn" data-tab="calculator-tab">Calculadora</button>
             <button class="tab-btn" data-tab="activation-tab">Ativação</button>
             <button class="tab-btn" data-tab="invoices-tab">Faturas</button>
+            <button class="tab-btn" data-tab="editor-tab">Editor</button>
         </div>
     </div>
 
@@ -1518,6 +1553,17 @@ Equipa Leadzai
         </div>
     </div>
     
+    <div id="editor-tab" class="tab-content">
+        <div class="editor-section">
+            <h2>Editor</h2>
+            <div id="editorWorkspace" class="editor-workspace" contenteditable="true" spellcheck="true"></div>
+
+            <div class="prompts-actions">
+                <button class="prompt-btn" id="copyEditorTextBtn" title="Copiar tudo do editor">Copiar Tudo</button>
+            </div>
+        </div>
+    </div>
+
     <div class="footer">
         Gerador de Fluxo de Trabalho 3000
     </div>
@@ -1609,6 +1655,9 @@ Equipa Leadzai
             const generateConfirmationInvoiceBtn = document.getElementById('generateConfirmationInvoiceBtn');
             const invoiceTextElement = document.getElementById('invoiceText');
             const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const editorWorkspace = document.getElementById('editorWorkspace');
+            const copyEditorTextBtn = document.getElementById('copyEditorTextBtn');
+
 
             function updateThemeButtonLabel() {
                 if (document.body.classList.contains('dark-mode')) {
@@ -2986,6 +3035,23 @@ Equipa Leadzai`;
                     });
             });
             
+            if (copyEditorTextBtn && editorWorkspace) {
+                copyEditorTextBtn.addEventListener('click', function() {
+                    const textToCopy = editorWorkspace.innerText.trim();
+                    if (!textToCopy) {
+                        return;
+                    }
+
+                    copyTextWithFallback(textToCopy)
+                        .then(() => {
+                            flashCopiedButton(copyEditorTextBtn, 'Copiado!');
+                        })
+                        .catch(err => {
+                            console.error('Erro ao copiar texto do editor: ', err);
+                        });
+                });
+            }
+
             // Event listeners para Enter nos emails da aba Anunciante
             confirmationEmailInput.addEventListener('keyup', function(event) {
                 if (event.key === 'Enter') {
@@ -3046,6 +3112,16 @@ Equipa Leadzai`;
                             if (currentInvoiceText) {
                                 const invoiceCopyButton = document.querySelector('[data-action="copy-invoice"]');
                                 copyToClipboard(currentInvoiceText, invoiceCopyButton);
+                            }
+                        } else if (activeTab === 'editor-tab') {
+                            if (editorWorkspace && editorWorkspace.innerText.trim()) {
+                                copyTextWithFallback(editorWorkspace.innerText.trim())
+                                    .then(() => {
+                                        flashCopiedButton(copyEditorTextBtn, 'Copiado!');
+                                    })
+                                    .catch(err => {
+                                        console.error('Erro ao copiar texto do editor: ', err);
+                                    });
                             }
                         }
                     }
