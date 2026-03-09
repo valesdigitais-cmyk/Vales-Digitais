@@ -1765,6 +1765,147 @@ Equipa Leadzai
                 }, 1400);
             }
 
+            function buildFormattedClipboardHtml(editorElement) {
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                const copyTextColor = isDarkMode ? '#ffffff' : '#202124';
+                const blockTextStyle = `font-family:'Google Sans', Arial, sans-serif; font-size:13px; line-height:1; color:${copyTextColor};`;
+                const paragraphStyle = `${blockTextStyle} margin:0 0 10px 0;`;
+                const headingStyle = `${blockTextStyle} margin:0 0 12px 0; font-weight:700;`;
+                const listStyle = `margin:0 0 10px 22px; padding:0;`;
+                const listItemStyle = `${blockTextStyle} margin:0 0 4px 0;`;
+                const outputDocument = document.implementation.createHTMLDocument('clipboard-export');
+                const outputRoot = outputDocument.createElement('div');
+
+                function sanitizeNode(node, context = 'root') {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        const text = node.textContent || '';
+                        if (context === 'root' && text.trim()) {
+                            const paragraph = outputDocument.createElement('p');
+                            paragraph.setAttribute('style', paragraphStyle);
+                            paragraph.textContent = text.trim();
+                            return paragraph;
+                        }
+                        return outputDocument.createTextNode(text);
+                    }
+
+                    if (node.nodeType !== Node.ELEMENT_NODE) {
+                        return null;
+                    }
+
+                    const tagName = node.tagName.toLowerCase();
+
+                    if (tagName === 'br') {
+                        return outputDocument.createElement('br');
+                    }
+
+                    if (tagName === 'strong' || tagName === 'b') {
+                        const strong = outputDocument.createElement('strong');
+                        Array.from(node.childNodes).forEach((childNode) => {
+                            const sanitizedChild = sanitizeNode(childNode, 'inline');
+                            if (sanitizedChild) {
+                                strong.appendChild(sanitizedChild);
+                            }
+                        });
+                        return strong;
+                    }
+
+                    if (tagName === 'em' || tagName === 'i') {
+                        const em = outputDocument.createElement('em');
+                        Array.from(node.childNodes).forEach((childNode) => {
+                            const sanitizedChild = sanitizeNode(childNode, 'inline');
+                            if (sanitizedChild) {
+                                em.appendChild(sanitizedChild);
+                            }
+                        });
+                        return em;
+                    }
+
+                    if (tagName === 'ul' || tagName === 'ol') {
+                        const list = outputDocument.createElement(tagName);
+                        list.setAttribute('style', listStyle);
+                        Array.from(node.children).forEach((childElement) => {
+                            const sanitizedItem = sanitizeNode(childElement, 'list');
+                            if (sanitizedItem) {
+                                if (sanitizedItem.tagName && sanitizedItem.tagName.toLowerCase() === 'li') {
+                                    list.appendChild(sanitizedItem);
+                                } else {
+                                    const li = outputDocument.createElement('li');
+                                    li.setAttribute('style', listItemStyle);
+                                    li.appendChild(sanitizedItem);
+                                    list.appendChild(li);
+                                }
+                            }
+                        });
+                        return list;
+                    }
+
+                    if (tagName === 'li') {
+                        const li = outputDocument.createElement('li');
+                        li.setAttribute('style', listItemStyle);
+                        Array.from(node.childNodes).forEach((childNode) => {
+                            const sanitizedChild = sanitizeNode(childNode, 'inline');
+                            if (sanitizedChild) {
+                                li.appendChild(sanitizedChild);
+                            }
+                        });
+                        if (!li.textContent.trim() && !li.querySelector('br')) {
+                            li.appendChild(outputDocument.createElement('br'));
+                        }
+                        return li;
+                    }
+
+                    if (tagName === 'p' || tagName === 'div') {
+                        const paragraph = outputDocument.createElement('p');
+                        paragraph.setAttribute('style', paragraphStyle);
+                        Array.from(node.childNodes).forEach((childNode) => {
+                            const sanitizedChild = sanitizeNode(childNode, 'inline');
+                            if (sanitizedChild) {
+                                paragraph.appendChild(sanitizedChild);
+                            }
+                        });
+                        if (!paragraph.textContent.trim() && !paragraph.querySelector('br')) {
+                            paragraph.appendChild(outputDocument.createElement('br'));
+                        }
+                        return paragraph;
+                    }
+
+                    if (/^h[1-6]$/.test(tagName)) {
+                        const headingAsParagraph = outputDocument.createElement('p');
+                        headingAsParagraph.setAttribute('style', headingStyle);
+                        const strong = outputDocument.createElement('strong');
+                        Array.from(node.childNodes).forEach((childNode) => {
+                            const sanitizedChild = sanitizeNode(childNode, 'inline');
+                            if (sanitizedChild) {
+                                strong.appendChild(sanitizedChild);
+                            }
+                        });
+                        if (!strong.textContent.trim() && !strong.querySelector('br')) {
+                            strong.appendChild(outputDocument.createElement('br'));
+                        }
+                        headingAsParagraph.appendChild(strong);
+                        return headingAsParagraph;
+                    }
+
+                    const fragment = outputDocument.createDocumentFragment();
+                    Array.from(node.childNodes).forEach((childNode) => {
+                        const sanitizedChild = sanitizeNode(childNode, context);
+                        if (sanitizedChild) {
+                            fragment.appendChild(sanitizedChild);
+                        }
+                    });
+                    return fragment;
+                }
+
+                Array.from(editorElement.childNodes).forEach((childNode) => {
+                    const sanitizedChild = sanitizeNode(childNode, 'root');
+                    if (sanitizedChild) {
+                        outputRoot.appendChild(sanitizedChild);
+                    }
+                });
+
+                return outputRoot.innerHTML;
+            }
+
             function copyEditorContent() {
                 if (!editorWorkspace) {
                     return;
@@ -1777,9 +1918,7 @@ Equipa Leadzai
                     return;
                 }
 
-                const isDarkMode = document.body.classList.contains('dark-mode');
-                const copyTextColor = isDarkMode ? '#ffffff' : '#202124';
-                const htmlToCopy = `<div style="font-family:'Google Sans', Arial, sans-serif; font-size:13px; line-height:1.5; color:${copyTextColor};">${editorWorkspace.innerHTML}</div>`;
+                const htmlToCopy = buildFormattedClipboardHtml(editorWorkspace);
                 const canWriteHtml = typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write;
 
                 if (canWriteHtml) {
