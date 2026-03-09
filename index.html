@@ -213,7 +213,7 @@
             padding: 16px;
             min-height: 500px;
             outline: none;
-            line-height: 1;
+            line-height: 1.5;
             font-size: 13px;
             font-family: 'Google Sans', Arial, sans-serif;
         }
@@ -221,7 +221,7 @@
         .editor-workspace p,
         .editor-workspace div {
             margin: 0;
-            line-height: 1;
+            line-height: 1.5;
             font-size: 13px;
             font-family: 'Google Sans', Arial, sans-serif;
         }
@@ -233,6 +233,23 @@
 
         body.dark-mode .editor-workspace:empty:before {
             color: #9aa0a6;
+        }
+
+
+        .editor-maintenance-warning {
+            margin-bottom: 14px;
+            padding: 10px 12px;
+            border: 1px solid #d93025;
+            background: #fce8e6;
+            color: #d93025;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        body.dark-mode .editor-maintenance-warning {
+            background: rgba(217, 48, 37, 0.16);
+            color: #f28b82;
+            border-color: #f28b82;
         }
 
         .editor-copy-feedback {
@@ -1616,6 +1633,7 @@ Equipa Leadzai
     <div id="editor-tab" class="tab-content">
         <div class="editor-section">
             <h2>Editor</h2>
+            <p class="editor-maintenance-warning">⚠️ Aba em manutenção: a formatação do editor pode apresentar instabilidade temporária.</p>
             <div id="editorWorkspace" class="editor-workspace" contenteditable="true" spellcheck="true"></div>
 
             <div class="prompts-actions">
@@ -1759,7 +1777,7 @@ Equipa Leadzai
                     return;
                 }
 
-                const htmlToCopy = `<div style="font-family:'Google Sans', Arial, sans-serif; font-size:13px; line-height:1;">${editorWorkspace.innerHTML}</div>`;
+                const htmlToCopy = `<div style="font-family:'Google Sans', Arial, sans-serif; font-size:13px; line-height:1.5;">${editorWorkspace.innerHTML}</div>`;
                 const canWriteHtml = typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write;
 
                 if (canWriteHtml) {
