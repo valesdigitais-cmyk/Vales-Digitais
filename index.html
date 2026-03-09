@@ -1637,7 +1637,7 @@ Equipa Leadzai
             <div id="editorWorkspace" class="editor-workspace" contenteditable="true" spellcheck="true"></div>
 
             <div class="prompts-actions">
-                <button class="prompt-btn" id="copyEditorTextBtn" title="Copiar tudo do editor (Ctrl+Shift+C)">Copiar Tudo (Ctrl+Shift+C)</button>
+                <button class="prompt-btn" id="copyEditorTextBtn" title="Copiar tudo do editor (Ctrl+Shift+C)">Copiar</button>
             </div>
             <p id="editorCopyFeedback" class="editor-copy-feedback">Sem texto para copiar.</p>
         </div>
@@ -1777,7 +1777,9 @@ Equipa Leadzai
                     return;
                 }
 
-                const htmlToCopy = `<div style="font-family:'Google Sans', Arial, sans-serif; font-size:13px; line-height:1.5;">${editorWorkspace.innerHTML}</div>`;
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                const copyTextColor = isDarkMode ? '#ffffff' : '#202124';
+                const htmlToCopy = `<div style="font-family:'Google Sans', Arial, sans-serif; font-size:13px; line-height:1.5; color:${copyTextColor};">${editorWorkspace.innerHTML}</div>`;
                 const canWriteHtml = typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write;
 
                 if (canWriteHtml) {
