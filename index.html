@@ -212,11 +212,18 @@
             border: 1px solid #e0e0e0;
             padding: 16px;
             min-height: 500px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
             outline: none;
-            line-height: 1.5;
-            font-size: 12px;
+            line-height: 1;
+            font-size: 13px;
+            font-family: 'Google Sans', Arial, sans-serif;
+        }
+
+        .editor-workspace p,
+        .editor-workspace div {
+            margin: 0;
+            line-height: 1;
+            font-size: 13px;
+            font-family: 'Google Sans', Arial, sans-serif;
         }
 
         .editor-workspace:empty:before {
@@ -226,6 +233,59 @@
 
         body.dark-mode .editor-workspace:empty:before {
             color: #9aa0a6;
+        }
+
+        .editor-copy-feedback {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #80868b;
+        }
+
+        .editor-copy-feedback.error {
+            color: #d93025;
+        }
+
+        .editor-copy-feedback.success {
+            color: #188038;
+        }
+
+        .floating-copy-notification {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #202124;
+            color: #ffffff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            font-size: 12px;
+            opacity: 0;
+            transform: translateY(8px);
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 9999;
+        }
+
+        .floating-copy-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        body.dark-mode .editor-copy-feedback {
+            color: #9aa0a6;
+        }
+
+        body.dark-mode .editor-copy-feedback.error {
+            color: #f28b82;
+        }
+
+        body.dark-mode .editor-copy-feedback.success {
+            color: #81c995;
+        }
+
+        body.dark-mode .floating-copy-notification {
+            background: #e8eaed;
+            color: #202124;
         }
 
         @media (max-width: 768px) {
@@ -1559,10 +1619,13 @@ Equipa Leadzai
             <div id="editorWorkspace" class="editor-workspace" contenteditable="true" spellcheck="true"></div>
 
             <div class="prompts-actions">
-                <button class="prompt-btn" id="copyEditorTextBtn" title="Copiar tudo do editor">Copiar Tudo</button>
+                <button class="prompt-btn" id="copyEditorTextBtn" title="Copiar tudo do editor (Ctrl+Shift+C)">Copiar Tudo (Ctrl+Shift+C)</button>
             </div>
+            <p id="editorCopyFeedback" class="editor-copy-feedback">Sem texto para copiar.</p>
         </div>
     </div>
+
+    <div id="floatingCopyNotification" class="floating-copy-notification" role="status" aria-live="polite"></div>
 
     <div class="footer">
         Gerador de Fluxo de Trabalho 3000
@@ -1657,6 +1720,102 @@ Equipa Leadzai
             const themeToggleBtn = document.getElementById('themeToggleBtn');
             const editorWorkspace = document.getElementById('editorWorkspace');
             const copyEditorTextBtn = document.getElementById('copyEditorTextBtn');
+            const editorCopyFeedback = document.getElementById('editorCopyFeedback');
+            const floatingCopyNotification = document.getElementById('floatingCopyNotification');
+
+            function setEditorCopyFeedback(message, status = '') {
+                if (!editorCopyFeedback) {
+                    return;
+                }
+
+                editorCopyFeedback.textContent = message;
+                editorCopyFeedback.classList.remove('error', 'success');
+                if (status) {
+                    editorCopyFeedback.classList.add(status);
+                }
+            }
+
+            function showFloatingCopyNotification(message) {
+                if (!floatingCopyNotification) {
+                    return;
+                }
+
+                floatingCopyNotification.textContent = message;
+                floatingCopyNotification.classList.add('show');
+                setTimeout(() => {
+                    floatingCopyNotification.classList.remove('show');
+                }, 1400);
+            }
+
+            function copyEditorContent() {
+                if (!editorWorkspace) {
+                    return;
+                }
+
+                const plainText = editorWorkspace.innerText.trim();
+                if (!plainText) {
+                    setEditorCopyFeedback('Sem texto para copiar.', 'error');
+                    showFloatingCopyNotification('Nada para copiar.');
+                    return;
+                }
+
+                const htmlToCopy = `<div style="font-family:'Google Sans', Arial, sans-serif; font-size:13px; line-height:1;">${editorWorkspace.innerHTML}</div>`;
+                const canWriteHtml = typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write;
+
+                if (canWriteHtml) {
+                    const clipboardItem = new ClipboardItem({
+                        'text/plain': new Blob([plainText], { type: 'text/plain' }),
+                        'text/html': new Blob([htmlToCopy], { type: 'text/html' })
+                    });
+
+                    navigator.clipboard.write([clipboardItem])
+                        .then(() => {
+                            flashCopiedButton(copyEditorTextBtn, 'Copiado!');
+                            setEditorCopyFeedback('Copiado com formatação e texto puro.', 'success');
+                            showFloatingCopyNotification('Texto copiado com sucesso!');
+                        })
+                        .catch(() => {
+                            copyTextWithFallback(plainText)
+                                .then(() => {
+                                    flashCopiedButton(copyEditorTextBtn, 'Copiado!');
+                                    setEditorCopyFeedback('Copiado em modo compatível (texto puro).', 'success');
+                                    showFloatingCopyNotification('Copiado em modo compatível.');
+                                })
+                                .catch((err) => {
+                                    console.error('Erro ao copiar texto do editor: ', err);
+                                    setEditorCopyFeedback('Não foi possível copiar.', 'error');
+                                });
+                        });
+
+                    return;
+                }
+
+                copyTextWithFallback(plainText)
+                    .then(() => {
+                        flashCopiedButton(copyEditorTextBtn, 'Copiado!');
+                        setEditorCopyFeedback('Copiado em modo compatível (texto puro).', 'success');
+                        showFloatingCopyNotification('Copiado em modo compatível.');
+                    })
+                    .catch((err) => {
+                        console.error('Erro ao copiar texto do editor: ', err);
+                        setEditorCopyFeedback('Não foi possível copiar.', 'error');
+                    });
+            }
+
+            function updateEditorCopyState() {
+                if (!editorWorkspace || !copyEditorTextBtn) {
+                    return;
+                }
+
+                const hasText = editorWorkspace.innerText.trim().length > 0;
+                copyEditorTextBtn.disabled = !hasText;
+                copyEditorTextBtn.style.opacity = hasText ? '1' : '0.6';
+                copyEditorTextBtn.style.cursor = hasText ? 'pointer' : 'not-allowed';
+
+                if (!hasText) {
+                    setEditorCopyFeedback('Sem texto para copiar.');
+                }
+            }
 
 
             function updateThemeButtonLabel() {
@@ -3037,19 +3196,18 @@ Equipa Leadzai`;
             
             if (copyEditorTextBtn && editorWorkspace) {
                 copyEditorTextBtn.addEventListener('click', function() {
-                    const textToCopy = editorWorkspace.innerText.trim();
-                    if (!textToCopy) {
-                        return;
-                    }
-
-                    copyTextWithFallback(textToCopy)
-                        .then(() => {
-                            flashCopiedButton(copyEditorTextBtn, 'Copiado!');
-                        })
-                        .catch(err => {
-                            console.error('Erro ao copiar texto do editor: ', err);
-                        });
+                    copyEditorContent();
                 });
+
+                editorWorkspace.addEventListener('input', updateEditorCopyState);
+                editorWorkspace.addEventListener('paste', function(event) {
+                    event.preventDefault();
+                    const pastedText = (event.clipboardData || window.clipboardData).getData('text');
+                    document.execCommand('insertHTML', false, `<p>${pastedText.replace(/\n/g, '</p><p>')}</p>`);
+                    updateEditorCopyState();
+                });
+
+                updateEditorCopyState();
             }
 
             // Event listeners para Enter nos emails da aba Anunciante
@@ -3067,7 +3225,7 @@ Equipa Leadzai`;
             
             // Atalho de teclado para copiar
             document.addEventListener('keydown', function(event) {
-                if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
+                if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c' && !event.shiftKey) {
                     const selection = window.getSelection();
                     if (selection.toString().length === 0) {
                         event.preventDefault();
@@ -3114,16 +3272,18 @@ Equipa Leadzai`;
                                 copyToClipboard(currentInvoiceText, invoiceCopyButton);
                             }
                         } else if (activeTab === 'editor-tab') {
-                            if (editorWorkspace && editorWorkspace.innerText.trim()) {
-                                copyTextWithFallback(editorWorkspace.innerText.trim())
-                                    .then(() => {
-                                        flashCopiedButton(copyEditorTextBtn, 'Copiado!');
-                                    })
-                                    .catch(err => {
-                                        console.error('Erro ao copiar texto do editor: ', err);
-                                    });
-                            }
+                            copyEditorContent();
                         }
+                    }
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key.toLowerCase() === 'c') {
+                    const activeTab = document.querySelector('.tab-btn.active')?.getAttribute('data-tab');
+                    if (activeTab === 'editor-tab') {
+                        event.preventDefault();
+                        copyEditorContent();
                     }
                 }
             });
