@@ -97,6 +97,19 @@
             color: #ebebeb;
         }
 
+        body.dark-mode .editor-toolbar-btn {
+            background-color: #1f1f1f;
+            border-color: #3a3a3a;
+            color: #ebebeb;
+        }
+
+        body.dark-mode .editor-toolbar-btn:hover,
+        body.dark-mode .editor-toolbar-btn.active {
+            border-color: #8ab4f8;
+            color: #8ab4f8;
+            background: rgba(138, 180, 248, 0.14);
+        }
+
         body.dark-mode .tab-btn,
         body.dark-mode .platform-btn {
             background-color: #2a2a2a;
@@ -210,12 +223,77 @@
         .editor-workspace {
             background: #f8f8f8;
             border: 1px solid #e0e0e0;
+            border-radius: 6px;
             padding: 16px;
             min-height: 500px;
             outline: none;
             line-height: 1.5;
             font-size: 13px;
             font-family: 'Google Sans', Arial, sans-serif;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .editor-workspace.is-focused {
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+        }
+
+        .editor-workspace.is-empty::before {
+            content: attr(data-placeholder);
+            color: #80868b;
+            pointer-events: none;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .editor-toolbar-btn {
+            border: 1px solid #dadce0;
+            background: #ffffff;
+            color: #202124;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .editor-toolbar-btn:hover {
+            border-color: #1a73e8;
+            color: #1a73e8;
+        }
+
+        .editor-toolbar-btn.active {
+            background: #e8f0fe;
+            border-color: #1a73e8;
+            color: #1a73e8;
+        }
+
+        .editor-toolbar-select {
+            border: 1px solid #dadce0;
+            background: #ffffff;
+            color: #202124;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .editor-size-small {
+            font-size: 11px;
+        }
+
+        .editor-size-medium {
+            font-size: 13px;
+        }
+
+        .editor-size-large {
+            font-size: 16px;
         }
 
         .editor-workspace p,
@@ -226,13 +304,14 @@
             font-family: 'Google Sans', Arial, sans-serif;
         }
 
-        .editor-workspace:empty:before {
-            content: "Comece a escrever aqui...";
-            color: #80868b;
+        body.dark-mode .editor-workspace.is-empty::before {
+            color: #9aa0a6;
         }
 
-        body.dark-mode .editor-workspace:empty:before {
-            color: #9aa0a6;
+        body.dark-mode .editor-toolbar-select {
+            background-color: #1f1f1f;
+            border-color: #3a3a3a;
+            color: #ebebeb;
         }
 
 
@@ -1735,13 +1814,28 @@ Equipa Leadzai
     <div id="editor-tab" class="tab-content">
         <div class="editor-section">
             <h2>Editor</h2>
-            <p class="editor-maintenance-warning">⚠️ Aba em manutenção: a formatação do editor pode apresentar instabilidade temporária.</p>
-            <div id="editorWorkspace" class="editor-workspace" contenteditable="true" spellcheck="true"></div>
+            <div class="editor-toolbar" role="toolbar" aria-label="Formatação do editor">
+                <button class="editor-toolbar-btn" type="button" data-editor-command="bold"><strong>B</strong></button>
+                <button class="editor-toolbar-btn" type="button" data-editor-command="italic"><em>I</em></button>
+                <button class="editor-toolbar-btn" type="button" data-editor-command="unorderedList">• Lista</button>
+                <button class="editor-toolbar-btn" type="button" data-editor-command="orderedList">1. Lista</button>
+                <select id="editorTextSizeSelect" class="editor-toolbar-select" aria-label="Tamanho do texto">
+                    <option value="">Tamanho</option>
+                    <option value="editor-size-small">Pequeno</option>
+                    <option value="editor-size-medium">Médio</option>
+                    <option value="editor-size-large">Grande</option>
+                </select>
+                <button class="editor-toolbar-btn" type="button" data-editor-command="clearTextSize">Reset tamanho</button>
+                <button class="editor-toolbar-btn" type="button" data-editor-command="undo">↶ Undo</button>
+                <button class="editor-toolbar-btn" type="button" data-editor-command="redo">↷ Redo</button>
+            </div>
+            <div id="editorWorkspace" class="editor-workspace" contenteditable="true" spellcheck="true" data-placeholder="Comece a escrever aqui..."></div>
 
             <div class="prompts-actions">
                 <button class="prompt-btn" id="copyEditorTextBtn" title="Copiar tudo do editor (Ctrl+Shift+C)">Copiar</button>
             </div>
             <p id="editorCopyFeedback" class="editor-copy-feedback">Sem texto para copiar.</p>
+            <p id="editorDirtyStatus" class="editor-copy-feedback">Sem alterações pendentes.</p>
         </div>
     </div>
 
@@ -1892,6 +1986,9 @@ Equipa Leadzai
             const copyEditorTextBtn = document.getElementById('copyEditorTextBtn');
             const editorCopyFeedback = document.getElementById('editorCopyFeedback');
             const floatingCopyNotification = document.getElementById('floatingCopyNotification');
+            const editorToolbarButtons = document.querySelectorAll('[data-editor-command]');
+            const editorTextSizeSelect = document.getElementById('editorTextSizeSelect');
+            const editorDirtyStatus = document.getElementById('editorDirtyStatus');
 
             // Elementos da aba Versionamento
             const userSelector = document.getElementById('userSelector');
@@ -2136,6 +2233,414 @@ Equipa Leadzai
                 if (!hasText) {
                     setEditorCopyFeedback('Sem texto para copiar.');
                 }
+            }
+
+            const editorStorageKey = 'editor-workspace-html';
+            const editorUndoStack = [];
+            const editorRedoStack = [];
+            let isApplyingEditorCommand = false;
+            let saveDraftTimeout = null;
+            let lastSavedEditorHtml = '';
+            let isDirtyEditor = false;
+            let typingSnapshotTimeout = null;
+            let lastEditorRange = null;
+            const sizeClasses = ['editor-size-small', 'editor-size-medium', 'editor-size-large'];
+
+            function escapeHtml(value) {
+                const div = document.createElement('div');
+                div.textContent = value;
+                return div.innerHTML;
+            }
+
+            function sanitizeEditorHtml(rawHtml) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(`<div>${rawHtml || ''}</div>`, 'text/html');
+                const wrapper = doc.body.firstElementChild;
+                const allowedTags = new Set(['P', 'BR', 'STRONG', 'EM', 'UL', 'OL', 'LI', 'SPAN']);
+
+                function sanitizeNode(node) {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        return doc.createTextNode(node.textContent || '');
+                    }
+
+                    if (node.nodeType !== Node.ELEMENT_NODE) {
+                        return null;
+                    }
+
+                    const tag = node.tagName.toUpperCase();
+                    const normalizedTag = tag === 'B' ? 'STRONG' : tag === 'I' ? 'EM' : tag;
+
+                    if (!allowedTags.has(normalizedTag)) {
+                        const fragment = doc.createDocumentFragment();
+                        Array.from(node.childNodes).forEach((childNode) => {
+                            const sanitizedChild = sanitizeNode(childNode);
+                            if (sanitizedChild) {
+                                fragment.appendChild(sanitizedChild);
+                            }
+                        });
+                        return fragment;
+                    }
+
+                    const element = doc.createElement(normalizedTag.toLowerCase());
+                    if (normalizedTag === 'SPAN') {
+                        const className = (node.getAttribute('class') || '').split(/\s+/).find((token) => sizeClasses.includes(token));
+                        if (!className) {
+                            const fragment = doc.createDocumentFragment();
+                            Array.from(node.childNodes).forEach((childNode) => {
+                                const sanitizedChild = sanitizeNode(childNode);
+                                if (sanitizedChild) {
+                                    fragment.appendChild(sanitizedChild);
+                                }
+                            });
+                            return fragment;
+                        }
+                        element.setAttribute('class', className);
+                    }
+
+                    Array.from(node.childNodes).forEach((childNode) => {
+                        const sanitizedChild = sanitizeNode(childNode);
+                        if (sanitizedChild) {
+                            element.appendChild(sanitizedChild);
+                        }
+                    });
+                    return element;
+                }
+
+                const container = doc.createElement('div');
+                Array.from(wrapper.childNodes).forEach((childNode) => {
+                    const sanitizedChild = sanitizeNode(childNode);
+                    if (!sanitizedChild) {
+                        return;
+                    }
+                    if (sanitizedChild.nodeType === Node.TEXT_NODE && sanitizedChild.textContent.trim()) {
+                        const paragraph = doc.createElement('p');
+                        paragraph.textContent = sanitizedChild.textContent;
+                        container.appendChild(paragraph);
+                        return;
+                    }
+                    container.appendChild(sanitizedChild);
+                });
+
+                return container.innerHTML.trim();
+            }
+
+            function setEditorDirtyState(isDirty) {
+                isDirtyEditor = isDirty;
+                if (editorDirtyStatus) {
+                    editorDirtyStatus.textContent = isDirty ? 'Alterações por guardar…' : 'Sem alterações pendentes.';
+                    editorDirtyStatus.classList.toggle('success', !isDirty);
+                }
+            }
+
+            function saveEditorSelection() {
+                const selection = window.getSelection();
+                if (!selection || selection.rangeCount === 0 || !editorWorkspace?.contains(selection.anchorNode)) {
+                    return null;
+                }
+                return selection.getRangeAt(0).cloneRange();
+            }
+
+            function restoreEditorSelection(savedRange) {
+                if (!savedRange) {
+                    return;
+                }
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(savedRange);
+            }
+
+            function normalizeEditorContent() {
+                if (!editorWorkspace) {
+                    return;
+                }
+
+                if (!editorWorkspace.textContent.trim()) {
+                    editorWorkspace.innerHTML = '';
+                    editorWorkspace.classList.add('is-empty');
+                    return;
+                }
+
+                editorWorkspace.classList.remove('is-empty');
+                const range = saveEditorSelection();
+                let hasChanges = false;
+
+                Array.from(editorWorkspace.childNodes).forEach((node) => {
+                    if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                        const paragraph = document.createElement('p');
+                        paragraph.textContent = node.textContent;
+                        editorWorkspace.replaceChild(paragraph, node);
+                        hasChanges = true;
+                    } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'DIV') {
+                        const paragraph = document.createElement('p');
+                        paragraph.innerHTML = node.innerHTML;
+                        editorWorkspace.replaceChild(paragraph, node);
+                        hasChanges = true;
+                    } else if (node.nodeType === Node.ELEMENT_NODE && !['P', 'UL', 'OL'].includes(node.tagName)) {
+                        const paragraph = document.createElement('p');
+                        paragraph.innerHTML = node.outerHTML;
+                        editorWorkspace.replaceChild(paragraph, node);
+                        hasChanges = true;
+                    }
+                });
+
+                editorWorkspace.querySelectorAll('span').forEach((span) => {
+                    const spanClasses = Array.from(span.classList).filter((cls) => sizeClasses.includes(cls));
+                    if (spanClasses.length > 1) {
+                        span.className = spanClasses[0];
+                        hasChanges = true;
+                    } else if (spanClasses.length === 0) {
+                        const parent = span.parentNode;
+                        while (span.firstChild) {
+                            parent.insertBefore(span.firstChild, span);
+                        }
+                        parent.removeChild(span);
+                        hasChanges = true;
+                    } else if (span.parentElement?.tagName === 'SPAN' && span.parentElement.classList.contains(spanClasses[0])) {
+                        while (span.firstChild) {
+                            span.parentElement.insertBefore(span.firstChild, span);
+                        }
+                        span.remove();
+                        hasChanges = true;
+                    }
+                });
+
+                if (hasChanges && range) {
+                    restoreEditorSelection(range);
+                }
+            }
+
+            function persistEditorContent() {
+                if (!editorWorkspace) {
+                    return;
+                }
+                const sanitized = sanitizeEditorHtml(editorWorkspace.innerHTML);
+                if (sanitized === lastSavedEditorHtml) {
+                    return;
+                }
+                localStorage.setItem(editorStorageKey, sanitized);
+                lastSavedEditorHtml = sanitized;
+                setEditorDirtyState(false);
+            }
+
+            function scheduleEditorPersist() {
+                clearTimeout(saveDraftTimeout);
+                saveDraftTimeout = setTimeout(() => {
+                    persistEditorContent();
+                }, 220);
+            }
+
+            function pushEditorSnapshot() {
+                if (!editorWorkspace) {
+                    return;
+                }
+                const snapshot = sanitizeEditorHtml(editorWorkspace.innerHTML);
+                if (editorUndoStack[editorUndoStack.length - 1] === snapshot) {
+                    return;
+                }
+                editorUndoStack.push(snapshot);
+                if (editorUndoStack.length > 80) {
+                    editorUndoStack.shift();
+                }
+            }
+
+            function getEditorRange() {
+                const selection = window.getSelection();
+                if (!selection || selection.rangeCount === 0 || !editorWorkspace.contains(selection.anchorNode)) {
+                    return lastEditorRange ? lastEditorRange.cloneRange() : null;
+                }
+                const currentRange = selection.getRangeAt(0).cloneRange();
+                lastEditorRange = currentRange.cloneRange();
+                return currentRange;
+            }
+
+            function applyEditorHtml(html, preserveSelection = false) {
+                if (!editorWorkspace) {
+                    return;
+                }
+                const savedRange = preserveSelection ? saveEditorSelection() : null;
+                editorWorkspace.innerHTML = sanitizeEditorHtml(html);
+                normalizeEditorContent();
+                if (savedRange) {
+                    restoreEditorSelection(savedRange);
+                }
+                updateEditorCopyState();
+            }
+
+            function toggleInlineTag(tagName) {
+                const range = getEditorRange();
+                const selection = window.getSelection();
+                if (!range || selection.isCollapsed) {
+                    return;
+                }
+                try {
+                    const wrapper = document.createElement(tagName);
+                    range.surroundContents(wrapper);
+                } catch (_) {
+                    document.execCommand(tagName === 'strong' ? 'bold' : 'italic');
+                }
+            }
+
+            function applyTextSizeToSelection(sizeClass) {
+                const range = getEditorRange();
+                const selection = window.getSelection();
+                if (!range || selection.isCollapsed) {
+                    return;
+                }
+
+                try {
+                    const fragment = range.extractContents();
+                    const wrapper = document.createElement('span');
+                    wrapper.className = sizeClass;
+                    wrapper.appendChild(fragment);
+                    range.insertNode(wrapper);
+                    range.selectNodeContents(wrapper);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                } catch (_) {
+                    const selectedText = selection.toString();
+                    if (!selectedText) {
+                        return;
+                    }
+                    const html = `<span class="${sizeClass}">${escapeHtml(selectedText)}</span>`;
+                    document.execCommand('insertHTML', false, html);
+                }
+            }
+
+            function clearTextSizeOnSelection() {
+                const range = getEditorRange();
+                const selection = window.getSelection();
+                if (!range || selection.isCollapsed) {
+                    return;
+                }
+
+                const fragment = range.extractContents();
+                const holder = document.createElement('div');
+                holder.appendChild(fragment);
+                holder.querySelectorAll('span').forEach((span) => {
+                    span.classList.remove(...sizeClasses);
+                    if (!span.className.trim()) {
+                        const parent = span.parentNode;
+                        while (span.firstChild) {
+                            parent.insertBefore(span.firstChild, span);
+                        }
+                        parent.removeChild(span);
+                    }
+                });
+                const cleanFragment = document.createDocumentFragment();
+                while (holder.firstChild) {
+                    cleanFragment.appendChild(holder.firstChild);
+                }
+                range.insertNode(cleanFragment);
+                selection.removeAllRanges();
+            }
+
+            function executeEditorCommand(command) {
+                if (!editorWorkspace || isApplyingEditorCommand) {
+                    return;
+                }
+
+                isApplyingEditorCommand = true;
+                pushEditorSnapshot();
+                editorRedoStack.length = 0;
+
+                if (command === 'bold') {
+                    toggleInlineTag('strong');
+                } else if (command === 'italic') {
+                    toggleInlineTag('em');
+                } else if (command === 'unorderedList') {
+                    document.execCommand('insertUnorderedList');
+                } else if (command === 'orderedList') {
+                    document.execCommand('insertOrderedList');
+                } else if (command === 'clearTextSize') {
+                    clearTextSizeOnSelection();
+                } else if (command === 'undo') {
+                    if (editorUndoStack.length > 0) {
+                        const current = sanitizeEditorHtml(editorWorkspace.innerHTML);
+                        const previous = editorUndoStack.pop();
+                        editorRedoStack.push(current);
+                        applyEditorHtml(previous, false);
+                    }
+                } else if (command === 'redo') {
+                    if (editorRedoStack.length > 0) {
+                        pushEditorSnapshot();
+                        const next = editorRedoStack.pop();
+                        applyEditorHtml(next, false);
+                    }
+                }
+
+                normalizeEditorContent();
+                updateEditorCopyState();
+                setEditorDirtyState(true);
+                scheduleEditorPersist();
+                isApplyingEditorCommand = false;
+            }
+
+            function handleEditorPaste(event) {
+                event.preventDefault();
+                const pasteText = (event.clipboardData || window.clipboardData).getData('text/plain');
+                if (!pasteText) {
+                    return;
+                }
+
+                const selection = window.getSelection();
+                if (!selection || selection.rangeCount === 0) {
+                    return;
+                }
+
+                const range = selection.getRangeAt(0);
+                range.deleteContents();
+                const lines = pasteText.replace(/\r\n?/g, '\n').split('\n');
+                const fragment = document.createDocumentFragment();
+
+                lines.forEach((line) => {
+                    const paragraph = document.createElement('p');
+                    paragraph.textContent = line;
+                    fragment.appendChild(paragraph);
+                });
+
+                range.insertNode(fragment);
+                selection.collapseToEnd();
+                setEditorDirtyState(true);
+            }
+
+            function handleEditorEnter(event) {
+                if (event.key !== 'Enter' || event.shiftKey) {
+                    return;
+                }
+
+                const selection = window.getSelection();
+                if (!selection || selection.rangeCount === 0 || !editorWorkspace.contains(selection.anchorNode)) {
+                    return;
+                }
+
+                const listAncestor = selection.anchorNode.nodeType === Node.ELEMENT_NODE
+                    ? selection.anchorNode.closest('li')
+                    : selection.anchorNode.parentElement?.closest('li');
+                if (listAncestor) {
+                    return;
+                }
+
+                event.preventDefault();
+                const range = selection.getRangeAt(0);
+                range.deleteContents();
+                const paragraph = document.createElement('p');
+                paragraph.appendChild(document.createElement('br'));
+                range.insertNode(paragraph);
+                range.setStart(paragraph, 0);
+                range.collapse(true);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                setEditorDirtyState(true);
+            }
+
+            function loadEditorDraft() {
+                if (!editorWorkspace) {
+                    return;
+                }
+                const storedHtml = localStorage.getItem(editorStorageKey) || '';
+                applyEditorHtml(storedHtml);
+                lastSavedEditorHtml = sanitizeEditorHtml(editorWorkspace.innerHTML);
+                setEditorDirtyState(false);
             }
 
 
@@ -3698,15 +4203,79 @@ Equipa Leadzai`;
                     copyEditorContent();
                 });
 
-                editorWorkspace.addEventListener('input', updateEditorCopyState);
-                editorWorkspace.addEventListener('paste', function(event) {
-                    event.preventDefault();
-                    const pastedText = (event.clipboardData || window.clipboardData).getData('text');
-                    document.execCommand('insertHTML', false, `<p>${pastedText.replace(/\n/g, '</p><p>')}</p>`);
-                    updateEditorCopyState();
+                loadEditorDraft();
+                pushEditorSnapshot();
+                updateEditorCopyState();
+
+                editorWorkspace.addEventListener('focus', () => {
+                    editorWorkspace.classList.add('is-focused');
+                    const activeRange = getEditorRange();
+                    if (activeRange) {
+                        lastEditorRange = activeRange.cloneRange();
+                    }
                 });
 
-                updateEditorCopyState();
+                editorWorkspace.addEventListener('blur', () => {
+                    editorWorkspace.classList.remove('is-focused');
+                    normalizeEditorContent();
+                    persistEditorContent();
+                });
+
+                editorWorkspace.addEventListener('keydown', handleEditorEnter);
+                editorWorkspace.addEventListener('keyup', () => {
+                    const activeRange = getEditorRange();
+                    if (activeRange) {
+                        lastEditorRange = activeRange.cloneRange();
+                    }
+                });
+                editorWorkspace.addEventListener('mouseup', () => {
+                    const activeRange = getEditorRange();
+                    if (activeRange) {
+                        lastEditorRange = activeRange.cloneRange();
+                    }
+                });
+                editorWorkspace.addEventListener('paste', handleEditorPaste);
+                editorWorkspace.addEventListener('input', () => {
+                    updateEditorCopyState();
+                    setEditorDirtyState(true);
+                    scheduleEditorPersist();
+
+                    clearTimeout(typingSnapshotTimeout);
+                    typingSnapshotTimeout = setTimeout(() => {
+                        pushEditorSnapshot();
+                    }, 450);
+                });
+            }
+
+            if (editorToolbarButtons.length > 0 && editorWorkspace) {
+                editorToolbarButtons.forEach((button) => {
+                    button.addEventListener('mousedown', (event) => {
+                        event.preventDefault();
+                    });
+
+                    button.addEventListener('click', () => {
+                        const command = button.getAttribute('data-editor-command');
+                        editorWorkspace.focus();
+                        executeEditorCommand(command);
+                    });
+                });
+            }
+
+            if (editorTextSizeSelect && editorWorkspace) {
+                editorTextSizeSelect.addEventListener('change', () => {
+                    const sizeClass = editorTextSizeSelect.value;
+                    if (!sizeClass) {
+                        return;
+                    }
+                    editorWorkspace.focus();
+                    pushEditorSnapshot();
+                    applyTextSizeToSelection(sizeClass);
+                    normalizeEditorContent();
+                    updateEditorCopyState();
+                    setEditorDirtyState(true);
+                    scheduleEditorPersist();
+                    editorTextSizeSelect.value = '';
+                });
             }
 
             // Event listeners para Enter nos emails da aba Anunciante
