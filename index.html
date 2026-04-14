@@ -2085,7 +2085,9 @@ Equipa Leadzai
             let isDirtyEditor = false;
             let typingSnapshotTimeout = null;
             let lastEditorRange = null;
+            let lastEditorSelection = null;
             const sizeClasses = ['editor-size-small', 'editor-size-medium', 'editor-size-large'];
+            const inlineTags = new Set(['STRONG', 'EM', 'SPAN']);
 
             function escapeHtml(value) {
                 const div = document.createElement('div');
@@ -2098,8 +2100,52 @@ Equipa Leadzai
                 const doc = parser.parseFromString(`<div>${rawHtml || ''}</div>`, 'text/html');
                 const wrapper = doc.body.firstElementChild;
                 const allowedTags = new Set(['P', 'BR', 'STRONG', 'EM', 'UL', 'OL', 'LI', 'SPAN']);
+                const blockTags = new Set(['P', 'UL', 'OL', 'LI']);
 
-                function sanitizeNode(node) {
+                function isEmptyOrWhitespaceText(node) {
+                    return node.nodeType === Node.TEXT_NODE && !(node.textContent || '').trim();
+                }
+
+                function normalizeInlineNode(node) {
+                    if (node.nodeType !== Node.ELEMENT_NODE) {
+                        return;
+                    }
+                    Array.from(node.childNodes).forEach((child) => normalizeInlineNode(child));
+
+                    if (node.tagName === 'SPAN') {
+                        if (!node.textContent.trim() && !node.querySelector('br')) {
+                            node.remove();
+                            return;
+                        }
+
+                        const spanClasses = Array.from(node.classList).filter((token) => sizeClasses.includes(token));
+                        if (spanClasses.length === 0) {
+                            const parent = node.parentNode;
+                            while (node.firstChild) {
+                                parent.insertBefore(node.firstChild, node);
+                            }
+                            node.remove();
+                            return;
+                        }
+                        node.className = spanClasses[0];
+                    }
+
+                    const parentTag = node.parentElement?.tagName;
+                    if (parentTag && parentTag === node.tagName && inlineTags.has(node.tagName)) {
+                        const parent = node.parentNode;
+                        while (node.firstChild) {
+                            parent.insertBefore(node.firstChild, node);
+                        }
+                        node.remove();
+                        return;
+                    }
+
+                    if ((node.tagName === 'STRONG' || node.tagName === 'EM') && !node.textContent.trim()) {
+                        node.remove();
+                    }
+                }
+
+                function sanitizeNode(node, context = 'root') {
                     if (node.nodeType === Node.TEXT_NODE) {
                         return doc.createTextNode(node.textContent || '');
                     }
@@ -2114,12 +2160,45 @@ Equipa Leadzai
                     if (!allowedTags.has(normalizedTag)) {
                         const fragment = doc.createDocumentFragment();
                         Array.from(node.childNodes).forEach((childNode) => {
-                            const sanitizedChild = sanitizeNode(childNode);
+                            const sanitizedChild = sanitizeNode(childNode, context);
                             if (sanitizedChild) {
                                 fragment.appendChild(sanitizedChild);
                             }
                         });
                         return fragment;
+                    }
+
+                    if (context === 'root' && normalizedTag === 'LI') {
+                        const paragraph = doc.createElement('p');
+                        Array.from(node.childNodes).forEach((childNode) => {
+                            const sanitizedChild = sanitizeNode(childNode, 'inline');
+                            if (sanitizedChild) {
+                                paragraph.appendChild(sanitizedChild);
+                            }
+                        });
+                        return paragraph;
+                    }
+
+                    if (context === 'inline' && blockTags.has(normalizedTag)) {
+                        if (normalizedTag === 'LI') {
+                            const fragment = doc.createDocumentFragment();
+                            Array.from(node.childNodes).forEach((childNode) => {
+                                const sanitizedChild = sanitizeNode(childNode, 'inline');
+                                if (sanitizedChild) {
+                                    fragment.appendChild(sanitizedChild);
+                                }
+                            });
+                            return fragment;
+                        }
+
+                        const paragraph = doc.createElement('p');
+                        Array.from(node.childNodes).forEach((childNode) => {
+                            const sanitizedChild = sanitizeNode(childNode, 'inline');
+                            if (sanitizedChild) {
+                                paragraph.appendChild(sanitizedChild);
+                            }
+                        });
+                        return paragraph;
                     }
 
                     const element = doc.createElement(normalizedTag.toLowerCase());
@@ -2128,7 +2207,7 @@ Equipa Leadzai
                         if (!className) {
                             const fragment = doc.createDocumentFragment();
                             Array.from(node.childNodes).forEach((childNode) => {
-                                const sanitizedChild = sanitizeNode(childNode);
+                                const sanitizedChild = sanitizeNode(childNode, 'inline');
                                 if (sanitizedChild) {
                                     fragment.appendChild(sanitizedChild);
                                 }
@@ -2139,17 +2218,43 @@ Equipa Leadzai
                     }
 
                     Array.from(node.childNodes).forEach((childNode) => {
-                        const sanitizedChild = sanitizeNode(childNode);
+                        const childContext = normalizedTag === 'UL' || normalizedTag === 'OL'
+                            ? 'list'
+                            : blockTags.has(normalizedTag) ? 'inline' : context;
+                        const sanitizedChild = sanitizeNode(childNode, childContext);
                         if (sanitizedChild) {
+                            if ((normalizedTag === 'UL' || normalizedTag === 'OL')
+                                && sanitizedChild.nodeType === Node.ELEMENT_NODE
+                                && sanitizedChild.tagName !== 'LI') {
+                                const li = doc.createElement('li');
+                                li.appendChild(sanitizedChild);
+                                element.appendChild(li);
+                                return;
+                            }
+                            if (normalizedTag === 'LI'
+                                && sanitizedChild.nodeType === Node.ELEMENT_NODE
+                                && blockTags.has(sanitizedChild.tagName)
+                                && sanitizedChild.tagName !== 'SPAN') {
+                                const fragment = doc.createDocumentFragment();
+                                while (sanitizedChild.firstChild) {
+                                    fragment.appendChild(sanitizedChild.firstChild);
+                                }
+                                element.appendChild(fragment);
+                                return;
+                            }
                             element.appendChild(sanitizedChild);
                         }
                     });
+
+                    Array.from(element.childNodes)
+                        .filter(isEmptyOrWhitespaceText)
+                        .forEach((emptyTextNode) => emptyTextNode.remove());
                     return element;
                 }
 
                 const container = doc.createElement('div');
                 Array.from(wrapper.childNodes).forEach((childNode) => {
-                    const sanitizedChild = sanitizeNode(childNode);
+                    const sanitizedChild = sanitizeNode(childNode, 'root');
                     if (!sanitizedChild) {
                         return;
                     }
@@ -2160,6 +2265,13 @@ Equipa Leadzai
                         return;
                     }
                     container.appendChild(sanitizedChild);
+                });
+
+                Array.from(container.querySelectorAll('*')).forEach((node) => normalizeInlineNode(node));
+                container.querySelectorAll('p').forEach((paragraph) => {
+                    if (!paragraph.textContent.trim() && !paragraph.querySelector('br')) {
+                        paragraph.innerHTML = '<br>';
+                    }
                 });
 
                 return container.innerHTML.trim();
@@ -2188,6 +2300,66 @@ Equipa Leadzai
                 const selection = window.getSelection();
                 selection.removeAllRanges();
                 selection.addRange(savedRange);
+            }
+
+            function getEditorSelectionOffsets() {
+                if (!editorWorkspace) {
+                    return null;
+                }
+                const selection = window.getSelection();
+                if (!selection || selection.rangeCount === 0 || !editorWorkspace.contains(selection.anchorNode)) {
+                    return null;
+                }
+
+                const range = selection.getRangeAt(0);
+                const preRange = range.cloneRange();
+                preRange.selectNodeContents(editorWorkspace);
+                preRange.setEnd(range.startContainer, range.startOffset);
+
+                const start = preRange.toString().length;
+                const length = range.toString().length;
+                return { start, end: start + length };
+            }
+
+            function restoreEditorSelectionFromOffsets(savedSelection) {
+                if (!editorWorkspace || !savedSelection) {
+                    return;
+                }
+
+                const textNodes = [];
+                const walker = document.createTreeWalker(editorWorkspace, NodeFilter.SHOW_TEXT, null);
+                let textNode = walker.nextNode();
+                while (textNode) {
+                    textNodes.push(textNode);
+                    textNode = walker.nextNode();
+                }
+
+                const locate = (offset) => {
+                    let remaining = Math.max(0, offset);
+                    for (let index = 0; index < textNodes.length; index += 1) {
+                        const currentTextNode = textNodes[index];
+                        const nodeLength = currentTextNode.textContent.length;
+                        if (remaining <= nodeLength) {
+                            return { node: currentTextNode, offset: remaining };
+                        }
+                        remaining -= nodeLength;
+                    }
+                    return {
+                        node: editorWorkspace,
+                        offset: editorWorkspace.childNodes.length
+                    };
+                };
+
+                const startPosition = locate(savedSelection.start);
+                const endPosition = locate(savedSelection.end);
+
+                const range = document.createRange();
+                range.setStart(startPosition.node, startPosition.offset);
+                range.setEnd(endPosition.node, endPosition.offset);
+
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
             }
 
             function normalizeEditorContent() {
@@ -2245,6 +2417,14 @@ Equipa Leadzai
                     }
                 });
 
+                editorWorkspace.querySelectorAll('strong strong, em em').forEach((nestedTag) => {
+                    while (nestedTag.firstChild) {
+                        nestedTag.parentElement.insertBefore(nestedTag.firstChild, nestedTag);
+                    }
+                    nestedTag.remove();
+                    hasChanges = true;
+                });
+
                 if (hasChanges && range) {
                     restoreEditorSelection(range);
                 }
@@ -2275,6 +2455,9 @@ Equipa Leadzai
                     return;
                 }
                 const snapshot = sanitizeEditorHtml(editorWorkspace.innerHTML);
+                if (snapshot === editorRedoStack[editorRedoStack.length - 1]) {
+                    return;
+                }
                 if (editorUndoStack[editorUndoStack.length - 1] === snapshot) {
                     return;
                 }
@@ -2298,12 +2481,13 @@ Equipa Leadzai
                 if (!editorWorkspace) {
                     return;
                 }
-                const savedRange = preserveSelection ? saveEditorSelection() : null;
+                const savedSelection = preserveSelection ? (getEditorSelectionOffsets() || lastEditorSelection) : null;
                 editorWorkspace.innerHTML = sanitizeEditorHtml(html);
                 normalizeEditorContent();
-                if (savedRange) {
-                    restoreEditorSelection(savedRange);
+                if (savedSelection) {
+                    restoreEditorSelectionFromOffsets(savedSelection);
                 }
+                lastEditorSelection = getEditorSelectionOffsets();
                 updateEditorCopyState();
             }
 
@@ -2381,8 +2565,12 @@ Equipa Leadzai
                 }
 
                 isApplyingEditorCommand = true;
-                pushEditorSnapshot();
-                editorRedoStack.length = 0;
+                const beforeHtml = sanitizeEditorHtml(editorWorkspace.innerHTML);
+                const shouldTrackChange = !['undo', 'redo'].includes(command);
+                if (shouldTrackChange) {
+                    pushEditorSnapshot();
+                    editorRedoStack.length = 0;
+                }
 
                 if (command === 'bold') {
                     toggleInlineTag('strong');
@@ -2398,21 +2586,29 @@ Equipa Leadzai
                     if (editorUndoStack.length > 0) {
                         const current = sanitizeEditorHtml(editorWorkspace.innerHTML);
                         const previous = editorUndoStack.pop();
-                        editorRedoStack.push(current);
+                        if (previous !== current) {
+                            editorRedoStack.push(current);
+                        }
                         applyEditorHtml(previous, false);
                     }
                 } else if (command === 'redo') {
                     if (editorRedoStack.length > 0) {
-                        pushEditorSnapshot();
                         const next = editorRedoStack.pop();
+                        const current = sanitizeEditorHtml(editorWorkspace.innerHTML);
+                        if (next !== current) {
+                            editorUndoStack.push(current);
+                        }
                         applyEditorHtml(next, false);
                     }
                 }
 
                 normalizeEditorContent();
                 updateEditorCopyState();
-                setEditorDirtyState(true);
-                scheduleEditorPersist();
+                const afterHtml = sanitizeEditorHtml(editorWorkspace.innerHTML);
+                if (beforeHtml !== afterHtml) {
+                    setEditorDirtyState(true);
+                    scheduleEditorPersist();
+                }
                 isApplyingEditorCommand = false;
             }
 
@@ -2422,6 +2618,8 @@ Equipa Leadzai
                 if (!pasteText) {
                     return;
                 }
+                pushEditorSnapshot();
+                editorRedoStack.length = 0;
 
                 const selection = window.getSelection();
                 if (!selection || selection.rangeCount === 0) {
@@ -2435,12 +2633,18 @@ Equipa Leadzai
 
                 lines.forEach((line) => {
                     const paragraph = document.createElement('p');
-                    paragraph.textContent = line;
+                    if (line.trim()) {
+                        paragraph.textContent = line;
+                    } else {
+                        paragraph.appendChild(document.createElement('br'));
+                    }
                     fragment.appendChild(paragraph);
                 });
 
                 range.insertNode(fragment);
                 selection.collapseToEnd();
+                normalizeEditorContent();
+                lastEditorSelection = getEditorSelectionOffsets();
                 setEditorDirtyState(true);
             }
 
@@ -2462,6 +2666,8 @@ Equipa Leadzai
                 }
 
                 event.preventDefault();
+                pushEditorSnapshot();
+                editorRedoStack.length = 0;
                 const range = selection.getRangeAt(0);
                 range.deleteContents();
                 const paragraph = document.createElement('p');
@@ -2471,6 +2677,7 @@ Equipa Leadzai
                 range.collapse(true);
                 selection.removeAllRanges();
                 selection.addRange(range);
+                lastEditorSelection = getEditorSelectionOffsets();
                 setEditorDirtyState(true);
             }
 
@@ -3879,6 +4086,7 @@ Equipa Leadzai`;
                     if (activeRange) {
                         lastEditorRange = activeRange.cloneRange();
                     }
+                    lastEditorSelection = getEditorSelectionOffsets();
                 });
 
                 editorWorkspace.addEventListener('blur', () => {
@@ -3893,18 +4101,29 @@ Equipa Leadzai`;
                     if (activeRange) {
                         lastEditorRange = activeRange.cloneRange();
                     }
+                    lastEditorSelection = getEditorSelectionOffsets();
                 });
                 editorWorkspace.addEventListener('mouseup', () => {
                     const activeRange = getEditorRange();
                     if (activeRange) {
                         lastEditorRange = activeRange.cloneRange();
                     }
+                    lastEditorSelection = getEditorSelectionOffsets();
                 });
                 editorWorkspace.addEventListener('paste', handleEditorPaste);
                 editorWorkspace.addEventListener('input', () => {
+                    const selectionBeforeNormalize = getEditorSelectionOffsets();
+                    normalizeEditorContent();
+                    if (selectionBeforeNormalize) {
+                        restoreEditorSelectionFromOffsets(selectionBeforeNormalize);
+                    }
+                    lastEditorSelection = getEditorSelectionOffsets();
                     updateEditorCopyState();
-                    setEditorDirtyState(true);
-                    scheduleEditorPersist();
+                    const currentSanitizedHtml = sanitizeEditorHtml(editorWorkspace.innerHTML);
+                    if (currentSanitizedHtml !== lastSavedEditorHtml) {
+                        setEditorDirtyState(true);
+                        scheduleEditorPersist();
+                    }
 
                     clearTimeout(typingSnapshotTimeout);
                     typingSnapshotTimeout = setTimeout(() => {
@@ -3937,6 +4156,7 @@ Equipa Leadzai`;
                     pushEditorSnapshot();
                     applyTextSizeToSelection(sizeClass);
                     normalizeEditorContent();
+                    lastEditorSelection = getEditorSelectionOffsets();
                     updateEditorCopyState();
                     setEditorDirtyState(true);
                     scheduleEditorPersist();
