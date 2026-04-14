@@ -1013,6 +1013,107 @@
             border-color: #3a3a3a;
             color: #ebebeb;
         }
+
+
+        .versioning-section {
+            background-color: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 24px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .versioning-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .versioning-controls label {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .versioning-controls select,
+        .versioning-controls input,
+        .versioning-editor {
+            width: 100%;
+            border: 1px solid #b0b0b0;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+
+        .versioning-editor {
+            min-height: 180px;
+            resize: vertical;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .versioning-meta {
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: #5f6368;
+        }
+
+        .version-history-list {
+            list-style: none;
+            border: 1px solid #e0e0e0;
+            max-height: 280px;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .version-history-item {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 10px 12px;
+            cursor: pointer;
+        }
+
+        .version-history-item:last-child {
+            border-bottom: none;
+        }
+
+        .version-history-item strong {
+            font-size: 12px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .version-history-item small {
+            display: block;
+            color: #5f6368;
+        }
+
+        body.dark-mode .versioning-section {
+            background-color: #1b1b1b;
+            border-color: #333333;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode .versioning-controls select,
+        body.dark-mode .versioning-controls input,
+        body.dark-mode .versioning-editor {
+            background-color: #242424;
+            border-color: #3a3a3a;
+            color: #ebebeb;
+        }
+
+        body.dark-mode .version-history-list,
+        body.dark-mode .version-history-item {
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .versioning-meta,
+        body.dark-mode .version-history-item small {
+            color: #bdbdbd;
+        }
+
     </style>
 </head>
 <body>
@@ -1029,6 +1130,7 @@
             <button class="tab-btn" data-tab="activation-tab">Ativação</button>
             <button class="tab-btn" data-tab="invoices-tab">Faturas</button>
             <button class="tab-btn" data-tab="editor-tab">Editor</button>
+            <button class="tab-btn" data-tab="template-history-tab">Versionamento</button>
         </div>
     </div>
 
@@ -1649,6 +1751,56 @@ Equipa Leadzai
         Gerador de Fluxo de Trabalho 3000
     </div>
 
+
+
+    <div id="template-history-tab" class="tab-content">
+        <div class="versioning-section">
+            <h2>Templates com histórico de versões</h2>
+            <p class="versioning-meta">Utilizador atual: <strong id="currentUserLabel">-</strong></p>
+
+            <div class="versioning-controls">
+                <div>
+                    <label for="userSelector">Login simples (utilizador)</label>
+                    <select id="userSelector">
+                        <option value="Ana">Ana</option>
+                        <option value="Bruno">Bruno</option>
+                        <option value="Carla">Carla</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="templateSelector">Template</label>
+                    <select id="templateSelector">
+                        <option value="welcome">Welcome</option>
+                        <option value="activation">Ativação</option>
+                        <option value="invoice">Fatura</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="historyFilter">Filtro do histórico</label>
+                    <select id="historyFilter">
+                        <option value="all">Todas as versões</option>
+                        <option value="current-user">Só do utilizador atual</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for="templateVersionEditor" style="font-size:12px;font-weight:600;display:block;margin-bottom:6px;">Conteúdo da versão</label>
+            <textarea id="templateVersionEditor" class="versioning-editor" placeholder="Edite o template e grave uma nova versão."></textarea>
+
+            <div class="versioning-controls" style="margin-bottom:10px;">
+                <div>
+                    <label for="changeMessageInput">Mensagem de alteração</label>
+                    <input type="text" id="changeMessageInput" placeholder="Ex: Ajuste de tom e CTA final">
+                </div>
+            </div>
+
+            <button class="template-btn" id="saveVersionBtn">Guardar nova versão</button>
+
+            <h3 style="margin:16px 0 10px;">Histórico</h3>
+            <ul id="versionHistoryList" class="version-history-list"></ul>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Elementos das abas
@@ -1740,6 +1892,16 @@ Equipa Leadzai
             const copyEditorTextBtn = document.getElementById('copyEditorTextBtn');
             const editorCopyFeedback = document.getElementById('editorCopyFeedback');
             const floatingCopyNotification = document.getElementById('floatingCopyNotification');
+
+            // Elementos da aba Versionamento
+            const userSelector = document.getElementById('userSelector');
+            const currentUserLabel = document.getElementById('currentUserLabel');
+            const templateSelector = document.getElementById('templateSelector');
+            const historyFilter = document.getElementById('historyFilter');
+            const templateVersionEditor = document.getElementById('templateVersionEditor');
+            const changeMessageInput = document.getElementById('changeMessageInput');
+            const saveVersionBtn = document.getElementById('saveVersionBtn');
+            const versionHistoryList = document.getElementById('versionHistoryList');
 
             function setEditorCopyFeedback(message, status = '') {
                 if (!editorCopyFeedback) {
@@ -2722,6 +2884,182 @@ Para cada categoria:
 - Sugestões de imagem:`
             };
             
+
+            // Sistema simples de utilizadores + histórico de versões em localStorage
+            const currentUserStorageKey = 'currentUser';
+            const templateVersionStorageKey = 'template-version-store';
+
+            function getVersionStore() {
+                try {
+                    const rawStore = localStorage.getItem(templateVersionStorageKey);
+                    if (!rawStore) {
+                        return {
+                            templates: {
+                                welcome: [{ content: 'Template welcome inicial.', editedBy: 'Sistema', timestamp: new Date().toISOString(), changeMessage: 'Versão inicial' }],
+                                activation: [{ content: 'Template ativação inicial.', editedBy: 'Sistema', timestamp: new Date().toISOString(), changeMessage: 'Versão inicial' }],
+                                invoice: [{ content: 'Template fatura inicial.', editedBy: 'Sistema', timestamp: new Date().toISOString(), changeMessage: 'Versão inicial' }]
+                            }
+                        };
+                    }
+
+                    const parsed = JSON.parse(rawStore);
+                    if (!parsed.templates) {
+                        parsed.templates = {};
+                    }
+
+                    ['welcome', 'activation', 'invoice'].forEach((templateName) => {
+                        if (!Array.isArray(parsed.templates[templateName]) || parsed.templates[templateName].length === 0) {
+                            parsed.templates[templateName] = [{
+                                content: `Template ${templateName} inicial.`,
+                                editedBy: 'Sistema',
+                                timestamp: new Date().toISOString(),
+                                changeMessage: 'Versão inicial'
+                            }];
+                        }
+                    });
+
+                    return parsed;
+                } catch (error) {
+                    console.error('Erro ao ler histórico de versões:', error);
+                    return { templates: { welcome: [], activation: [], invoice: [] } };
+                }
+            }
+
+            function saveVersionStore(store) {
+                localStorage.setItem(templateVersionStorageKey, JSON.stringify(store));
+            }
+
+            function formatTimestamp(value) {
+                return new Date(value).toLocaleString('pt-PT', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            function getCurrentUser() {
+                const savedUser = localStorage.getItem(currentUserStorageKey);
+                return savedUser || userSelector?.value || 'Ana';
+            }
+
+            function setCurrentUser(userName) {
+                localStorage.setItem(currentUserStorageKey, userName);
+                if (currentUserLabel) {
+                    currentUserLabel.textContent = userName;
+                }
+            }
+
+            function renderVersionHistory() {
+                if (!versionHistoryList || !templateSelector || !historyFilter) {
+                    return;
+                }
+
+                const selectedTemplate = templateSelector.value;
+                const selectedFilter = historyFilter.value;
+                const currentUser = getCurrentUser();
+                const store = getVersionStore();
+                const allVersions = (store.templates[selectedTemplate] || []).slice().reverse();
+
+                const visibleVersions = allVersions.filter((version) => {
+                    if (selectedFilter === 'current-user') {
+                        return version.editedBy === currentUser;
+                    }
+                    return true;
+                });
+
+                versionHistoryList.innerHTML = '';
+
+                if (visibleVersions.length === 0) {
+                    versionHistoryList.innerHTML = '<li class="version-history-item"><small>Sem versões para este filtro.</small></li>';
+                    return;
+                }
+
+                visibleVersions.forEach((version) => {
+                    const item = document.createElement('li');
+                    item.className = 'version-history-item';
+                    item.innerHTML = `
+                        <strong>${version.changeMessage || 'Sem mensagem de alteração'}</strong>
+                        <small>Editado por ${version.editedBy} • ${formatTimestamp(version.timestamp)}</small>
+                    `;
+                    item.addEventListener('click', () => {
+                        templateVersionEditor.value = version.content;
+                    });
+                    versionHistoryList.appendChild(item);
+                });
+            }
+
+            function loadLatestTemplateVersion() {
+                if (!templateSelector || !templateVersionEditor) {
+                    return;
+                }
+
+                const store = getVersionStore();
+                const selectedTemplate = templateSelector.value;
+                const versions = store.templates[selectedTemplate] || [];
+                const latestVersion = versions[versions.length - 1];
+                templateVersionEditor.value = latestVersion?.content || '';
+            }
+
+            function saveNewTemplateVersion() {
+                const selectedTemplate = templateSelector?.value;
+                const content = templateVersionEditor?.value?.trim();
+                const changeMessage = changeMessageInput?.value?.trim();
+                const currentUser = getCurrentUser();
+
+                if (!content) {
+                    alert('O conteúdo da versão não pode estar vazio.');
+                    return;
+                }
+
+                const store = getVersionStore();
+                if (!store.templates[selectedTemplate]) {
+                    store.templates[selectedTemplate] = [];
+                }
+
+                store.templates[selectedTemplate].push({
+                    content,
+                    editedBy: currentUser,
+                    timestamp: new Date().toISOString(),
+                    changeMessage: changeMessage || 'Atualização sem descrição'
+                });
+
+                saveVersionStore(store);
+                if (changeMessageInput) {
+                    changeMessageInput.value = '';
+                }
+                renderVersionHistory();
+                flashCopiedButton(saveVersionBtn, 'Guardado!');
+            }
+
+            function initializeVersioningSystem() {
+                if (!userSelector || !templateSelector || !saveVersionBtn) {
+                    return;
+                }
+
+                const savedUser = getCurrentUser();
+                userSelector.value = savedUser;
+                setCurrentUser(savedUser);
+
+                saveVersionStore(getVersionStore());
+                loadLatestTemplateVersion();
+                renderVersionHistory();
+
+                userSelector.addEventListener('change', () => {
+                    setCurrentUser(userSelector.value);
+                    renderVersionHistory();
+                });
+
+                templateSelector.addEventListener('change', () => {
+                    loadLatestTemplateVersion();
+                    renderVersionHistory();
+                });
+
+                historyFilter.addEventListener('change', renderVersionHistory);
+                saveVersionBtn.addEventListener('click', saveNewTemplateVersion);
+            }
+
             // Sistema de abas
             const activeTabStorageKey = 'active-tab';
 
@@ -3461,6 +3799,8 @@ Equipa Leadzai`;
             if (dividerInput) {
                 calculateFiftyFive();
             }
+
+            initializeVersioningSystem();
             
             // Focar no input da calculadora se estiver na aba certa
             setTimeout(() => {
