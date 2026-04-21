@@ -675,16 +675,53 @@
         }
         
         .budget-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
             margin-bottom: 20px;
         }
-        
+
+        .welcome-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .welcome-row-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            color: #444;
+        }
+
+        .welcome-row-track {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            padding-bottom: 6px;
+        }
+
+        .welcome-row-track::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .welcome-row-track::-webkit-scrollbar-thumb {
+            background: #c7c7c7;
+            border-radius: 999px;
+        }
+
+        .welcome-row-track .budget-card {
+            flex: 0 0 280px;
+            min-width: 280px;
+        }
 
         @media (max-width: 768px) {
-            .budget-grid {
-                grid-template-columns: 1fr;
+            .welcome-row-track .budget-card {
+                flex-basis: 90%;
+                min-width: 90%;
             }
         }
         
@@ -1245,6 +1282,9 @@
 
             <div id="google-welcomes" class="platform-welcomes active">
                 <div class="budget-grid">
+                    <div class="welcome-row">
+                        <div class="welcome-row-title">Linha 1 · Welcomes</div>
+                        <div class="welcome-row-track" data-wheel-horizontal>
                     <div class="budget-card">
                         <div class="budget-price">500€</div>
                         <ul class="budget-features">
@@ -1254,17 +1294,6 @@
                             <li>Template completo de boas-vindas Google</li>
                         </ul>
                         <button class="prompt-btn copy-welcome-btn" data-budget="500" data-platform="google">Copiar Welcome 500€</button>
-                    </div>
-
-                    <div class="budget-card">
-                        <div class="budget-price">Reforço de 500€</div>
-                        <ul class="budget-features">
-                            <li>Follow-up para recolha de dados</li>
-                            <li>5 anúncios criados</li>
-                            <li>2 categorias de anúncios</li>
-                            <li>Template de reforço de informações</li>
-                        </ul>
-                        <button class="prompt-btn copy-welcome-btn" data-budget="500-reforco" data-platform="google">Copiar Reforço 500€</button>
                     </div>
 
                     <div class="budget-card">
@@ -1279,17 +1308,6 @@
                     </div>
 
                     <div class="budget-card">
-                        <div class="budget-price">Reforço de 1000€</div>
-                        <ul class="budget-features">
-                            <li>Follow-up para recolha de dados</li>
-                            <li>8 anúncios criados</li>
-                            <li>3 categorias de anúncios</li>
-                            <li>Template de reforço de informações</li>
-                        </ul>
-                        <button class="prompt-btn copy-welcome-btn" data-budget="1000-reforco" data-platform="google">Copiar Reforço 1000€</button>
-                    </div>
-
-                    <div class="budget-card">
                         <div class="budget-price">1500€+</div>
                         <ul class="budget-features">
                             <li>12 anúncios criados</li>
@@ -1298,6 +1316,33 @@
                             <li>Template completo de boas-vindas Google</li>
                         </ul>
                         <button class="prompt-btn copy-welcome-btn" data-budget="1500" data-platform="google">Copiar Welcome 1500€+</button>
+                    </div>
+                        </div>
+                    </div>
+
+                    <div class="welcome-row">
+                        <div class="welcome-row-title">Linha 2 · Forcings</div>
+                        <div class="welcome-row-track" data-wheel-horizontal>
+                    <div class="budget-card">
+                        <div class="budget-price">Reforço de 500€</div>
+                        <ul class="budget-features">
+                            <li>Follow-up para recolha de dados</li>
+                            <li>5 anúncios criados</li>
+                            <li>2 categorias de anúncios</li>
+                            <li>Template de reforço de informações</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="500-reforco" data-platform="google">Copiar Reforço 500€</button>
+                    </div>
+
+                    <div class="budget-card">
+                        <div class="budget-price">Reforço de 1000€</div>
+                        <ul class="budget-features">
+                            <li>Follow-up para recolha de dados</li>
+                            <li>8 anúncios criados</li>
+                            <li>3 categorias de anúncios</li>
+                            <li>Template de reforço de informações</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="1000-reforco" data-platform="google">Copiar Reforço 1000€</button>
                     </div>
 
                     <div class="budget-card">
@@ -1310,7 +1355,12 @@
                         </ul>
                         <button class="prompt-btn copy-welcome-btn" data-budget="1500-reforco" data-platform="google">Copiar Reforço 1500+€</button>
                     </div>
+                        </div>
+                    </div>
 
+                    <div class="welcome-row">
+                        <div class="welcome-row-title">Linha 3 · Sugestões</div>
+                        <div class="welcome-row-track" data-wheel-horizontal>
                     <div class="budget-card">
                         <div class="budget-price">Instante Site</div>
                         <ul class="budget-features">
@@ -1343,11 +1393,16 @@
                         </ul>
                         <button class="prompt-btn copy-welcome-btn" data-budget="taxa-simulacao" data-platform="google">Copiar Taxa e Simulação</button>
                     </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div id="meta-welcomes" class="platform-welcomes">
                 <div class="budget-grid">
+                    <div class="welcome-row">
+                        <div class="welcome-row-title">Linha 1 · Welcomes</div>
+                        <div class="welcome-row-track" data-wheel-horizontal>
                     <div class="budget-card">
                         <div class="budget-price">500€</div>
                         <ul class="budget-features">
@@ -1357,17 +1412,6 @@
                             <li>Template completo de boas-vindas Meta</li>
                         </ul>
                         <button class="prompt-btn copy-welcome-btn" data-budget="500" data-platform="meta">Copiar Welcome 500€</button>
-                    </div>
-
-                    <div class="budget-card">
-                        <div class="budget-price">Reforço de 500€</div>
-                        <ul class="budget-features">
-                            <li>Follow-up para recolha de dados</li>
-                            <li>5 anúncios criados</li>
-                            <li>2 categorias de anúncios</li>
-                            <li>Template de reforço de informações</li>
-                        </ul>
-                        <button class="prompt-btn copy-welcome-btn" data-budget="500-reforco" data-platform="meta">Copiar Reforço 500€</button>
                     </div>
 
                     <div class="budget-card">
@@ -1382,17 +1426,6 @@
                     </div>
 
                     <div class="budget-card">
-                        <div class="budget-price">Reforço de 1000€</div>
-                        <ul class="budget-features">
-                            <li>Follow-up para recolha de dados</li>
-                            <li>8 anúncios criados</li>
-                            <li>3 categorias de anúncios</li>
-                            <li>Template de reforço de informações</li>
-                        </ul>
-                        <button class="prompt-btn copy-welcome-btn" data-budget="1000-reforco" data-platform="meta">Copiar Reforço 1000€</button>
-                    </div>
-
-                    <div class="budget-card">
                         <div class="budget-price">1500€+</div>
                         <ul class="budget-features">
                             <li>12 anúncios criados</li>
@@ -1401,6 +1434,33 @@
                             <li>Template completo de boas-vindas Meta</li>
                         </ul>
                         <button class="prompt-btn copy-welcome-btn" data-budget="1500" data-platform="meta">Copiar Welcome 1500€+</button>
+                    </div>
+                        </div>
+                    </div>
+
+                    <div class="welcome-row">
+                        <div class="welcome-row-title">Linha 2 · Forcings</div>
+                        <div class="welcome-row-track" data-wheel-horizontal>
+                    <div class="budget-card">
+                        <div class="budget-price">Reforço de 500€</div>
+                        <ul class="budget-features">
+                            <li>Follow-up para recolha de dados</li>
+                            <li>5 anúncios criados</li>
+                            <li>2 categorias de anúncios</li>
+                            <li>Template de reforço de informações</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="500-reforco" data-platform="meta">Copiar Reforço 500€</button>
+                    </div>
+
+                    <div class="budget-card">
+                        <div class="budget-price">Reforço de 1000€</div>
+                        <ul class="budget-features">
+                            <li>Follow-up para recolha de dados</li>
+                            <li>8 anúncios criados</li>
+                            <li>3 categorias de anúncios</li>
+                            <li>Template de reforço de informações</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="1000-reforco" data-platform="meta">Copiar Reforço 1000€</button>
                     </div>
 
                     <div class="budget-card">
@@ -1413,7 +1473,12 @@
                         </ul>
                         <button class="prompt-btn copy-welcome-btn" data-budget="1500-reforco" data-platform="meta">Copiar Reforço 1500+€</button>
                     </div>
+                        </div>
+                    </div>
 
+                    <div class="welcome-row">
+                        <div class="welcome-row-title">Linha 3 · Sugestões</div>
+                        <div class="welcome-row-track" data-wheel-horizontal>
                     <div class="budget-card">
                         <div class="budget-price">Instante Site</div>
                         <ul class="budget-features">
@@ -1445,6 +1510,8 @@
                             <li>Template de esclarecimento ao cliente</li>
                         </ul>
                         <button class="prompt-btn copy-welcome-btn" data-budget="taxa-simulacao" data-platform="meta">Copiar Taxa e Simulação</button>
+                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3808,6 +3875,22 @@ Para cada categoria:
                     currentPromptText = '';
                 });
             });
+
+            function enableHorizontalWheelScroll() {
+                const horizontalRows = document.querySelectorAll('[data-wheel-horizontal]');
+                horizontalRows.forEach(row => {
+                    row.addEventListener('wheel', event => {
+                        if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) {
+                            return;
+                        }
+
+                        event.preventDefault();
+                        row.scrollBy({ left: event.deltaY, behavior: 'smooth' });
+                    }, { passive: false });
+                });
+            }
+
+            enableHorizontalWheelScroll();
 
             welcomePlatformButtons.forEach(button => {
                 button.addEventListener('click', () => {
