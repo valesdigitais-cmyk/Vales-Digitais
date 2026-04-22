@@ -1277,7 +1277,7 @@
             <div class="platform-buttons welcome-platform-buttons">
                 <button class="platform-btn welcome-platform-btn active" data-welcome-platform="google">Google Ads</button>
                 <button class="platform-btn welcome-platform-btn" data-welcome-platform="meta">Meta Ads</button>
-                <button class="platform-btn welcome-platform-btn" data-welcome-platform="omnichannel">Omnichannel</button>
+                <button class="platform-btn welcome-platform-btn" data-welcome-platform="omnichannel">Variantes</button>
             </div>
 
             <div id="google-welcomes" class="platform-welcomes active">
@@ -1359,7 +1359,7 @@
                     </div>
 
                     <div class="welcome-row">
-                        <div class="welcome-row-title">Linha 3 · Sugestões</div>
+                        <div class="welcome-row-title">Linha 3 · Fs's</div>
                         <div class="welcome-row-track" data-wheel-horizontal>
                     <div class="budget-card">
                         <div class="budget-price">Instante Site</div>
@@ -1477,7 +1477,7 @@
                     </div>
 
                     <div class="welcome-row">
-                        <div class="welcome-row-title">Linha 3 · Sugestões</div>
+                        <div class="welcome-row-title">Linha 3 · Fs's</div>
                         <div class="welcome-row-track" data-wheel-horizontal>
                     <div class="budget-card">
                         <div class="budget-price">Instante Site</div>
@@ -1516,7 +1516,47 @@
                 </div>
             </div>
 
-            <div id="omnichannel-welcomes" class="platform-welcomes"></div>
+            <div id="omnichannel-welcomes" class="platform-welcomes">
+                <div class="budget-grid">
+                    <div class="welcome-row">
+                        <div class="welcome-row-title">Linha 1 · Variantes</div>
+                        <div class="welcome-row-track" data-wheel-horizontal>
+                    <div class="budget-card">
+                        <div class="budget-price">Google + Meta</div>
+                        <ul class="budget-features">
+                            <li>Welcome combinado entre plataformas</li>
+                            <li>Google Ads + Meta Ads</li>
+                            <li>Mensagem única e alinhada</li>
+                            <li>Template para campanhas híbridas</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="google-meta" data-platform="omnichannel">Copiar Google + Meta</button>
+                    </div>
+
+                    <div class="budget-card">
+                        <div class="budget-price">Google Leads + Meta</div>
+                        <ul class="budget-features">
+                            <li>Estratégia focada em leads no Google</li>
+                            <li>Suporte com campanhas Meta Ads</li>
+                            <li>Reforço de captação de contactos</li>
+                            <li>Template para operação multicanal</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="google-leads-meta" data-platform="omnichannel">Copiar Google Leads + Meta</button>
+                    </div>
+
+                    <div class="budget-card">
+                        <div class="budget-price">Meta Leads + Google</div>
+                        <ul class="budget-features">
+                            <li>Estratégia focada em leads na Meta</li>
+                            <li>Suporte com campanhas Google Ads</li>
+                            <li>Reforço de captação de contactos</li>
+                            <li>Template para operação multicanal</li>
+                        </ul>
+                        <button class="prompt-btn copy-welcome-btn" data-budget="meta-leads-google" data-platform="omnichannel">Copiar Meta Leads + Google</button>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <h3>Preview do Welcome:</h3>
             <div class="welcome-text" id="welcomeText">
@@ -3527,6 +3567,44 @@ Recomendamos também: numa campanha publicitária, o ideal é escolher apenas um
 ⚠️ Prazo: envie as respostas dentro do prazo para que os anúncios fiquem 100% alinhados com a sua visão. Após esse prazo, a criação será automática.
 
 Obrigado desde já pela confiança. Estamos ansiosos por trabalhar consigo!
+
+Com os melhores cumprimentos,`
+                },
+                omnichannel: {
+                    'google-meta': `Olá,
+
+Partilhamos abaixo a versão combinada do welcome para campanhas Google + Meta.
+
+Para avançarmos com a ativação das duas plataformas, pedimos:
+1. Nome comercial
+2. Link do website
+3. Contacto para anúncio
+4. Duração da campanha
+5. Segmentação geográfica
+6. Público-alvo
+7. Produto/serviço principal
+
+Assim garantimos uma estratégia alinhada e com comunicação consistente entre Google Ads e Meta Ads.
+
+Com os melhores cumprimentos,`,
+
+                    'google-leads-meta': `Olá,
+
+Partilhamos a variante Google Leads + Meta.
+
+Nesta configuração, a geração de leads fica priorizada no Google, com suporte complementar em Meta Ads para reforço de alcance e conversão.
+
+Para ativação, precisamos dos dados habituais de campanha e confirmação do objetivo principal de captação de contactos.
+
+Com os melhores cumprimentos,`,
+
+                    'meta-leads-google': `Olá,
+
+Partilhamos a variante Meta Leads + Google.
+
+Nesta configuração, a geração de leads fica priorizada na Meta, com suporte complementar em Google Ads para reforço de alcance e intenção.
+
+Para ativação, precisamos dos dados habituais de campanha e confirmação do objetivo principal de captação de contactos.
 
 Com os melhores cumprimentos,`
                 }
