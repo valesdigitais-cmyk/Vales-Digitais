@@ -415,81 +415,56 @@
             color: #202124;
         }
 
-        .excel-sim-container {
-            margin-top: 16px;
-            background: #ffffff;
-            border: 1px solid #a9a9a9;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            border-radius: 0;
-            overflow-x: auto;
-        }
-
-        .excel-sim-header {
-            display: flex;
-            background-color: #f3f3f3;
-            border-bottom: 1px solid #a9a9a9;
-        }
-
-        .excel-sim-col-header {
-            width: 320px;
-            padding: 12px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 14px;
-            color: #2c3e50;
-            background: #e9ecef;
-            border-right: 1px solid #a9a9a9;
-        }
-
+        .excel-sim-container { margin-top: 12px; background: #ffffff; border: 1px solid #dcdcdc; border-radius: 0; overflow-x: auto; }
+        .excel-sim-header { display: flex; border-bottom: 1px solid #dcdcdc; background: #fafafa; }
+        .excel-sim-col-header { width: 320px; padding: 10px; text-align: center; font-weight: 600; font-size: 12px; color: #1f1f1f; border-right: 1px solid #dcdcdc; }
         .excel-sim-col-header:last-child { border-right: none; }
         .excel-sim-row { display: flex; }
-        .excel-sim-cell { width: 320px; padding: 15px; border-right: 1px solid #d4d4d4; background: #fff; }
+        .excel-sim-cell { width: 320px; padding: 12px; border-right: 1px solid #e4e4e4; background: #fff; }
         .excel-sim-cell:last-child { border-right: none; }
-        .excel-sim-cell-content { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .excel-sim-ref { font-size: 11px; color: #2c5e8c; background: #ecf3f9; padding: 3px 10px; border-radius: 0; font-family: monospace; font-weight: 700; }
-        .excel-sim-value { font-family: 'Courier New', monospace; font-size: 28px; font-weight: 700; margin: 10px 0; padding: 12px; background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 0; display: inline-block; min-width: 100px; text-align: center; }
-        .excel-sim-spinner { display: inline-flex; flex-direction: column; border-radius: 0; overflow: hidden; background: #ffffff; border: 1px solid #dadce0; margin: 10px auto; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); }
-        .excel-sim-spinner-btn { background: #ffffff; color: #202124; border: none; width: 34px; height: 26px; font-size: 12px; font-weight: 700; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease; }
-        .excel-sim-spinner-btn + .excel-sim-spinner-btn { border-top: 1px solid #dadce0; }
-        .excel-sim-spinner-btn:hover { background: #f1f3f4; }
-        .excel-sim-spinner-btn:active { background: #000000; color: #ffffff; }
-        .excel-sim-save-btn { background-color: #28a745; color: #fff; border: none; padding: 6px 16px; border-radius: 0; cursor: pointer; font-size: 12px; font-weight: 700; margin-top: 8px; }
-        .excel-sim-save-btn:hover { background-color: #218838; }
-        .excel-sim-clear-btn { background-color: #6c757d; color: #fff; border: none; padding: 3px 8px; border-radius: 0; cursor: pointer; font-size: 9px; margin-top: 5px; }
-        .excel-sim-history { margin-top: 12px; padding: 8px; background: #f8f9fa; border-radius: 0; width: 100%; text-align: left; border: 1px solid #e2e3e5; }
-        .excel-sim-history-title { font-size: 10px; font-weight: 700; color: #495057; margin-bottom: 5px; border-bottom: 1px solid #dee2e6; padding-bottom: 3px; }
-        .excel-sim-history-value { font-family: monospace; font-size: 16px; font-weight: 700; }
-        .excel-sim-history-value-latest { color: #28a745; }
-        .excel-sim-history-value-prev { color: #6c757d; font-size: 12px; }
-        .excel-sim-history-prev { font-size: 10px; color: #6c757d; margin-top: 5px; }
-        .excel-sim-log { margin-top: 12px; padding: 8px; background: #fff3cd; border-radius: 0; border: 1px solid #ffeaa7; max-height: 120px; overflow-y: auto; text-align: left; width: 100%; }
-        .excel-sim-log-title { font-size: 10px; font-weight: 700; color: #856404; margin-bottom: 5px; }
-        .excel-sim-log-item { font-family: monospace; font-size: 10px; padding: 2px 0; border-bottom: 1px dotted #ffeaa7; }
-        .excel-sim-legend { font-size: 11px; color: #3a6ea5; text-align: center; background: #f9f9f9; padding: 8px; border-top: 1px solid #e2e2e2; }
-        .excel-sim-help-text { font-size: 10px; color: #666; }
-        .excel-sim-cell.selected { background-color: #fffed8; outline: 2px solid #217346; outline-offset: -1px; }
+        .excel-sim-cell-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .excel-sim-ref { font-size: 10px; color: #606060; font-family: monospace; font-weight: 600; }
+        .excel-sim-value { font-family: 'Courier New', monospace; font-size: 26px; font-weight: 700; padding: 10px; border: 1px solid #d9d9d9; min-width: 110px; text-align: center; background: #ffffff; }
+        .excel-sim-spinner { display: inline-flex; flex-direction: column; border: 1px solid #d9d9d9; margin: 2px auto 0; }
+        .excel-sim-spinner-btn { background: #ffffff; color: #1f1f1f; border: none; width: 34px; height: 24px; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .excel-sim-spinner-btn + .excel-sim-spinner-btn { border-top: 1px solid #d9d9d9; }
+        .excel-sim-spinner-btn:hover { background: #f3f3f3; }
+        .excel-sim-spinner-btn:active { background: #1f1f1f; color: #ffffff; }
+        .excel-sim-save-btn { background: #1f1f1f; color: #fff; border: 1px solid #1f1f1f; padding: 5px 14px; border-radius: 0; cursor: pointer; font-size: 11px; font-weight: 600; }
+        .excel-sim-save-btn:hover { background: #000000; border-color: #000000; }
+        .excel-sim-clear-btn { background: #ffffff; color: #666; border: 1px solid #d3d3d3; padding: 3px 8px; border-radius: 0; cursor: pointer; font-size: 9px; margin-top: 6px; }
+        .excel-sim-history { margin-top: 2px; padding: 8px; background: #ffffff; width: 100%; text-align: left; border: 1px solid #e4e4e4; }
+        .excel-sim-history-title { font-size: 10px; font-weight: 600; color: #555; margin-bottom: 5px; }
+        .excel-sim-history-value { font-family: monospace; font-size: 15px; font-weight: 700; color: #111; }
+        .excel-sim-history-value-prev { color: #666; font-size: 12px; }
+        .excel-sim-history-prev { font-size: 10px; color: #666; margin-top: 4px; }
+        .excel-sim-log { margin-top: 2px; padding: 8px; background: #ffffff; border: 1px solid #e4e4e4; max-height: 100px; overflow-y: auto; text-align: left; width: 100%; }
+        .excel-sim-log-title { font-size: 10px; font-weight: 600; color: #555; margin-bottom: 4px; }
+        .excel-sim-log-item { font-family: monospace; font-size: 10px; padding: 2px 0; border-bottom: 1px solid #f1f1f1; color: #222; }
+        .excel-sim-help-text, .excel-sim-legend { display: none; }
+        .excel-sim-cell.selected { background-color: #f7f7f7; outline: 1px solid #111; outline-offset: -1px; }
 
-        body.dark-mode .excel-sim-container { background: #171717; border-color: #4a4a4a; }
-        body.dark-mode .excel-sim-cell { background: #1e1e1e; border-color: #4a4a4a; }
-        body.dark-mode .excel-sim-header { border-color: #4a4a4a; }
-        body.dark-mode .excel-sim-col-header { background: #262626; color: #f3f3f3; border-color: #4a4a4a; }
-        body.dark-mode .excel-sim-ref { background: #1f2d3a; color: #9ec4ff; }
-        body.dark-mode .excel-sim-value { background: #141414; border-color: #4a4a4a; color: #f3f3f3; }
-        body.dark-mode .excel-sim-history { background: #202020; border-color: #4a4a4a; }
-        body.dark-mode .excel-sim-history-title { color: #d8d8d8; border-bottom-color: #4a4a4a; }
+        body.dark-mode .excel-sim-container,
+        body.dark-mode .excel-sim-header,
+        body.dark-mode .excel-sim-cell,
+        body.dark-mode .excel-sim-history,
+        body.dark-mode .excel-sim-log,
+        body.dark-mode .excel-sim-value,
+        body.dark-mode .excel-sim-spinner,
+        body.dark-mode .excel-sim-clear-btn { background: #1b1b1b; border-color: #3a3a3a; color: #ebebeb; }
+        body.dark-mode .excel-sim-col-header { color: #f3f3f3; border-color: #3a3a3a; }
+        body.dark-mode .excel-sim-ref,
+        body.dark-mode .excel-sim-history-title,
         body.dark-mode .excel-sim-history-prev,
         body.dark-mode .excel-sim-history-value-prev,
-        body.dark-mode .excel-sim-help-text { color: #bdbdbd; }
-        body.dark-mode .excel-sim-history-value-latest { color: #72d58b; }
-        body.dark-mode .excel-sim-log { background: #2a2617; border-color: #6f6134; }
-        body.dark-mode .excel-sim-log-title { color: #f6d583; }
-        body.dark-mode .excel-sim-log-item { border-bottom-color: #6f6134; color: #f3f3f3; }
-        body.dark-mode .excel-sim-legend { background: #202020; border-color: #4a4a4a; color: #9ec4ff; }
-        body.dark-mode .excel-sim-spinner { background: #171717; border-color: #4a4a4a; box-shadow: none; }
-        body.dark-mode .excel-sim-spinner-btn { background: #171717; color: #ebebeb; }
-        body.dark-mode .excel-sim-spinner-btn + .excel-sim-spinner-btn { border-top-color: #4a4a4a; }
+        body.dark-mode .excel-sim-log-title { color: #bdbdbd; }
+        body.dark-mode .excel-sim-history-value,
+        body.dark-mode .excel-sim-log-item,
+        body.dark-mode .excel-sim-spinner-btn { color: #efefef; }
+        body.dark-mode .excel-sim-spinner-btn + .excel-sim-spinner-btn,
+        body.dark-mode .excel-sim-log-item { border-color: #333333; }
         body.dark-mode .excel-sim-spinner-btn:hover { background: #2a2a2a; }
-        body.dark-mode .excel-sim-spinner-btn:active { background: #8ab4f8; color: #111111; }
+        body.dark-mode .excel-sim-save-btn { background: #f1f1f1; color: #121212; border-color: #f1f1f1; }
         body.dark-mode .tab-notification { background: #ff6f61; color: #111111; }
 
         @media (max-width: 768px) {
@@ -1254,7 +1229,7 @@
             <button class="tab-btn" data-tab="calculator-tab">Calculadora</button>
             <button class="tab-btn" data-tab="activation-tab">Ativação</button>
             <button class="tab-btn" data-tab="invoices-tab">Faturas</button>
-            <button class="tab-btn" data-tab="editor-tab">Spinner <span class="tab-notification">NEW</span></button>
+            <button class="tab-btn" data-tab="editor-tab">Spinner</button>
         </div>
     </div>
 
@@ -2017,11 +1992,11 @@ Equipa Leadzai
     <div id="editor-tab" class="tab-content">
         <div class="editor-section">
             <h2>Spinner</h2>
-            <p class="shortcut-info">Simulador de duas colunas (A e B) com spinner, salvamento e histórico independente.</p>
+            <p class="shortcut-info">Simulador simples de duas colunas (A e B) com controlo independente.</p>
             <div class="excel-sim-container" id="excelSimContainer">
                 <div class="excel-sim-header">
-                    <div class="excel-sim-col-header">🇦 Coluna A</div>
-                    <div class="excel-sim-col-header">🇧 Coluna B</div>
+                    <div class="excel-sim-col-header">Coluna A</div>
+                    <div class="excel-sim-col-header">Coluna B</div>
                 </div>
                 <div class="excel-sim-row">
                     <div class="excel-sim-cell" id="excelColA">
@@ -2033,16 +2008,16 @@ Equipa Leadzai
                                 <button class="excel-sim-spinner-btn" id="excelBtnDownA">▼</button>
                             </div>
                             <div class="excel-sim-help-text">▲ +1 | ▼ -1</div>
-                            <button class="excel-sim-save-btn" id="excelBtnSalvarA">💾 Salvar número</button>
+                            <button class="excel-sim-save-btn" id="excelBtnSalvarA">Salvar</button>
                             <div class="excel-sim-history">
-                                <div class="excel-sim-history-title">📌 Último salvo:</div>
+                                <div class="excel-sim-history-title">Último salvo:</div>
                                 <div class="excel-sim-history-value excel-sim-history-value-latest" id="excelUltimoSalvoA">—</div>
-                                <div class="excel-sim-history-prev">🕒 Anterior:</div>
+                                <div class="excel-sim-history-prev">Anterior:</div>
                                 <div class="excel-sim-history-value excel-sim-history-value-prev" id="excelAnteriorSalvoA">—</div>
                                 <button class="excel-sim-clear-btn" id="excelBtnLimparA">Limpar memória</button>
                             </div>
                             <div class="excel-sim-log">
-                                <div class="excel-sim-log-title">📜 Histórico completo</div>
+                                <div class="excel-sim-log-title">Histórico</div>
                                 <div id="excelListaRegistosA"><div class="excel-sim-log-item" style="color:#999;">Nenhum registo</div></div>
                             </div>
                         </div>
@@ -2056,22 +2031,22 @@ Equipa Leadzai
                                 <button class="excel-sim-spinner-btn" id="excelBtnDownB">▼</button>
                             </div>
                             <div class="excel-sim-help-text">▲ +1 | ▼ -1</div>
-                            <button class="excel-sim-save-btn" id="excelBtnSalvarB">💾 Salvar número</button>
+                            <button class="excel-sim-save-btn" id="excelBtnSalvarB">Salvar</button>
                             <div class="excel-sim-history">
-                                <div class="excel-sim-history-title">📌 Último salvo:</div>
+                                <div class="excel-sim-history-title">Último salvo:</div>
                                 <div class="excel-sim-history-value excel-sim-history-value-latest" id="excelUltimoSalvoB">—</div>
-                                <div class="excel-sim-history-prev">🕒 Anterior:</div>
+                                <div class="excel-sim-history-prev">Anterior:</div>
                                 <div class="excel-sim-history-value excel-sim-history-value-prev" id="excelAnteriorSalvoB">—</div>
                                 <button class="excel-sim-clear-btn" id="excelBtnLimparB">Limpar memória</button>
                             </div>
                             <div class="excel-sim-log">
-                                <div class="excel-sim-log-title">📜 Histórico completo</div>
+                                <div class="excel-sim-log-title">Histórico</div>
                                 <div id="excelListaRegistosB"><div class="excel-sim-log-item" style="color:#999;">Nenhum registo</div></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="excel-sim-legend">🇦 🇧 Cada coluna é independente | ⬆️ ⬇️ Setas alteram valor | 💾 Salva na memória da respetiva coluna</div>
+                <div class="excel-sim-legend">Cada coluna é independente.</div>
             </div>
         </div>
     </div>
