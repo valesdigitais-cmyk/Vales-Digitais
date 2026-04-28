@@ -396,6 +396,63 @@
             color: #202124;
         }
 
+        .excel-sim-container {
+            margin-top: 16px;
+            background: #ffffff;
+            border: 1px solid #a9a9a9;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .excel-sim-header {
+            display: flex;
+            background-color: #f3f3f3;
+            border-bottom: 1px solid #a9a9a9;
+        }
+
+        .excel-sim-col-header {
+            width: 320px;
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: #2c3e50;
+            background: #e9ecef;
+            border-right: 1px solid #a9a9a9;
+        }
+
+        .excel-sim-col-header:last-child { border-right: none; }
+        .excel-sim-row { display: flex; }
+        .excel-sim-cell { width: 320px; padding: 15px; border-right: 1px solid #d4d4d4; background: #fff; }
+        .excel-sim-cell:last-child { border-right: none; }
+        .excel-sim-cell-content { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .excel-sim-ref { font-size: 11px; color: #2c5e8c; background: #ecf3f9; padding: 3px 10px; border-radius: 12px; font-family: monospace; font-weight: 700; }
+        .excel-sim-value { font-family: 'Courier New', monospace; font-size: 28px; font-weight: 700; margin: 10px 0; padding: 12px; background: #f8f9fa; border: 2px solid #dee2e6; border-radius: 6px; display: inline-block; min-width: 100px; text-align: center; }
+        .excel-sim-spinner { display: inline-flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); border-radius: 2px; overflow: hidden; background: #f3f3f3; border: 1px solid #7f7f7f; margin: 10px auto; }
+        .excel-sim-spinner-btn { background: #f3f3f3; border: none; width: 32px; height: 24px; font-size: 14px; font-weight: 700; cursor: pointer; }
+        .excel-sim-spinner-btn:hover { background: #cde0f7; }
+        .excel-sim-spinner-btn:active { background: #99bce8; }
+        .excel-sim-save-btn { background-color: #28a745; color: #fff; border: none; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 700; margin-top: 8px; }
+        .excel-sim-save-btn:hover { background-color: #218838; }
+        .excel-sim-clear-btn { background-color: #6c757d; color: #fff; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer; font-size: 9px; margin-top: 5px; }
+        .excel-sim-history { margin-top: 12px; padding: 8px; background: #f8f9fa; border-radius: 6px; width: 100%; text-align: left; border: 1px solid #e2e3e5; }
+        .excel-sim-history-title { font-size: 10px; font-weight: 700; color: #495057; margin-bottom: 5px; border-bottom: 1px solid #dee2e6; padding-bottom: 3px; }
+        .excel-sim-history-value { font-family: monospace; font-size: 16px; font-weight: 700; }
+        .excel-sim-history-prev { font-size: 10px; color: #6c757d; margin-top: 5px; }
+        .excel-sim-log { margin-top: 12px; padding: 8px; background: #fff3cd; border-radius: 6px; border: 1px solid #ffeaa7; max-height: 120px; overflow-y: auto; text-align: left; width: 100%; }
+        .excel-sim-log-title { font-size: 10px; font-weight: 700; color: #856404; margin-bottom: 5px; }
+        .excel-sim-log-item { font-family: monospace; font-size: 10px; padding: 2px 0; border-bottom: 1px dotted #ffeaa7; }
+        .excel-sim-legend { font-size: 11px; color: #3a6ea5; text-align: center; background: #f9f9f9; padding: 8px; border-top: 1px solid #e2e2e2; }
+        .excel-sim-cell.selected { background-color: #fffed8; outline: 2px solid #217346; outline-offset: -1px; }
+
+        body.dark-mode .excel-sim-container { background: #1b1b1b; border-color: #3a3a3a; }
+        body.dark-mode .excel-sim-cell { background: #1b1b1b; border-color: #3a3a3a; }
+        body.dark-mode .excel-sim-header { border-color: #3a3a3a; }
+        body.dark-mode .excel-sim-col-header { background: #2a2a2a; color: #f3f3f3; border-color: #3a3a3a; }
+        body.dark-mode .excel-sim-value { background: #242424; border-color: #3a3a3a; color: #f3f3f3; }
+        body.dark-mode .excel-sim-legend { background: #242424; border-color: #3a3a3a; color: #9ec4ff; }
+
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -1921,28 +1978,62 @@ Equipa Leadzai
     <div id="editor-tab" class="tab-content">
         <div class="editor-section">
             <h2>Editor</h2>
-            <div class="editor-toolbar" role="toolbar" aria-label="Formatação do editor">
-                <button class="editor-toolbar-btn" type="button" data-editor-command="bold"><strong>B</strong></button>
-                <button class="editor-toolbar-btn" type="button" data-editor-command="italic"><em>I</em></button>
-                <button class="editor-toolbar-btn" type="button" data-editor-command="unorderedList">• Lista</button>
-                <button class="editor-toolbar-btn" type="button" data-editor-command="orderedList">1. Lista</button>
-                <select id="editorTextSizeSelect" class="editor-toolbar-select" aria-label="Tamanho do texto">
-                    <option value="">Tamanho</option>
-                    <option value="editor-size-small">Pequeno</option>
-                    <option value="editor-size-medium">Médio</option>
-                    <option value="editor-size-large">Grande</option>
-                </select>
-                <button class="editor-toolbar-btn" type="button" data-editor-command="clearTextSize">Reset tamanho</button>
-                <button class="editor-toolbar-btn" type="button" data-editor-command="undo">↶ Undo</button>
-                <button class="editor-toolbar-btn" type="button" data-editor-command="redo">↷ Redo</button>
+            <p class="shortcut-info">Simulador de duas colunas (A e B) com spinner, salvamento e histórico independente.</p>
+            <div class="excel-sim-container" id="excelSimContainer">
+                <div class="excel-sim-header">
+                    <div class="excel-sim-col-header">🇦 Coluna A</div>
+                    <div class="excel-sim-col-header">🇧 Coluna B</div>
+                </div>
+                <div class="excel-sim-row">
+                    <div class="excel-sim-cell" id="excelColA">
+                        <div class="excel-sim-cell-content">
+                            <div class="excel-sim-ref">A1 (Valor atual)</div>
+                            <div class="excel-sim-value" id="excelValorA">0</div>
+                            <div class="excel-sim-spinner">
+                                <button class="excel-sim-spinner-btn" id="excelBtnUpA">▲</button>
+                                <button class="excel-sim-spinner-btn" id="excelBtnDownA">▼</button>
+                            </div>
+                            <div style="font-size:10px;color:#666;">▲ +1 | ▼ -1</div>
+                            <button class="excel-sim-save-btn" id="excelBtnSalvarA">💾 Salvar número</button>
+                            <div class="excel-sim-history">
+                                <div class="excel-sim-history-title">📌 Último salvo:</div>
+                                <div class="excel-sim-history-value" id="excelUltimoSalvoA" style="color:#28a745;">—</div>
+                                <div class="excel-sim-history-prev">🕒 Anterior:</div>
+                                <div class="excel-sim-history-value" id="excelAnteriorSalvoA" style="color:#6c757d;font-size:12px;">—</div>
+                                <button class="excel-sim-clear-btn" id="excelBtnLimparA">Limpar memória</button>
+                            </div>
+                            <div class="excel-sim-log">
+                                <div class="excel-sim-log-title">📜 Histórico completo</div>
+                                <div id="excelListaRegistosA"><div class="excel-sim-log-item" style="color:#999;">Nenhum registo</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="excel-sim-cell" id="excelColB">
+                        <div class="excel-sim-cell-content">
+                            <div class="excel-sim-ref">B1 (Valor atual)</div>
+                            <div class="excel-sim-value" id="excelValorB">0</div>
+                            <div class="excel-sim-spinner">
+                                <button class="excel-sim-spinner-btn" id="excelBtnUpB">▲</button>
+                                <button class="excel-sim-spinner-btn" id="excelBtnDownB">▼</button>
+                            </div>
+                            <div style="font-size:10px;color:#666;">▲ +1 | ▼ -1</div>
+                            <button class="excel-sim-save-btn" id="excelBtnSalvarB">💾 Salvar número</button>
+                            <div class="excel-sim-history">
+                                <div class="excel-sim-history-title">📌 Último salvo:</div>
+                                <div class="excel-sim-history-value" id="excelUltimoSalvoB" style="color:#28a745;">—</div>
+                                <div class="excel-sim-history-prev">🕒 Anterior:</div>
+                                <div class="excel-sim-history-value" id="excelAnteriorSalvoB" style="color:#6c757d;font-size:12px;">—</div>
+                                <button class="excel-sim-clear-btn" id="excelBtnLimparB">Limpar memória</button>
+                            </div>
+                            <div class="excel-sim-log">
+                                <div class="excel-sim-log-title">📜 Histórico completo</div>
+                                <div id="excelListaRegistosB"><div class="excel-sim-log-item" style="color:#999;">Nenhum registo</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="excel-sim-legend">🇦 🇧 Cada coluna é independente | ⬆️ ⬇️ Setas alteram valor | 💾 Salva na memória da respetiva coluna</div>
             </div>
-            <div id="editorWorkspace" class="editor-workspace" contenteditable="true" spellcheck="true" data-placeholder="Comece a escrever aqui..."></div>
-
-            <div class="prompts-actions">
-                <button class="prompt-btn" id="copyEditorTextBtn" title="Copiar tudo do editor (Ctrl+Shift+C)">Copiar</button>
-            </div>
-            <p id="editorCopyFeedback" class="editor-copy-feedback">Sem texto para copiar.</p>
-            <p id="editorDirtyStatus" class="editor-copy-feedback">Sem alterações pendentes.</p>
         </div>
     </div>
 
@@ -4742,6 +4833,137 @@ Equipa Leadzai`;
                     editorTextSizeSelect.value = '';
                 });
             }
+
+            function criarEstadoColunaExcel(prefixo) {
+                return {
+                    valor: 0,
+                    ultimo: null,
+                    anterior: null,
+                    registos: [],
+                    cell: document.getElementById(`excelCol${prefixo}`),
+                    display: document.getElementById(`excelValor${prefixo}`),
+                    ultimoElem: document.getElementById(`excelUltimoSalvo${prefixo}`),
+                    anteriorElem: document.getElementById(`excelAnteriorSalvo${prefixo}`),
+                    listaElem: document.getElementById(`excelListaRegistos${prefixo}`),
+                    upBtn: document.getElementById(`excelBtnUp${prefixo}`),
+                    downBtn: document.getElementById(`excelBtnDown${prefixo}`),
+                    saveBtn: document.getElementById(`excelBtnSalvar${prefixo}`),
+                    clearBtn: document.getElementById(`excelBtnLimpar${prefixo}`)
+                };
+            }
+
+            function inicializarSimuladorExcel() {
+                const colA = criarEstadoColunaExcel('A');
+                const colB = criarEstadoColunaExcel('B');
+                if (!colA.cell || !colB.cell) {
+                    return;
+                }
+
+                const timeFormat = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+                let colunaSelecionada = 'A';
+
+                const atualizarDisplay = (col) => {
+                    if (col.display) {
+                        col.display.textContent = col.valor;
+                    }
+                };
+
+                const atualizarHistorico = (col) => {
+                    if (!col.ultimoElem || !col.anteriorElem || !col.listaElem) {
+                        return;
+                    }
+                    col.ultimoElem.textContent = col.ultimo === null ? '—' : String(col.ultimo);
+                    col.anteriorElem.textContent = col.anterior === null ? '—' : String(col.anterior);
+
+                    if (col.registos.length === 0) {
+                        col.listaElem.innerHTML = '<div class="excel-sim-log-item" style="color:#999;">Nenhum registo</div>';
+                        return;
+                    }
+
+                    col.listaElem.innerHTML = col.registos.map((item) => {
+                        const horaStr = new Date(item.dataHora).toLocaleTimeString('pt-PT', timeFormat);
+                        return `<div class="excel-sim-log-item">🕒 ${horaStr} → <strong>${item.valor}</strong></div>`;
+                    }).join('');
+                };
+
+                const destacarColuna = () => {
+                    colA.cell.classList.toggle('selected', colunaSelecionada === 'A');
+                    colB.cell.classList.toggle('selected', colunaSelecionada === 'B');
+                };
+
+                const aumentar = (col) => {
+                    col.valor += 1;
+                    atualizarDisplay(col);
+                };
+
+                const diminuir = (col) => {
+                    col.valor -= 1;
+                    atualizarDisplay(col);
+                };
+
+                const salvar = (col) => {
+                    if (col.ultimo !== null) {
+                        col.anterior = col.ultimo;
+                    }
+                    col.ultimo = col.valor;
+                    col.registos.unshift({ valor: col.valor, dataHora: Date.now() });
+                    if (col.registos.length > 20) {
+                        col.registos.pop();
+                    }
+                    atualizarHistorico(col);
+                };
+
+                const limpar = (col) => {
+                    col.ultimo = null;
+                    col.anterior = null;
+                    col.registos = [];
+                    atualizarHistorico(col);
+                };
+
+                colA.upBtn?.addEventListener('click', () => aumentar(colA));
+                colA.downBtn?.addEventListener('click', () => diminuir(colA));
+                colA.saveBtn?.addEventListener('click', () => salvar(colA));
+                colA.clearBtn?.addEventListener('click', () => limpar(colA));
+
+                colB.upBtn?.addEventListener('click', () => aumentar(colB));
+                colB.downBtn?.addEventListener('click', () => diminuir(colB));
+                colB.saveBtn?.addEventListener('click', () => salvar(colB));
+                colB.clearBtn?.addEventListener('click', () => limpar(colB));
+
+                colA.cell.addEventListener('click', () => {
+                    colunaSelecionada = 'A';
+                    destacarColuna();
+                });
+
+                colB.cell.addEventListener('click', () => {
+                    colunaSelecionada = 'B';
+                    destacarColuna();
+                });
+
+                document.addEventListener('keydown', (event) => {
+                    const editorTabAtiva = document.getElementById('editor-tab')?.classList.contains('active');
+                    if (!editorTabAtiva) {
+                        return;
+                    }
+                    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+                        event.preventDefault();
+                        const colunaAlvo = colunaSelecionada === 'A' ? colA : colB;
+                        if (event.key === 'ArrowUp') {
+                            aumentar(colunaAlvo);
+                        } else {
+                            diminuir(colunaAlvo);
+                        }
+                    }
+                });
+
+                atualizarDisplay(colA);
+                atualizarDisplay(colB);
+                atualizarHistorico(colA);
+                atualizarHistorico(colB);
+                destacarColuna();
+            }
+
+            inicializarSimuladorExcel();
 
             // Event listeners para Enter nos emails da aba Anunciante
             confirmationEmailInput.addEventListener('keyup', function(event) {
