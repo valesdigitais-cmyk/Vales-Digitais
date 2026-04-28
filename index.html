@@ -416,11 +416,11 @@
         }
 
         .excel-sim-container { margin-top: 12px; background: #ffffff; border: 1px solid #dcdcdc; border-radius: 0; overflow-x: auto; }
-        .excel-sim-header { display: flex; border-bottom: 1px solid #dcdcdc; background: #fafafa; }
-        .excel-sim-col-header { width: 320px; padding: 10px; text-align: center; font-weight: 600; font-size: 12px; color: #1f1f1f; border-right: 1px solid #dcdcdc; }
+        .excel-sim-header { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #dcdcdc; background: #fafafa; }
+        .excel-sim-col-header { min-width: 280px; padding: 10px; text-align: center; font-weight: 600; font-size: 12px; color: #1f1f1f; border-right: 1px solid #dcdcdc; }
         .excel-sim-col-header:last-child { border-right: none; }
-        .excel-sim-row { display: flex; }
-        .excel-sim-cell { width: 320px; padding: 12px; border-right: 1px solid #e4e4e4; background: #fff; }
+        .excel-sim-row { display: grid; grid-template-columns: 1fr 1fr; }
+        .excel-sim-cell { min-width: 280px; padding: 12px; border-right: 1px solid #e4e4e4; background: #fff; }
         .excel-sim-cell:last-child { border-right: none; }
         .excel-sim-cell-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .excel-sim-ref { font-size: 10px; color: #606060; font-family: monospace; font-weight: 600; }
@@ -430,8 +430,6 @@
         .excel-sim-spinner-btn + .excel-sim-spinner-btn { border-top: 1px solid #d9d9d9; }
         .excel-sim-spinner-btn:hover { background: #f3f3f3; }
         .excel-sim-spinner-btn:active { background: #1f1f1f; color: #ffffff; }
-        .excel-sim-save-btn { background: #1f1f1f; color: #fff; border: 1px solid #1f1f1f; padding: 5px 14px; border-radius: 0; cursor: pointer; font-size: 11px; font-weight: 600; }
-        .excel-sim-save-btn:hover { background: #000000; border-color: #000000; }
         .excel-sim-clear-btn { background: #ffffff; color: #666; border: 1px solid #d3d3d3; padding: 3px 8px; border-radius: 0; cursor: pointer; font-size: 9px; margin-top: 6px; }
         .excel-sim-history { margin-top: 2px; padding: 8px; background: #ffffff; width: 100%; text-align: left; border: 1px solid #e4e4e4; }
         .excel-sim-history-title { font-size: 10px; font-weight: 600; color: #555; margin-bottom: 5px; }
@@ -464,7 +462,6 @@
         body.dark-mode .excel-sim-spinner-btn + .excel-sim-spinner-btn,
         body.dark-mode .excel-sim-log-item { border-color: #333333; }
         body.dark-mode .excel-sim-spinner-btn:hover { background: #2a2a2a; }
-        body.dark-mode .excel-sim-save-btn { background: #f1f1f1; color: #121212; border-color: #f1f1f1; }
         body.dark-mode .tab-notification { background: #ff6f61; color: #111111; }
 
         @media (max-width: 768px) {
@@ -1992,11 +1989,11 @@ Equipa Leadzai
     <div id="editor-tab" class="tab-content">
         <div class="editor-section">
             <h2>Spinner</h2>
-            <p class="shortcut-info">Simulador simples de duas colunas (A e B) com controlo independente.</p>
+            <p class="shortcut-info">Simulador simples de Campanhas e Vouchers com controlo independente e gravação automática.</p>
             <div class="excel-sim-container" id="excelSimContainer">
                 <div class="excel-sim-header">
-                    <div class="excel-sim-col-header">Coluna A</div>
-                    <div class="excel-sim-col-header">Coluna B</div>
+                    <div class="excel-sim-col-header">Campanhas</div>
+                    <div class="excel-sim-col-header">Vouchers</div>
                 </div>
                 <div class="excel-sim-row">
                     <div class="excel-sim-cell" id="excelColA">
@@ -2008,7 +2005,6 @@ Equipa Leadzai
                                 <button class="excel-sim-spinner-btn" id="excelBtnDownA">▼</button>
                             </div>
                             <div class="excel-sim-help-text">▲ +1 | ▼ -1</div>
-                            <button class="excel-sim-save-btn" id="excelBtnSalvarA">Salvar</button>
                             <div class="excel-sim-history">
                                 <div class="excel-sim-history-title">Último salvo:</div>
                                 <div class="excel-sim-history-value excel-sim-history-value-latest" id="excelUltimoSalvoA">—</div>
@@ -2031,7 +2027,6 @@ Equipa Leadzai
                                 <button class="excel-sim-spinner-btn" id="excelBtnDownB">▼</button>
                             </div>
                             <div class="excel-sim-help-text">▲ +1 | ▼ -1</div>
-                            <button class="excel-sim-save-btn" id="excelBtnSalvarB">Salvar</button>
                             <div class="excel-sim-history">
                                 <div class="excel-sim-history-title">Último salvo:</div>
                                 <div class="excel-sim-history-value excel-sim-history-value-latest" id="excelUltimoSalvoB">—</div>
@@ -4861,7 +4856,6 @@ Equipa Leadzai`;
                     listaElem: document.getElementById(`excelListaRegistos${prefixo}`),
                     upBtn: document.getElementById(`excelBtnUp${prefixo}`),
                     downBtn: document.getElementById(`excelBtnDown${prefixo}`),
-                    saveBtn: document.getElementById(`excelBtnSalvar${prefixo}`),
                     clearBtn: document.getElementById(`excelBtnLimpar${prefixo}`)
                 };
             }
@@ -4875,6 +4869,53 @@ Equipa Leadzai`;
 
                 const timeFormat = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
                 let colunaSelecionada = 'A';
+                const storageKey = 'excelSpinnerStateV1';
+
+                const guardarEstado = () => {
+                    const estado = {
+                        colunaSelecionada,
+                        colunas: {
+                            A: { valor: colA.valor, ultimo: colA.ultimo, anterior: colA.anterior, registos: colA.registos },
+                            B: { valor: colB.valor, ultimo: colB.ultimo, anterior: colB.anterior, registos: colB.registos }
+                        }
+                    };
+                    try {
+                        localStorage.setItem(storageKey, JSON.stringify(estado));
+                    } catch (error) {
+                        console.warn('Não foi possível guardar o estado do spinner.', error);
+                    }
+                };
+
+                const carregarEstado = () => {
+                    try {
+                        const raw = localStorage.getItem(storageKey);
+                        if (!raw) {
+                            return;
+                        }
+                        const estado = JSON.parse(raw);
+                        const aplicarColuna = (col, dados) => {
+                            if (!dados || typeof dados !== 'object') {
+                                return;
+                            }
+                            col.valor = Number.isFinite(dados.valor) ? dados.valor : 0;
+                            col.ultimo = Number.isFinite(dados.ultimo) ? dados.ultimo : null;
+                            col.anterior = Number.isFinite(dados.anterior) ? dados.anterior : null;
+                            col.registos = Array.isArray(dados.registos)
+                                ? dados.registos
+                                    .filter((item) => Number.isFinite(item?.valor) && Number.isFinite(item?.dataHora))
+                                    .slice(0, 20)
+                                : [];
+                        };
+
+                        aplicarColuna(colA, estado.colunas?.A);
+                        aplicarColuna(colB, estado.colunas?.B);
+                        if (estado.colunaSelecionada === 'A' || estado.colunaSelecionada === 'B') {
+                            colunaSelecionada = estado.colunaSelecionada;
+                        }
+                    } catch (error) {
+                        console.warn('Não foi possível carregar o estado guardado do spinner.', error);
+                    }
+                };
 
                 const atualizarDisplay = (col) => {
                     if (col.display) {
@@ -4925,6 +4966,7 @@ Equipa Leadzai`;
                         col.registos.pop();
                     }
                     atualizarHistorico(col);
+                    guardarEstado();
                 };
 
                 const limpar = (col) => {
@@ -4932,26 +4974,39 @@ Equipa Leadzai`;
                     col.anterior = null;
                     col.registos = [];
                     atualizarHistorico(col);
+                    guardarEstado();
                 };
 
-                colA.upBtn?.addEventListener('click', () => aumentar(colA));
-                colA.downBtn?.addEventListener('click', () => diminuir(colA));
-                colA.saveBtn?.addEventListener('click', () => salvar(colA));
+                colA.upBtn?.addEventListener('click', () => {
+                    aumentar(colA);
+                    salvar(colA);
+                });
+                colA.downBtn?.addEventListener('click', () => {
+                    diminuir(colA);
+                    salvar(colA);
+                });
                 colA.clearBtn?.addEventListener('click', () => limpar(colA));
 
-                colB.upBtn?.addEventListener('click', () => aumentar(colB));
-                colB.downBtn?.addEventListener('click', () => diminuir(colB));
-                colB.saveBtn?.addEventListener('click', () => salvar(colB));
+                colB.upBtn?.addEventListener('click', () => {
+                    aumentar(colB);
+                    salvar(colB);
+                });
+                colB.downBtn?.addEventListener('click', () => {
+                    diminuir(colB);
+                    salvar(colB);
+                });
                 colB.clearBtn?.addEventListener('click', () => limpar(colB));
 
                 colA.cell.addEventListener('click', () => {
                     colunaSelecionada = 'A';
                     destacarColuna();
+                    guardarEstado();
                 });
 
                 colB.cell.addEventListener('click', () => {
                     colunaSelecionada = 'B';
                     destacarColuna();
+                    guardarEstado();
                 });
 
                 document.addEventListener('keydown', (event) => {
@@ -4967,9 +5022,11 @@ Equipa Leadzai`;
                         } else {
                             diminuir(colunaAlvo);
                         }
+                        salvar(colunaAlvo);
                     }
                 });
 
+                carregarEstado();
                 atualizarDisplay(colA);
                 atualizarDisplay(colB);
                 atualizarHistorico(colA);
