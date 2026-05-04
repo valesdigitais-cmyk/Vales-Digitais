@@ -1935,6 +1935,15 @@ Melhores cumprimentos,
                     </ul>
                     <button class="prompt-btn" id="generateTwoCampaignsBtn">Gerar Email</button>
                 </div>
+
+                <div class="budget-card">
+                    <div class="budget-price">Campanha 48hs</div>
+                    <ul class="budget-features">
+                        <li>Confirmação de campanha ativa com nota de pausa</li>
+                        <li>Template direto e pronto a copiar</li>
+                    </ul>
+                    <button class="prompt-btn" id="generateCampaign48hBtn">Gerar Email</button>
+                </div>
             </div>
             
             <h3>Email Gerado:</h3>
@@ -2097,6 +2106,7 @@ Melhores cumprimentos,
             // Elementos da aba Ativação
             const generateOneCampaignBtn = document.getElementById('generateOneCampaignBtn');
             const generateTwoCampaignsBtn = document.getElementById('generateTwoCampaignsBtn');
+            const generateCampaign48hBtn = document.getElementById('generateCampaign48hBtn');
             const activationTextElement = document.getElementById('activationText');
             
             // Elementos da aba Anunciante
@@ -3147,6 +3157,30 @@ Agradecemos a sua confiança e desejamos muito sucesso com esta campanha!
 
 
 Votos de sucesso,`,
+
+                campaign48hs: `Caro cliente,
+
+Temos o prazer de informar que a sua campanha está ativa!
+A mesma poderá ser colocada em pausa assim que enviar novos ajustes ou pedidos de alteração.
+
+Neste momento, a campanha entrou num período inicial de aprendizagem, onde o sistema está a aprender e a ajustar-se para alcançar os melhores resultados possíveis. Esta fase é essencial para que os anúncios se adaptem ao comportamento do público e ao conteúdo que tem mais sucesso.
+
+Durante alguns dias, os anúncios vão ser testados e ajustados automaticamente para assegurar que a campanha atinge o maior número de pessoas relevantes para o seu negócio. Assim que esta fase estiver completa, a campanha estará totalmente otimizada e em pleno funcionamento.
+
+Importa ainda esclarecer que os anúncios são criados e geridos dentro da plataforma da Leadzai, sob o nosso MCC (conta de gestão), não sendo realizados diretamente na conta Google Ads, Google Analytics ou Meta Ads do cliente. Esta abordagem permite-nos uma gestão centralizada e otimizada da campanha, assegurando um acompanhamento mais eficaz e consistente dos resultados.
+
+Como previamente mencionado, a nossa equipa acompanhará de perto o desempenho da campanha ao longo do período em que estiver ativa. Iremos monitorar as principais métricas e ajustar elementos como as palavras-chave, de forma a otimizar os resultados e garantir que a sua campanha tenha o maior impacto possível.
+
+Além disso, disponibilizamos relatórios mensais para que possa acompanhar os resultados da sua campanha com total transparência.
+
+        ◦ Informamos também que a fatura referente ao IVA será enviada dentro de 7 dias úteis.
+
+Caso tenha alguma questão ou deseje mais informações, não hesite em contactar-nos. Estamos aqui para garantir que obtém o máximo valor do seu investimento.
+
+Agradecemos a sua confiança e desejamos muito sucesso com esta campanha!
+
+
+Melhores cumprimentos,`,
 
                 twoCampaigns: `Caro cliente,
 
@@ -4376,6 +4410,17 @@ Para cada categoria:
                     ${currentActivationText}
                 `;
                 
+                // Copiar automaticamente para clipboard
+                copyToClipboard(currentActivationText, this);
+            });
+
+            generateCampaign48hBtn.addEventListener('click', function() {
+                currentActivationText = normalizeMessageText(activationEmails.campaign48hs);
+                activationTextElement.innerHTML = `
+                    <button class="copy-btn" data-action="copy-activation" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${currentActivationText}
+                `;
+
                 // Copiar automaticamente para clipboard
                 copyToClipboard(currentActivationText, this);
             });
