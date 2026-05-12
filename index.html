@@ -424,7 +424,8 @@
         .excel-sim-cell:last-child { border-right: none; }
         .excel-sim-cell-content { display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .excel-sim-ref { font-size: 10px; color: #606060; font-family: monospace; font-weight: 600; }
-        .excel-sim-value { font-family: 'Courier New', monospace; font-size: 26px; font-weight: 700; padding: 10px; border: 1px solid #d9d9d9; min-width: 110px; text-align: center; background: #ffffff; }
+        input.excel-sim-value { font-family: 'Courier New', monospace; font-size: 26px; font-weight: 700; padding: 10px; border: 1px solid #d9d9d9; width: 110px; min-width: 110px; text-align: center; background: #ffffff; color: #111111; }
+        input.excel-sim-value:focus { outline: 2px solid #111111; outline-offset: 2px; box-shadow: none; }
         .excel-sim-spinner { display: inline-flex; flex-direction: column; border: 1px solid #d9d9d9; margin: 2px auto 0; }
         .excel-sim-spinner-btn { background: #ffffff; color: #1f1f1f; border: none; width: 34px; height: 24px; font-size: 11px; font-weight: 700; cursor: pointer; }
         .excel-sim-spinner-btn + .excel-sim-spinner-btn { border-top: 1px solid #d9d9d9; }
@@ -2004,7 +2005,7 @@ Melhores cumprimentos,
                     <div class="excel-sim-cell" id="excelColA">
                         <div class="excel-sim-cell-content">
                             <div class="excel-sim-ref">A1 (Valor atual)</div>
-                            <div class="excel-sim-value" id="excelValorA">0</div>
+                            <input type="number" class="excel-sim-value" id="excelValorA" value="0" step="1" aria-label="Valor atual de Campanhas">
                             <div class="excel-sim-spinner">
                                 <button class="excel-sim-spinner-btn" id="excelBtnUpA">▲</button>
                                 <button class="excel-sim-spinner-btn" id="excelBtnDownA">▼</button>
@@ -2026,7 +2027,7 @@ Melhores cumprimentos,
                     <div class="excel-sim-cell" id="excelColB">
                         <div class="excel-sim-cell-content">
                             <div class="excel-sim-ref">B1 (Valor atual)</div>
-                            <div class="excel-sim-value" id="excelValorB">0</div>
+                            <input type="number" class="excel-sim-value" id="excelValorB" value="0" step="1" aria-label="Valor atual de Vouchers">
                             <div class="excel-sim-spinner">
                                 <button class="excel-sim-spinner-btn" id="excelBtnUpB">▲</button>
                                 <button class="excel-sim-spinner-btn" id="excelBtnDownB">▼</button>
@@ -4943,8 +4944,23 @@ Melhores cumprimentos,`;
 
                 const atualizarDisplay = (col) => {
                     if (col.display) {
-                        col.display.textContent = col.valor;
+                        col.display.value = col.valor;
                     }
+                };
+
+                const atualizarValorPorInput = (col) => {
+                    const valorDigitado = Number(col.display.value);
+                    col.valor = Number.isFinite(valorDigitado) ? valorDigitado : 0;
+                };
+
+                const salvarValorDigitado = (col) => {
+                    atualizarValorPorInput(col);
+                    atualizarDisplay(col);
+                    if (col.ultimo === col.valor) {
+                        guardarEstado();
+                        return;
+                    }
+                    salvar(col);
                 };
 
                 const atualizarHistorico = (col) => {
@@ -5001,6 +5017,35 @@ Melhores cumprimentos,`;
                     guardarEstado();
                 };
 
+                const ativarEdicaoManual = (col, coluna) => {
+                    col.display?.addEventListener('input', () => {
+                        atualizarValorPorInput(col);
+                        guardarEstado();
+                    });
+
+                    col.display?.addEventListener('change', () => salvarValorDigitado(col));
+
+                    col.display?.addEventListener('keydown', (event) => {
+                        if (event.key === 'Enter') {
+                            event.preventDefault();
+                            col.display.blur();
+                        }
+
+                        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+                            window.setTimeout(() => salvarValorDigitado(col), 0);
+                        }
+                    });
+
+                    col.display?.addEventListener('focus', () => {
+                        colunaSelecionada = coluna;
+                        destacarColuna();
+                        guardarEstado();
+                    });
+                };
+
+                ativarEdicaoManual(colA, 'A');
+                ativarEdicaoManual(colB, 'B');
+
                 colA.upBtn?.addEventListener('click', () => {
                     aumentar(colA);
                     salvar(colA);
@@ -5036,6 +5081,9 @@ Melhores cumprimentos,`;
                 document.addEventListener('keydown', (event) => {
                     const editorTabAtiva = document.getElementById('editor-tab')?.classList.contains('active');
                     if (!editorTabAtiva) {
+                        return;
+                    }
+                    if (event.target instanceof HTMLInputElement && event.target.classList.contains('excel-sim-value')) {
                         return;
                     }
                     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
