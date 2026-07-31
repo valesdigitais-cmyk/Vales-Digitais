@@ -1888,25 +1888,21 @@ Com os melhores cumprimentos,
                 <div class="generated-text" id="generatedText">
                     <button class="copy-btn" data-action="copy-campaign" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
                     
-Boa tarde,
+Bom dia,
 
 A sua campanha está criada e encontra-se em anexo para que possa analisar.
-
 Estimamos que o potencial de cliques esperado por mês se situe entre <span id="minText">0</span> e <span id="maxText">0</span>.
-
 • Nota: Esta projeção é feita sob a premissa de que a campanha e o seu website se mantêm integralmente elegíveis e em conformidade com as políticas das plataformas (Meta/Google). O número real de cliques poderá variar significativamente caso existam restrições políticas, limitações técnicas no website, ou outros fatores que possam impactar o desempenho.
 
 Por favor, analise os anúncios e responda a este email com a sua aprovação.
 
 <div class="alert-box">
 <strong>Alerta de Prazo Limite</strong>
-Informamos que tem dois (2) dias úteis a contar da data de envio deste email para nos enviar a sua resposta e aprovação.
-
+Informamos que tem cinco (5) dias úteis a contar da data de envio deste email para nos enviar a sua resposta e aprovação.
 *Caso não recebamos qualquer resposta ou feedback dentro deste prazo, entenderemos por subentendido que os anúncios estão aceites e que a campanha pode ser ativada de imediato. A campanha poderá ser colocada em pausa assim que enviar novos ajustes ou pedidos de alteração. 
 </div>
 
 Ficamos a aguardar a sua resposta o mais breve possível para garantirmos o sucesso e a rapidez da ativação da sua campanha.
-
 Com os melhores cumprimentos,
                 </div>
                 
@@ -4621,74 +4617,11 @@ Para cada categoria:
                     return '';
                 }
 
-                const lines = normalizedText.split('\n');
-                const htmlParts = [];
-                let inUl = false;
-                let inOl = false;
-
-                const closeLists = () => {
-                    if (inUl) {
-                        htmlParts.push('</ul>');
-                        inUl = false;
-                    }
-                    if (inOl) {
-                        htmlParts.push('</ol>');
-                        inOl = false;
-                    }
-                };
-
-                lines.forEach((rawLine) => {
-                    const line = rawLine.trimEnd();
-                    const trimmed = line.trim();
-
-                    if (!trimmed) {
-                        closeLists();
-                        htmlParts.push('<p style="margin:0 0 10px 0;"><br></p>');
-                        return;
-                    }
-
-                    const orderedMatch = trimmed.match(/^(\d+)\.\s+(.*)$/);
-                    const unorderedMatch = trimmed.match(/^(?:[-*•])\s+(.*)$/);
-                    const headingMatch = trimmed.match(/^(#{1,6})\s+(.*)$/);
-
-                    if (headingMatch) {
-                        closeLists();
-                        htmlParts.push(`<p style="margin:0 0 10px 0;"><strong>${parseInlineMarkdown(headingMatch[2])}</strong></p>`);
-                        return;
-                    }
-
-                    if (orderedMatch) {
-                        if (inUl) {
-                            htmlParts.push('</ul>');
-                            inUl = false;
-                        }
-                        if (!inOl) {
-                            htmlParts.push('<ol style="margin:0 0 10px 22px; padding:0;">');
-                            inOl = true;
-                        }
-                        htmlParts.push(`<li style="margin:0 0 4px 0;">${parseInlineMarkdown(orderedMatch[2])}</li>`);
-                        return;
-                    }
-
-                    if (unorderedMatch) {
-                        if (inOl) {
-                            htmlParts.push('</ol>');
-                            inOl = false;
-                        }
-                        if (!inUl) {
-                            htmlParts.push('<ul style="margin:0 0 10px 22px; padding:0;">');
-                            inUl = true;
-                        }
-                        htmlParts.push(`<li style="margin:0 0 4px 0;">${parseInlineMarkdown(unorderedMatch[1])}</li>`);
-                        return;
-                    }
-
-                    closeLists();
-                    htmlParts.push(`<p style="margin:0 0 10px 0;">${parseInlineMarkdown(trimmed)}</p>`);
-                });
-
-                closeLists();
-                return `<div style="font-family:'Google Sans', Arial, sans-serif; font-size:11px; line-height:1.45;">${htmlParts.join('')}</div>`;
+                // Preserve the template's exact newlines. Paragraph and list elements
+                // receive extra margins in email clients, causing oversized gaps after
+                // pasting the copied content.
+                const formattedText = parseInlineMarkdown(normalizedText).replace(/\n/g, '<br>');
+                return `<div style="font-family:'Google Sans', Arial, sans-serif; font-size:11px; line-height:1.45; margin:0;">${formattedText}</div>`;
             }
 
             function getTemplateText(element) {
