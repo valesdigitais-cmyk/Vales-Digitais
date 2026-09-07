@@ -1302,7 +1302,7 @@
                 <button class="leads-reset-btn" data-reset-target="leadScriptCard">Reset</button>
                 <h3>2. Template de Script (Email GTM)</h3>
 
-                <p>Caro cliente,</p>
+                <p>Caro beneficiário,</p>
 
                 <p>Conforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.</p>
 
@@ -1679,7 +1679,7 @@
                 <div class="template-text" id="confirmationText">
                     <button class="copy-btn" data-action="copy-confirmation" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
                     
-Caro cliente,
+Caro beneficiário,
 
 Gostaria apenas de confirmar se o endereço de e-mail associado à página de Facebook da vossa empresa é <span class="email-input" id="confirmationEmailPlaceholder">[INSERIR EMAIL AQUI]</span>
 
@@ -1695,21 +1695,16 @@ Com os melhores cumprimentos,
             <div class="template-container">
                 <h3>2. Confirmação do Envio do Pedido</h3>
                 
-                <div class="input-group">
-                    <label for="warningEmail">Insira o email do cliente:</label>
-                    <input type="email" id="warningEmail" placeholder="exemplo@empresa.com">
-                </div>
-                
-                <button class="template-btn" id="generateWarningBtn">Gerar Email de Confirmação do Envio</button>
+                <button class="template-btn" id="generateWarningBtn">Copiar Email de Confirmação do Envio</button>
                 
                 <div class="template-text" id="warningText">
                     <button class="copy-btn" data-action="copy-warning" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
                     
-Caro cliente,
+Caro beneficiário,
 
-No seguimento do pedido enviado, foi encaminhado um e-mail para endereço e <span class="email-input" id="warningEmailPlaceholder">[INSERIR EMAIL AQUI]</span>.
+No seguimento do pedido enviado, foi encaminhado um e-mail para o endereço mdmarcas@gmail.com.
 
-Solicitamos, por favor, que verifique se este e-mail foi recebido. Caso não se encontre na caixa de entrada, pedimos que verifique também a pasta de Spam ou Lixo Eletrônico. 
+Solicitamos, por favor, que verifique se este e-mail foi recebido. Caso não se encontre na caixa de entrada, pedimos que verifique também a pasta de Spam ou Lixo Eletrónico. Adicionalmente, enviamos em anexo os guias para ajudar no processo.
 
 Ficamos a aguardar o vosso retorno.
 
@@ -2110,13 +2105,11 @@ Com os melhores cumprimentos,
             
             // Elementos da aba Anunciante
             const confirmationEmailInput = document.getElementById('confirmationEmail');
-            const warningEmailInput = document.getElementById('warningEmail');
             const generateConfirmationBtn = document.getElementById('generateConfirmationBtn');
             const generateWarningBtn = document.getElementById('generateWarningBtn');
             const copyConfirmationBtn = document.querySelector('[data-action="copy-confirmation"]');
             const copyWarningBtn = document.querySelector('[data-action="copy-warning"]');
             const confirmationEmailPlaceholder = document.getElementById('confirmationEmailPlaceholder');
-            const warningEmailPlaceholder = document.getElementById('warningEmailPlaceholder');
 
             // Elementos da aba Leads
             const leadBrandName = document.getElementById('leadBrandName');
@@ -3204,7 +3197,7 @@ Votos de sucesso,`
             
             // Templates Anunciante
             const advertiserTemplates = {
-                confirmation: (email) => `Caro cliente,
+                confirmation: (email) => `Caro beneficiário,
 
 Gostaria apenas de confirmar se o endereço de e-mail associado à página de Facebook da vossa empresa é ${email}
 
@@ -3214,11 +3207,11 @@ Obrigada pela ajuda.
 
 Com os melhores cumprimentos,`,
 
-                warning: (email) => `Caro cliente,
+                warning: () => `Caro beneficiário,
 
-No seguimento do pedido enviado, foi encaminhado um e-mail para endereço e ${email}.
+No seguimento do pedido enviado, foi encaminhado um e-mail para o endereço mdmarcas@gmail.com.
 
-Solicitamos, por favor, que verifique se este e-mail foi recebido. Caso não se encontre na caixa de entrada, pedimos que verifique também a pasta de Spam ou Lixo Eletrônico. 
+Solicitamos, por favor, que verifique se este e-mail foi recebido. Caso não se encontre na caixa de entrada, pedimos que verifique também a pasta de Spam ou Lixo Eletrónico. Adicionalmente, enviamos em anexo os guias para ajudar no processo.
 
 Ficamos a aguardar o vosso retorno.
 
@@ -3460,7 +3453,7 @@ Gostaríamos de saber se está interessado nesta oferta para avançarmos com o e
 
 Com os melhores cumprimentos,`,
 
-                    'taxa-simulacao': `Caro cliente,
+                    'taxa-simulacao': `Caro beneficiário,
 
 Esperamos que este e-mail o encontre bem.
 
@@ -3694,7 +3687,7 @@ Gostaríamos de saber se está interessado nesta oferta para avançarmos com o e
 
 Com os melhores cumprimentos,`,
 
-                    'taxa-simulacao': `Caro cliente,
+                    'taxa-simulacao': `Caro beneficiário,
 
 Esperamos que este e-mail o encontre bem.
 
@@ -4832,26 +4825,8 @@ Para cada categoria:
             });
             
             generateWarningBtn.addEventListener('click', function() {
-                const email = warningEmailInput.value.trim();
-                if (!email) {
-                    alert('Por favor, insira um email válido.');
-                    warningEmailInput.focus();
-                    return;
-                }
-                
-                // Atualizar o placeholder no template
-                warningEmailPlaceholder.textContent = email;
-                
-                // Gerar o texto completo
-                const fullText = advertiserTemplates.warning(email);
-                
-                // Atualizar o botão de copiar
-                copyWarningBtn.onclick = function() {
-                    copyToClipboard(fullText, this);
-                };
-                
-                // Copiar automaticamente para clipboard
-                copyToClipboard(fullText, this);
+                const fullText = advertiserTemplates.warning();
+                copyToClipboard(fullText, copyWarningBtn);
             });
             
             // Configurar botões de copiar da aba Anunciante
@@ -4867,14 +4842,7 @@ Para cada categoria:
             });
             
             copyWarningBtn.addEventListener('click', function() {
-                const email = warningEmailInput.value.trim();
-                if (!email) {
-                    alert('Por favor, insira um email e clique em "Gerar Email de Confirmação do Envio" primeiro.');
-                    return;
-                }
-                
-                const fullText = advertiserTemplates.warning(email);
-                copyToClipboard(fullText, this);
+                copyToClipboard(advertiserTemplates.warning(), this);
             });
 
             function getValue(element) {
@@ -4898,7 +4866,7 @@ Para cada categoria:
             }
 
             function generateScriptTemplateText() {
-                return `Caro cliente,
+                return `Caro beneficiário,
 
 Conforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.
 
@@ -5495,12 +5463,6 @@ Com os melhores cumprimentos,`;
                 }
             });
             
-            warningEmailInput.addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    generateWarningBtn.click();
-                }
-            });
-            
             // Atalho de teclado para copiar
             document.addEventListener('keydown', function(event) {
                 if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c' && !event.shiftKey) {
@@ -5530,14 +5492,11 @@ Com os melhores cumprimentos,`;
                         } else if (activeTab === 'advertiser-tab') {
                             // Verificar qual template está visível
                             const confirmationEmail = confirmationEmailInput.value.trim();
-                            const warningEmail = warningEmailInput.value.trim();
-                            
                             if (confirmationEmail) {
                                 const fullText = advertiserTemplates.confirmation(confirmationEmail);
                                 copyToClipboard(fullText, copyConfirmationBtn);
-                            } else if (warningEmail) {
-                                const fullText = advertiserTemplates.warning(warningEmail);
-                                copyToClipboard(fullText, copyWarningBtn);
+                            } else {
+                                copyToClipboard(advertiserTemplates.warning(), copyWarningBtn);
                             }
                         } else if (activeTab === 'leads-tab') {
                             if (currentLeadsText) {
