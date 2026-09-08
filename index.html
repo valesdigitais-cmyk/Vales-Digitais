@@ -1694,6 +1694,11 @@ Com os melhores cumprimentos,
             <!-- Template 2: Confirmação do Envio do Pedido -->
             <div class="template-container">
                 <h3>2. Confirmação do Envio do Pedido</h3>
+
+                <div class="input-group">
+                    <label for="warningEmail">Insira o email que recebeu o pedido:</label>
+                    <input type="email" id="warningEmail" placeholder="exemplo@empresa.com">
+                </div>
                 
                 <button class="template-btn" id="generateWarningBtn">Copiar Email de Confirmação do Envio</button>
                 
@@ -1702,7 +1707,7 @@ Com os melhores cumprimentos,
                     
 Caro beneficiário,
 
-No seguimento do pedido enviado, foi encaminhado um e-mail para o endereço mdmarcas@gmail.com.
+No seguimento do pedido enviado, foi encaminhado um e-mail para o endereço <span class="email-input" id="warningEmailPlaceholder">[INSERIR EMAIL AQUI]</span>.
 
 Solicitamos, por favor, que verifique se este e-mail foi recebido. Caso não se encontre na caixa de entrada, pedimos que verifique também a pasta de Spam ou Lixo Eletrónico. Adicionalmente, enviamos em anexo os guias para ajudar no processo.
 
@@ -2105,11 +2110,13 @@ Com os melhores cumprimentos,
             
             // Elementos da aba Anunciante
             const confirmationEmailInput = document.getElementById('confirmationEmail');
+            const warningEmailInput = document.getElementById('warningEmail');
             const generateConfirmationBtn = document.getElementById('generateConfirmationBtn');
             const generateWarningBtn = document.getElementById('generateWarningBtn');
             const copyConfirmationBtn = document.querySelector('[data-action="copy-confirmation"]');
             const copyWarningBtn = document.querySelector('[data-action="copy-warning"]');
             const confirmationEmailPlaceholder = document.getElementById('confirmationEmailPlaceholder');
+            const warningEmailPlaceholder = document.getElementById('warningEmailPlaceholder');
 
             // Elementos da aba Leads
             const leadBrandName = document.getElementById('leadBrandName');
@@ -3207,9 +3214,9 @@ Obrigada pela ajuda.
 
 Com os melhores cumprimentos,`,
 
-                warning: () => `Caro beneficiário,
+                warning: (email) => `Caro beneficiário,
 
-No seguimento do pedido enviado, foi encaminhado um e-mail para o endereço mdmarcas@gmail.com.
+No seguimento do pedido enviado, foi encaminhado um e-mail para o endereço ${email}.
 
 Solicitamos, por favor, que verifique se este e-mail foi recebido. Caso não se encontre na caixa de entrada, pedimos que verifique também a pasta de Spam ou Lixo Eletrónico. Adicionalmente, enviamos em anexo os guias para ajudar no processo.
 
@@ -4825,8 +4832,16 @@ Para cada categoria:
             });
             
             generateWarningBtn.addEventListener('click', function() {
-                const fullText = advertiserTemplates.warning();
-                copyToClipboard(fullText, copyWarningBtn);
+                const email = warningEmailInput.value.trim();
+                if (!email) {
+                    alert('Por favor, insira um email válido.');
+                    warningEmailInput.focus();
+                    return;
+                }
+
+                warningEmailPlaceholder.textContent = email;
+                const fullText = advertiserTemplates.warning(email);
+                copyToClipboard(fullText, this);
             });
             
             // Configurar botões de copiar da aba Anunciante
@@ -4842,7 +4857,13 @@ Para cada categoria:
             });
             
             copyWarningBtn.addEventListener('click', function() {
-                copyToClipboard(advertiserTemplates.warning(), this);
+                const email = warningEmailInput.value.trim();
+                if (!email) {
+                    alert('Por favor, insira um email e clique em "Copiar Email de Confirmação do Envio" primeiro.');
+                    return;
+                }
+
+                copyToClipboard(advertiserTemplates.warning(email), this);
             });
 
             function getValue(element) {
@@ -5462,6 +5483,12 @@ Com os melhores cumprimentos,`;
                     generateConfirmationBtn.click();
                 }
             });
+
+            warningEmailInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    generateWarningBtn.click();
+                }
+            });
             
             // Atalho de teclado para copiar
             document.addEventListener('keydown', function(event) {
@@ -5492,11 +5519,13 @@ Com os melhores cumprimentos,`;
                         } else if (activeTab === 'advertiser-tab') {
                             // Verificar qual template está visível
                             const confirmationEmail = confirmationEmailInput.value.trim();
+                            const warningEmail = warningEmailInput.value.trim();
                             if (confirmationEmail) {
                                 const fullText = advertiserTemplates.confirmation(confirmationEmail);
                                 copyToClipboard(fullText, copyConfirmationBtn);
-                            } else {
-                                copyToClipboard(advertiserTemplates.warning(), copyWarningBtn);
+                            } else if (warningEmail) {
+                                const fullText = advertiserTemplates.warning(warningEmail);
+                                copyToClipboard(fullText, copyWarningBtn);
                             }
                         } else if (activeTab === 'leads-tab') {
                             if (currentLeadsText) {
