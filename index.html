@@ -4239,12 +4239,28 @@ Com os melhores cumprimentos,`
                 }
             };
 
-            welcomeTemplates.google[500] = welcomeV2Templates.google[500];
-            welcomeTemplates.google[1000] = welcomeV2Templates.google[1000];
-            welcomeTemplates.google[1500] = welcomeV2Templates.google[1500];
-            welcomeTemplates.meta[500] = welcomeV2Templates.meta[500];
-            welcomeTemplates.meta[1000] = welcomeV2Templates.meta[1000];
-            welcomeTemplates.meta[1500] = welcomeV2Templates.meta[1500];
+            const welcomePlanDetails = {
+                500: `📌 Estrutura da campanha:
+• 5 anúncios criados
+• 2 categorias de anúncios`,
+                1000: `📌 Estrutura da campanha:
+• 8 anúncios criados
+• 3 categorias de anúncios`,
+                1500: `📌 Estrutura da campanha:
+• 12 anúncios criados
+• 4 categorias de anúncios`
+            };
+
+            ['google', 'meta'].forEach(platform => {
+                [500, 1000, 1500].forEach(budget => {
+                    welcomeTemplates[platform][budget] = welcomeV2Templates[platform][budget]
+                        .replace('Para arrancarmos, responda apenas:', `${welcomePlanDetails[budget]}\n\nPara arrancarmos, responda apenas:`);
+
+                    const reinforcementBudget = `${budget}-reforco`;
+                    welcomeTemplates[platform][reinforcementBudget] = welcomeTemplates[platform][reinforcementBudget]
+                        .replace('⚠️ Informação importante sobre o serviço:', `${welcomePlanDetails[budget]}\n\n⚠️ Informação importante sobre o serviço:`);
+                });
+            });
             
             // Prompts predefinidos Google Ads
             const googlePrompts = {
