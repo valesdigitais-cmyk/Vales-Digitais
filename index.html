@@ -1240,43 +1240,58 @@
 
             <div class="template-card" id="leadBriefingCard">
                 <button class="leads-reset-btn" data-reset-target="leadBriefingCard">Reset</button>
-                <h3>1. Briefing para Campanha de Leads</h3>
+                <h3>📋Briefing para Campanha de Leads</h3>
+
+                <!-- Seleção de Plataforma -->
+                <div class="leads-form-group">
+                    <label>Selecione a Plataforma:</label>
+                    <div class="platform-buttons" style="margin-bottom: 10px;">
+                        <button type="button" class="platform-btn lead-platform-btn active" data-lead-platform="Google">Google</button>
+                        <button type="button" class="platform-btn lead-platform-btn" data-lead-platform="Meta">Meta</button>
+                        <button type="button" class="platform-btn lead-platform-btn" data-lead-platform="Omnichannel">Omnichannel</button>
+                    </div>
+                </div>
+
+                <!-- Seleção de Objetivo -->
+                <div class="leads-form-group">
+                    <label>Selecione o Objetivo:</label>
+                    <div class="platform-buttons" style="margin-bottom: 15px;">
+                        <button type="button" class="platform-btn lead-type-btn active" data-lead-type="Tráfego">Tráfego</button>
+                        <button type="button" class="platform-btn lead-type-btn" data-lead-type="Leads">Leads</button>
+                    </div>
+                </div>
 
                 <div class="leads-form-group">
-                    <label for="leadCampaignCreation">Criação de campanhas -</label>
-                    <input type="text" id="leadCampaignCreation" placeholder="Personalize o texto da criação de campanhas">
-                </div>
-                <div class="leads-form-group">
                     <label for="leadBrandName">1. Nome Comercial (Marca)</label>
-                    <input type="text" id="leadBrandName" placeholder="Ex: Marca XPTO">
+                    <input type="text" id="leadBrandName" placeholder="Ex: RETIROS ELEGANTES">
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadWebsite">2. Site/ Rede</label>
-                    <input type="text" id="leadWebsite" placeholder="https://... ou rede social">
+                    <label for="leadWebsite">2. Site / Redes Sociais</label>
+                    <input type="text" id="leadWebsite" placeholder="https://...">
                 </div>
                 <div class="leads-form-group">
                     <label for="leadContact">3. Contacto</label>
-                    <input type="text" id="leadContact" placeholder="+351 ...">
+                    <input type="text" id="leadContact" placeholder="Ex: Sem Contacto ou +351 ...">
                 </div>
                 <div class="leads-form-group">
                     <label for="leadBudget">4. Orçamento</label>
-                    <input type="text" id="leadBudget" placeholder="Ex: 1500€">
+                    <input type="text" id="leadBudget" placeholder="Ex: € 412,50">
                 </div>
                 <div class="leads-form-group">
                     <label for="leadDuration">5. Duração da Campanha</label>
-                    <input type="text" id="leadDuration" placeholder="Ex: 3 meses">
+                    <input type="text" id="leadDuration" placeholder="Ex: Até 31/10">
                 </div>
                 <div class="leads-form-group">
                     <label for="leadGeo">6. Segmentação Geográfica</label>
-                    <textarea id="leadGeo" placeholder="Cidades, regiões ou raio geográfico."></textarea>
+                    <input type="text" id="leadGeo" placeholder="Ex: Portugal">
                 </div>
                 <div class="leads-form-group">
                     <label for="leadAudience">7. Audiência</label>
-                    <textarea id="leadAudience" placeholder="Público-alvo da campanha."></textarea>
+                    <textarea id="leadAudience" placeholder="Público-alvo e Interesses..."></textarea>
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadNotes">8. Notas</label>
-                    <textarea id="leadNotes" placeholder="Informação adicional relevante."></textarea>
+                    <label for="leadNotes">8. Notas e Produto em Destaque</label>
+                    <textarea id="leadNotes" placeholder="Informação adicional e destaques..."></textarea>
                 </div>
 
                 <div class="template-actions">
@@ -2105,24 +2120,33 @@ Com os melhores cumprimentos,
             const confirmationEmailPlaceholder = document.getElementById('confirmationEmailPlaceholder');
             const warningEmailPlaceholder = document.getElementById('warningEmailPlaceholder');
 
-            // Elementos da aba Leads
-            const leadBrandName = document.getElementById('leadBrandName');
-            const leadCampaignCreation = document.getElementById('leadCampaignCreation');
-            const leadWebsite = document.getElementById('leadWebsite');
-            const leadContact = document.getElementById('leadContact');
-            const leadBudget = document.getElementById('leadBudget');
-            const leadDuration = document.getElementById('leadDuration');
-            const leadGeo = document.getElementById('leadGeo');
-            const leadAudience = document.getElementById('leadAudience');
-            const leadNotes = document.getElementById('leadNotes');
-            const leadHeadCode = document.getElementById('leadHeadCode');
-            const leadBodyCode = document.getElementById('leadBodyCode');
-            const leadGtmId = document.getElementById('leadGtmId');
+            // Elementos e estado da aba Leads
+            let selectedLeadPlatform = 'Google';
+            let selectedLeadType = 'Tráfego';
+
+            const leadPlatformBtns = document.querySelectorAll('.lead-platform-btn');
+            const leadTypeBtns = document.querySelectorAll('.lead-type-btn');
             const copyLeadBriefingBtn = document.getElementById('copyLeadBriefingBtn');
             const copyLeadScriptBtn = document.getElementById('copyLeadScriptBtn');
             const leadBriefingToast = document.getElementById('leadBriefingToast');
             const leadScriptToast = document.getElementById('leadScriptToast');
             const leadResetButtons = document.querySelectorAll('.leads-reset-btn');
+
+            leadPlatformBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    leadPlatformBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedLeadPlatform = this.getAttribute('data-lead-platform');
+                });
+            });
+
+            leadTypeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    leadTypeBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedLeadType = this.getAttribute('data-lead-type');
+                });
+            });
             
             // Elementos da aba Faturas
             const generateInvoiceBtn = document.getElementById('generateInvoiceBtn');
@@ -3126,7 +3150,7 @@ Temos o prazer de informar que a sua campanha está ativa! Neste momento, a camp
 
 Durante alguns dias, os anúncios vão ser testados e ajustados automaticamente para assegurar que a campanha atinge o maior número de pessoas relevantes para o seu negócio. Assim que esta fase estiver completa, a campanha estará totalmente otimizada e em pleno funcionamento.
 
-Importa ainda esclarecer que os anúncios são criados e geridos dentro da plataforma da Leadzai, sob o nosso MCC (conta de gestão), não sendo realizados diretamente na conta Google Ads, Google Analytics ou Meta Ads do cliente. Esta abordagem permite-nos uma gestão centralizada e otimizada da campanha, assegurando um acompanhamento mais eficaz e consistente dos resultados. 
+Importa ainda esclarecer que os anúncios são criados e geridos dentro da plataforma da Leadzai, sob o nosso MCC (conta de gestão), não sendo realizados diretamente na conta Google Ads, Google Analytics ou Meta Ads do cliente. Esta abordagem permite-nos uma gestão centralizada e otimizada da campanha, assegurando um acompanhamento mais eficaz e consistente dos resultados. 
 
 Como previamente mencionado, a nossa equipa acompanhará de perto o desempenho da campanha ao longo do período em que estiver ativa. Iremos monitorar as principais métricas e ajustar elementos como as palavras-chave, de forma a otimizar os resultados e garantir que a sua campanha tenha o maior impacto possível.
 
@@ -3643,7 +3667,7 @@ Com os melhores cumprimentos,`,
 
 Esta oferta exclusiva, desenvolvida em parceria com a Páginas Amarelas, é dedicada a clientes sem website.
 
-O conteúdo do website será criado com base num formulário que terá de ser preenchido por si com as informações mais relevantes do seu negócio. Após a criação, terá acesso a uma área de gestão simples e intuitiva onde poderá alterar informações e imagens sempre que necessário.
+O conteúdo do website será criado com base num formulário que terá de ser preenchido por si com as informações mais relevantes do seu negócio. Após a criação, terá acesso a uma área de gestão simples e intuitive onde poderá alterar informações e imagens sempre que necessário.
 
 Informações importantes:
 
@@ -4871,17 +4895,33 @@ Para cada categoria:
             }
 
             function generateBriefingTemplateText() {
-                return `📋Briefing para Campanha de Leads
+                const brand = getValue(document.getElementById('leadBrandName'));
+                const site = getValue(document.getElementById('leadWebsite'));
+                const contact = getValue(document.getElementById('leadContact'));
+                const budget = getValue(document.getElementById('leadBudget'));
+                const duration = getValue(document.getElementById('leadDuration'));
+                const geo = getValue(document.getElementById('leadGeo'));
+                const audience = getValue(document.getElementById('leadAudience'));
+                const notes = getValue(document.getElementById('leadNotes'));
 
-Criação de campanhas - ${getValue(leadCampaignCreation)}
-1. Nome Comercial (Marca): ${getValue(leadBrandName)}
-2. Site/ Rede: ${getValue(leadWebsite)}
-3. Contacto: ${getValue(leadContact)}
-4. Orçamento: ${getValue(leadBudget)}
-5. Duração da Campanha: ${getValue(leadDuration)}
-6. Segmentação Geográfica: ${getValue(leadGeo)}
-7. Audiência: ${getValue(leadAudience)}
-8. Notas: ${getValue(leadNotes)}`;
+                return `Boa tarde colega,
+
+Conforme o novo fluxo de trabalho e o acordo estabelecido, envio em anexo/abaixo os dados para a campanha:
+
+${selectedLeadPlatform} - ${selectedLeadType}
+
+1.  Nome Comercial (Marca): ${brand}
+2.  Site / Redes Sociais: ${site}
+3.  Contacto: ${contact}
+4.  Orçamento: ${budget}
+5.  Duração da Campanha: ${duration}
+6.  Segmentação Geográfica: ${geo}
+7.  Audiência:
+${audience}
+8.  Notas e Produto em Destaque:
+${notes}
+
+Com os melhores cumprimentos,`;
             }
 
             function generateScriptTemplateText() {
@@ -4893,13 +4933,13 @@ CÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO
 Este código deve ser instalado em TODAS as páginas do website:
 
 1ª PARTE - Colar no <head> (o mais alto possível, idealmente como primeiro item):
-${getValue(leadHeadCode)}
+${getValue(document.getElementById('leadHeadCode'))}
 
 2ª PARTE - Colar imediatamente após a abertura da tag <body>:
-${getValue(leadBodyCode)}
+${getValue(document.getElementById('leadBodyCode'))}
 
 NOTA: Algumas plataformas necessitam apenas do ID do Google Tag Manager.
-ID GTM: ${getValue(leadGtmId)}
+ID GTM: ${getValue(document.getElementById('leadGtmId'))}
 
 IMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto.
 O código deve ser implementado em todas as páginas do site.
