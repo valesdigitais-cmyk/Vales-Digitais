@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faturas - Equipa Vales Digitais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', Arial, sans-serif;
+            font-size: 11px;
+        }
+        
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            color: #000000;
+            max-width: 1000px;
+            margin: 0 auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 999;
+            border: 1px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e7e7e7;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3 {
+            color: #f3f3f3;
+        }
+
+        body.dark-mode .tabs,
+        body.dark-mode h1,
+        body.dark-mode .footer {
+            border-color: #333333;
+        }
+
+        body.dark-mode .invoices-section,
+        body.dark-mode .budget-card {
+            background-color: #1b1b1b;
+            border-color: #333333;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode .invoice-text {
+            background-color: #242424;
+            border-color: #3a3a3a;
+            color: #ebebeb;
+        }
+
+        body.dark-mode .tab-btn {
+            background-color: #2a2a2a;
+            color: #d7d7d7;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn:hover {
+            background-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode .budget-features li,
+        body.dark-mode .shortcut-info,
+        body.dark-mode .footer {
+            color: #bdbdbd;
+        }
+
+        body.dark-mode .theme-toggle-btn {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode .theme-toggle-btn:hover {
+            background-color: #ffffff;
+            color: #121212;
+        }
+        
+        .tabs-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 18px;
+            background: #f1f1f1;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: #555;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        
+        .tab-btn:hover {
+            background: #e8e8e8;
+        }
+        
+        .tab-btn.active {
+            background: #000;
+            color: white;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 11px;
+            }
+        }
+        
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 24px;
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        h2 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            color: #000000;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .invoices-section {
+            background-color: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .prompt-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .prompt-btn:hover {
+            background-color: #333333;
+            transform: translateY(-1px);
+        }
+
+        .invoice-text {
+            background-color: #f8f8f8;
+            border-radius: 0;
+            padding: 25px;
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            font-size: 12px;
+            color: #000000;
+            min-height: 450px;
+            position: relative;
+            font-family: 'Google Sans', Arial, sans-serif;
+            text-align: left;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        
+        .copy-btn:hover {
+            background-color: #333333;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .copy-btn.copied {
+            background-color: #4CAF50;
+        }
+
+        .invoice-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .invoice-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .budget-card {
+            background: #f8f9fa;
+            border-radius: 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .budget-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .budget-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        
+        .budget-features {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        
+        .budget-features li {
+            padding: 5px 0;
+            font-size: 11.5px;
+            color: #555;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .budget-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .shortcut-info {
+            margin-top: 10px;
+            color: #777777;
+            font-size: 10px;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777777;
+            font-size: 10px;
+            font-weight: 400;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">🌙 Modo noturno</button>
+    <h1>Equipa Vales Digitais</h1>
+    
+    <div class="tabs-container">
+        <div class="tabs">
+            <a href="welcome.html" class="tab-btn">Welcomes</a>
+            <a href="leadzai.html" class="tab-btn">Leadzai</a>
+            <a href="anunciante.html" class="tab-btn">Anunciante</a>
+            <a href="prompts.html" class="tab-btn">Prompts</a>
+            <a href="calculadora.html" class="tab-btn">Calculadora</a>
+            <a href="activacao.html" class="tab-btn">Ativação</a>
+            <a href="faturas.html" class="tab-btn active">Faturas</a>
+            <a href="spinner.html" class="tab-btn">Spinner</a>
+        </div>
+    </div>
+
+    <!-- Aba Faturas -->
+    <div class="invoices-section">
+        <h2>Emails para Faturas</h2>
+        
+        <div class="invoice-buttons">
+            <div class="budget-card">
+                <div class="budget-price">Envio da Fatura</div>
+                <ul class="budget-features">
+                    <li>Email para envio da fatura de IVA</li>
+                    <li>Explica que o valor base está no Voucher Digital</li>
+                </ul>
+                <button class="prompt-btn" id="generateInvoiceBtn">Copiar Envio da Fatura</button>
+            </div>
+
+            <div class="budget-card">
+                <div class="budget-price">Confirmação de Pagamento</div>
+                <ul class="budget-features">
+                    <li>Confirmação da boa receção do pagamento</li>
+                    <li>Processo regularizado e mensagem de fecho</li>
+                </ul>
+                <button class="prompt-btn" id="generateConfirmationInvoiceBtn">Copiar Confirmação de Pagamento</button>
+            </div>
+        </div>
+        
+        <h3>Email Gerado:</h3>
+        <div class="invoice-text" id="invoiceText">
+            <button class="copy-btn" data-action="copy-invoice" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+            Clique em um dos botões acima para gerar o email correspondente.
+        </div>
+        
+        <p class="shortcut-info">Pressione Ctrl+C para copiar o texto ou clique no botão "Copiar Tudo"</p>
+    </div>
+
+    <div class="footer">
+        Gerador de Fluxo de Trabalho 3000
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const generateInvoiceBtn = document.getElementById('generateInvoiceBtn');
+            const generateConfirmationInvoiceBtn = document.getElementById('generateConfirmationInvoiceBtn');
+            const invoiceTextElement = document.getElementById('invoiceText');
+            let currentInvoiceText = '';
+
+            // Gestão do Modo Noturno
+            function updateThemeButtonLabel() {
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggleBtn.textContent = '☀️ Modo claro';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo claro');
+                } else {
+                    themeToggleBtn.textContent = '🌙 Modo noturno';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo noturno');
+                }
+            }
+
+            if (localStorage.getItem('theme-preference') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            updateThemeButtonLabel();
+
+            themeToggleBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                localStorage.setItem('theme-preference', currentTheme);
+                updateThemeButtonLabel();
+            });
+
+            // Emails para Faturas
+            const invoiceEmails = {
+                fatura: `Caro(a) Beneficiário(a),
+
+Em anexo, enviamos a fatura referente ao serviço.
+
+Informamos que o valor base do serviço encontra-se abrangido pelo incentivo do Voucher Digital, sendo apenas devido o pagamento do montante de IVA indicado na fatura.
+
+Este valor será posteriormente reembolsado, conforme as condições do programa.
+
+Assim que efetuar o pagamento, agradecemos que nos envie o respetivo comprovativo, para que possamos dar seguimento ao processo administrativo.
+
+Estamos disponíveis para qualquer esclarecimento adicional.
+
+Com os melhores cumprimentos,`,
+
+                confirmacao: `Caro Beneficiário,
+
+Agradecemos o envio do comprovativo.
+
+Confirmamos a boa receção do pagamento do IVA, ficando o processo devidamente regularizado da nossa parte.
+
+Agradecemos a sua colaboração e desejamos os maiores sucessos para os seus projetos.
+
+Com os melhores cumprimentos,`
+            };
+
+            // Funções de Cópia
+            function setCopyFeedback(buttonElement, successText = '✓ Copiado!') {
+                if (!buttonElement) return;
+                const originalText = buttonElement.textContent;
+                buttonElement.textContent = successText;
+                buttonElement.classList.add('copied');
+                setTimeout(() => {
+                    buttonElement.textContent = originalText;
+                    buttonElement.classList.remove('copied');
+                }, 1500);
+            }
+
+            function copyToClipboard(text, buttonElement = null) {
+                if (!text) return;
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text)
+                        .then(() => setCopyFeedback(buttonElement))
+                        .catch(() => {
+                            const textArea = document.createElement('textarea');
+                            textArea.value = text;
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textArea);
+                            setCopyFeedback(buttonElement, 'Copiado!');
+                        });
+                    return;
+                }
+
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                setCopyFeedback(buttonElement, 'Copiado!');
+            }
+
+            // Geração e Cópia
+            generateInvoiceBtn.addEventListener('click', function() {
+                currentInvoiceText = invoiceEmails.fatura.trim();
+                invoiceTextElement.innerHTML = `
+                    <button class="copy-btn" data-action="copy-invoice" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${currentInvoiceText.replace(/\n/g, '<br>')}
+                `;
+                copyToClipboard(currentInvoiceText, this);
+            });
+            
+            generateConfirmationInvoiceBtn.addEventListener('click', function() {
+                currentInvoiceText = invoiceEmails.confirmacao.trim();
+                invoiceTextElement.innerHTML = `
+                    <button class="copy-btn" data-action="copy-invoice" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+                    ${currentInvoiceText.replace(/\n/g, '<br>')}
+                `;
+                copyToClipboard(currentInvoiceText, this);
+            });
+
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.matches('.copy-btn[data-action="copy-invoice"]') && currentInvoiceText) {
+                    copyToClipboard(currentInvoiceText, e.target);
+                }
+            });
+
+            // Atalho Teclado (Ctrl+C)
+            document.addEventListener('keydown', function(event) {
+                if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c' && !event.shiftKey) {
+                    const selection = window.getSelection();
+                    if (selection.toString().length === 0 && currentInvoiceText) {
+                        event.preventDefault();
+                        const invoiceCopyButton = document.querySelector('[data-action="copy-invoice"]');
+                        copyToClipboard(currentInvoiceText, invoiceCopyButton);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
