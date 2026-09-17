@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcomes - Equipa Vales Digitais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', Arial, sans-serif;
+            font-size: 11px;
+        }
+        
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            color: #000000;
+            max-width: 1000px;
+            margin: 0 auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 999;
+            border: 1px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e7e7e7;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3,
+        body.dark-mode label {
+            color: #f3f3f3;
+        }
+
+        body.dark-mode .tabs,
+        body.dark-mode h1,
+        body.dark-mode .footer,
+        body.dark-mode .welcome-section h3 {
+            border-color: #333333;
+        }
+
+        body.dark-mode .welcome-section,
+        body.dark-mode .budget-card {
+            background-color: #1b1b1b;
+            border-color: #333333;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode .welcome-text {
+            background-color: #242424;
+            border-color: #3a3a3a;
+            color: #ebebeb;
+        }
+
+        body.dark-mode .tab-btn,
+        body.dark-mode .platform-btn {
+            background-color: #2a2a2a;
+            color: #d7d7d7;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn:hover,
+        body.dark-mode .platform-btn:hover {
+            background-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn.active,
+        body.dark-mode .platform-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode .budget-features li,
+        body.dark-mode .shortcut-info,
+        body.dark-mode .footer {
+            color: #bdbdbd;
+        }
+
+        body.dark-mode .theme-toggle-btn {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode .theme-toggle-btn:hover {
+            background-color: #ffffff;
+            color: #121212;
+        }
+        
+        .tabs-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 18px;
+            background: #f1f1f1;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: #555;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        
+        .tab-btn:hover {
+            background: #e8e8e8;
+        }
+        
+        .tab-btn.active {
+            background: #000;
+            color: white;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 11px;
+            }
+        }
+        
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 24px;
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        h2 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            color: #000000;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .welcome-section {
+            background-color: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .prompt-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .prompt-btn:hover {
+            background-color: #333333;
+            transform: translateY(-1px);
+        }
+
+        .welcome-text {
+            background-color: #f8f8f8;
+            border-radius: 0;
+            padding: 30px;
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+            line-height: 1.28;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 10.5px;
+            color: #000000;
+            min-height: 550px;
+            position: relative;
+            font-family: 'Google Sans', Arial, sans-serif;
+            text-align: left;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        
+        .copy-btn:hover {
+            background-color: #333333;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .copy-btn.copied {
+            background-color: #4CAF50;
+        }
+
+        .platform-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .platform-btn {
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 0;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .platform-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .platform-btn.active {
+            background-color: #000;
+            color: white;
+            border-color: #000;
+        }
+        
+        .budget-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .welcome-row-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            color: #444;
+        }
+
+        .welcome-row-track {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            padding-bottom: 6px;
+        }
+
+        .welcome-row-track::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .welcome-row-track::-webkit-scrollbar-thumb {
+            background: #c7c7c7;
+            border-radius: 999px;
+        }
+
+        .welcome-row-track .budget-card {
+            flex: 0 0 280px;
+            min-width: 280px;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-row-track .budget-card {
+                flex-basis: 90%;
+                min-width: 90%;
+            }
+        }
+        
+        .budget-card {
+            background: #f8f9fa;
+            border-radius: 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .budget-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .budget-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        
+        .budget-features {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        
+        .budget-features li {
+            padding: 5px 0;
+            font-size: 11.5px;
+            color: #555;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .budget-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .shortcut-info {
+            margin-top: 10px;
+            color: #777777;
+            font-size: 10px;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777777;
+            font-size: 10px;
+            font-weight: 400;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .platform-welcomes {
+            display: none;
+        }
+
+        .platform-welcomes.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">🌙 Modo noturno</button>
+    <h1>Equipa Vales Digitais</h1>
+    
+    <div class="tabs-container">
+        <div class="tabs">
+            <a href="welcome.html" class="tab-btn active">Welcomes</a>
+            <a href="leadzai.html" class="tab-btn">Leadzai</a>
+            <a href="anunciante.html" class="tab-btn">Anunciante</a>
+            <a href="prompts.html" class="tab-btn">Prompts</a>
+            <a href="calculadora.html" class="tab-btn">Calculadora</a>
+            <a href="activacao.html" class="tab-btn">Ativação</a>
+            <a href="faturas.html" class="tab-btn">Faturas</a>
+            <a href="spinner.html" class="tab-btn">Spinner</a>
+        </div>
+    </div>
+
+    <!-- Aba Welcomes -->
+    <div class="welcome-section">
+        <h2>Templates de Welcome</h2>
+
+        <div class="platform-buttons welcome-platform-buttons">
+            <button class="platform-btn welcome-platform-btn active" data-welcome-platform="google">Google Ads</button>
+            <button class="platform-btn welcome-platform-btn" data-welcome-platform="meta">Meta Ads</button>
+            <button class="platform-btn welcome-platform-btn" data-welcome-platform="omnichannel">Variantes</button>
+        </div>
+
+        <div id="google-welcomes" class="platform-welcomes active">
+            <div class="budget-grid">
+                <div class="welcome-row">
+                    <div class="welcome-row-title">Linha 1 · Welcomes</div>
+                    <div class="welcome-row-track" data-wheel-horizontal>
+                        <div class="budget-card">
+                            <div class="budget-price">500€</div>
+                            <ul class="budget-features">
+                                <li>5 anúncios criados</li>
+                                <li>2 categorias de anúncios</li>
+                                <li>Google Ads (GA)</li>
+                                <li>Template completo de boas-vindas Google</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="500" data-platform="google">Copiar Welcome 500€</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">1000€</div>
+                            <ul class="budget-features">
+                                <li>8 anúncios criados</li>
+                                <li>3 categorias de anúncios</li>
+                                <li>Google Ads (GA)</li>
+                                <li>Template completo de boas-vindas Google</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="1000" data-platform="google">Copiar Welcome 1000€</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">1500€+</div>
+                            <ul class="budget-features">
+                                <li>12 anúncios criados</li>
+                                <li>4 categorias de anúncios</li>
+                                <li>Google Ads (GA)</li>
+                                <li>Template completo de boas-vindas Google</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="1500" data-platform="google">Copiar Welcome 1500€+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="welcome-row">
+                    <div class="welcome-row-title">Linha 2 · Afirmações</div>
+                    <div class="welcome-row-track" data-wheel-horizontal>
+                        <div class="budget-card">
+                            <div class="budget-price">Afirmação de 500€</div>
+                            <ul class="budget-features">
+                                <li>Afirmação de subscrição recebida</li>
+                                <li>5 anúncios criados</li>
+                                <li>2 categorias de anúncios</li>
+                                <li>Template de afirmação de subscrição</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="500-reforco" data-platform="google">Copiar Afirmação 500€</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Afirmação de 1000€</div>
+                            <ul class="budget-features">
+                                <li>Afirmação de subscrição recebida</li>
+                                <li>8 anúncios criados</li>
+                                <li>3 categorias de anúncios</li>
+                                <li>Template de afirmação de subscrição</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="1000-reforco" data-platform="google">Copiar Afirmação 1000€</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Afirmação de 1500+€</div>
+                            <ul class="budget-features">
+                                <li>Afirmação de subscrição recebida</li>
+                                <li>12 anúncios criados</li>
+                                <li>4 categorias de anúncios</li>
+                                <li>Template de afirmação de subscrição</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="1500-reforco" data-platform="google">Copiar Afirmação 1500+€</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="welcome-row">
+                    <div class="welcome-row-title">Linha 3 · Fs's</div>
+                    <div class="welcome-row-track" data-wheel-horizontal>
+                        <div class="budget-card">
+                            <div class="budget-price">Instante Site</div>
+                            <ul class="budget-features">
+                                <li>Oferta exclusiva de Instante Site</li>
+                                <li>3 meses gratuitos</li>
+                                <li>Parceria com Páginas Amarelas</li>
+                                <li>Template para clientes sem website</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="instante-site" data-platform="google">Copiar Instante Site</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Link Redes Sociais</div>
+                            <ul class="budget-features">
+                                <li>Cliente sem website próprio</li>
+                                <li>Uso de Facebook/Instagram como destino</li>
+                                <li>Explicação de impacto em conversão</li>
+                                <li>Oferta de Instante Site até 3 meses</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="link-redes-sociais" data-platform="google">Copiar Link Redes Sociais</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Taxa e Simulação</div>
+                            <ul class="budget-features">
+                                <li>Campanhas para outros países</li>
+                                <li>CPC internacional mais elevado</li>
+                                <li>Simulação de custo adicional</li>
+                                <li>Template de esclarecimento ao cliente</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="taxa-simulacao" data-platform="google">Copiar Taxa e Simulação</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Dados recolhidos</div>
+                            <ul class="budget-features">
+                                <li>Confirmação de dados recebidos</li>
+                                <li>Encaminhamento para produção</li>
+                                <li>Seguimento da criação da campanha</li>
+                                <li>Template de confirmação ao cliente</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="dados-recolhidos" data-platform="google">Copiar Dados recolhidos</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="meta-welcomes" class="platform-welcomes">
+            <div class="budget-grid">
+                <div class="welcome-row">
+                    <div class="welcome-row-title">Linha 1 · Welcomes</div>
+                    <div class="welcome-row-track" data-wheel-horizontal>
+                        <div class="budget-card">
+                            <div class="budget-price">500€</div>
+                            <ul class="budget-features">
+                                <li>5 anúncios criados</li>
+                                <li>2 categorias de anúncios</li>
+                                <li>Meta Ads (MA)</li>
+                                <li>Template completo de boas-vindas Meta</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="500" data-platform="meta">Copiar Welcome 500€</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">1000€</div>
+                            <ul class="budget-features">
+                                <li>8 anúncios criados</li>
+                                <li>3 categorias de anúncios</li>
+                                <li>Meta Ads (MA)</li>
+                                <li>Template completo de boas-vindas Meta</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="1000" data-platform="meta">Copiar Welcome 1000€</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">1500€+</div>
+                            <ul class="budget-features">
+                                <li>12 anúncios criados</li>
+                                <li>4 categorias de anúncios</li>
+                                <li>Meta Ads (MA)</li>
+                                <li>Template completo de boas-vindas Meta</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="1500" data-platform="meta">Copiar Welcome 1500€+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="welcome-row">
+                    <div class="welcome-row-title">Linha 2 · Afirmações</div>
+                    <div class="welcome-row-track" data-wheel-horizontal>
+                        <div class="budget-card">
+                            <div class="budget-price">Afirmação de 500€</div>
+                            <ul class="budget-features">
+                                <li>Afirmação de subscrição recebida</li>
+                                <li>5 anúncios criados</li>
+                                <li>2 categorias de anúncios</li>
+                                <li>Template de afirmação de subscrição</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="500-reforco" data-platform="meta">Copiar Afirmação 500€</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Afirmação de 1000€</div>
+                            <ul class="budget-features">
+                                <li>Afirmação de subscrição recebida</li>
+                                <li>8 anúncios criados</li>
+                                <li>3 categorias de anúncios</li>
+                                <li>Template de afirmação de subscrição</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="1000-reforco" data-platform="meta">Copiar Afirmação 1000€</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Afirmação de 1500+€</div>
+                            <ul class="budget-features">
+                                <li>Afirmação de subscrição recebida</li>
+                                <li>12 anúncios criados</li>
+                                <li>4 categorias de anúncios</li>
+                                <li>Template de afirmação de subscrição</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="1500-reforco" data-platform="meta">Copiar Afirmação 1500+€</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="welcome-row">
+                    <div class="welcome-row-title">Linha 3 · Fs's</div>
+                    <div class="welcome-row-track" data-wheel-horizontal>
+                        <div class="budget-card">
+                            <div class="budget-price">Instante Site</div>
+                            <ul class="budget-features">
+                                <li>Oferta exclusiva de Instante Site</li>
+                                <li>3 meses gratuitos</li>
+                                <li>Parceria com Páginas Amarelas</li>
+                                <li>Template para clientes sem website</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="instante-site" data-platform="meta">Copiar Instante Site</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Link Redes Sociais</div>
+                            <ul class="budget-features">
+                                <li>Cliente sem website próprio</li>
+                                <li>Uso de Facebook/Instagram como destino</li>
+                                <li>Explicação de impacto em conversão</li>
+                                <li>Oferta de Instante Site até 3 meses</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="link-redes-sociais" data-platform="meta">Copiar Link Redes Sociais</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Taxa e Simulação</div>
+                            <ul class="budget-features">
+                                <li>Campanhas para outros países</li>
+                                <li>CPC internacional mais elevado</li>
+                                <li>Simulação de custo adicional</li>
+                                <li>Template de esclarecimento ao cliente</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="taxa-simulacao" data-platform="meta">Copiar Taxa e Simulação</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Dados recolhidos</div>
+                            <ul class="budget-features">
+                                <li>Confirmação de dados recebidos</li>
+                                <li>Encaminhamento para produção</li>
+                                <li>Seguimento da criação da campanha</li>
+                                <li>Template de confirmação ao cliente</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="dados-recolhidos" data-platform="meta">Copiar Dados recolhidos</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="omnichannel-welcomes" class="platform-welcomes">
+            <div class="budget-grid">
+                <div class="welcome-row">
+                    <div class="welcome-row-title">Linha 1 · Variantes</div>
+                    <div class="welcome-row-track" data-wheel-horizontal>
+                        <div class="budget-card">
+                            <div class="budget-price">Google + Meta</div>
+                            <ul class="budget-features">
+                                <li>Welcome combinado entre plataformas</li>
+                                <li>Google Ads + Meta Ads</li>
+                                <li>Mensagem única e alinhada</li>
+                                <li>Template para campanhas híbridas</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="google-meta" data-platform="omnichannel">Copiar Google + Meta</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Google Leads + Meta</div>
+                            <ul class="budget-features">
+                                <li>Estratégia focada em leads no Google</li>
+                                <li>Suporte com campanhas Meta Ads</li>
+                                <li>Reforço de captação de contactos</li>
+                                <li>Template para operação multicanal</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="google-leads-meta" data-platform="omnichannel">Copiar Google Leads + Meta</button>
+                        </div>
+
+                        <div class="budget-card">
+                            <div class="budget-price">Meta Leads + Google</div>
+                            <ul class="budget-features">
+                                <li>Estratégia focada em leads na Meta</li>
+                                <li>Suporte com campanhas Google Ads</li>
+                                <li>Reforço de captação de contactos</li>
+                                <li>Template para operação multicanal</li>
+                            </ul>
+                            <button class="prompt-btn copy-welcome-btn" data-budget="meta-leads-google" data-platform="omnichannel">Copiar Meta Leads + Google</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3>Preview do Welcome:</h3>
+        <div class="welcome-text" id="welcomeText">
+            <button class="copy-btn" data-action="copy-welcome" title="Clique para copiar">Copiar Welcome</button>
+            Selecione uma plataforma e orçamento acima para visualizar e copiar o template de welcome correspondente.
+        </div>
+
+        <p class="shortcut-info">Clique nos botões para copiar automaticamente cada template específico</p>
+    </div>
+
+    <div class="footer">
+        Gerador de Fluxo de Trabalho 3000
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const welcomePlatformButtons = document.querySelectorAll('.welcome-platform-btn');
+            const welcomePlatforms = document.querySelectorAll('.platform-welcomes');
+            const welcomeButtons = document.querySelectorAll('.copy-welcome-btn');
+            const welcomeTextElement = document.getElementById('welcomeText');
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            let currentWelcomeText = '';
+
+            // Gestão do Modo Noturno
+            function updateThemeButtonLabel() {
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggleBtn.textContent = '☀️ Modo claro';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo claro');
+                } else {
+                    themeToggleBtn.textContent = '🌙 Modo noturno';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo noturno');
+                }
+            }
+
+            if (localStorage.getItem('theme-preference') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            updateThemeButtonLabel();
+
+            themeToggleBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                localStorage.setItem('theme-preference', currentTheme);
+                updateThemeButtonLabel();
+            });
+
+            // Templates de Welcome
+            const welcomeV2Templates = {
+                google: {
+                    500: `Olá,\n\nA sua subscrição foi recebida com sucesso. Bem-vindo(a)!\n\n🚨 Ação necessária: Estamos na reta final do programa de Vouchers. Para garantir que a sua campanha é criada e publicada dentro dos prazos, pedimos que acompanhe regularmente este e-mail e responda às nossas mensagens com a maior brevidade possível.\n\nPara iniciarmos a criação da sua campanha, responda às questões abaixo. Demora menos de 3 minutos.\n\nO que está incluído no seu voucher?\n\n• 🛠️ Criação de anúncios com recurso a IA, otimizada com base no seu website.\n• 📊 Acompanhamento por especialistas, com otimizações ao longo da campanha.\n• 📋 Relatórios mensais com os principais resultados.\n• 💰 Taxa de gestão incluída no valor do voucher, sem qualquer custo adicional pela gestão da campanha.\n• 🧾 Pré-pagamento do IVA – Antes da ativação da campanha será necessário efetuar o pagamento do IVA correspondente ao valor do voucher e enviar o respetivo comprovativo.\n\nPara arrancarmos, responda apenas:\n1. **Nome comercial** –\n2. **Link do website** –\n3. **Número de contacto para o anúncio** –\n4. **Duração da campanha** *(data limite 31/10)* –\n5. **Segmentacao geografica? (Apenas Portugal)** –\n6. **Público-alvo** *(idade, sexo, interesses)* –\n7. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\n**Recomendamos também:** *numa campanha publicitária, o ideal é escolher apenas um ou poucos produtos/serviços para divulgar. Com foco e objetivo claros, a taxa de sucesso é muito maior.*\n\n⚠️ Informação importante sobre o serviço: Para garantirmos agilidade, o nosso serviço foca-se na execução técnica e operacional. Por isso, não está incluída a definição de estratégia de marketing nem a criação de imagens ou vídeos. A campanha será estruturada inteiramente com base no material e na visão de negócio que nos fornecer.\n\nComo funciona o processo?\n• A campanha será criada no prazo máximo de 2 dias úteis após a receção das suas respostas.\n• Após a criação, enviaremos um preview da campanha para a sua revisão e aprovação.\n• Aguardaremos a sua resposta durante os 2 dias úteis seguintes.\n• Caso não recebamos resposta dentro desse prazo, a campanha será publicada com a versão enviada, de forma a garantir o cumprimento dos prazos do programa.\n\nAgradecemos a sua confiança.\n\nEstamos ansiosos por ajudar o seu negócio a chegar a mais clientes!\n\nCom os melhores cumprimentos,`,
+                    1000: `Olá,\n\nA sua subscrição foi recebida com sucesso. Bem-vindo(a)!\n\n🚨 Ação necessária: Estamos na reta final do programa de Vouchers. Para garantir que a sua campanha é criada e publicada dentro dos prazos, pedimos que acompanhe regularmente este e-mail e responda às nossas mensagens com a maior brevidade possível.\n\nPara iniciarmos a criação da sua campanha, responda às questões abaixo. Demora menos de 3 minutos.\n\nO que está incluído no seu voucher?\n\n• 🛠️ Criação de anúncios com recurso a IA, otimizada com base no seu website.\n• 📊 Acompanhamento por especialistas, com otimizações ao longo da campanha.\n• 📋 Relatórios mensais com os principais resultados.\n• 💰 Taxa de gestão incluída no valor do voucher, sem qualquer custo adicional pela gestão da campanha.\n• 🧾 Pré-pagamento do IVA – Antes da ativação da campanha será necessário efetuar o pagamento do IVA correspondente ao valor do voucher e enviar o respetivo comprovativo.\n\nPara arrancarmos, responda apenas:\n1. **Nome comercial** –\n2. **Link do website** –\n3. **Número de contacto para o anúncio** –\n4. **Duração da campanha** *(data limite 31/10)* –\n5. **Segmentacao geografica? (Apenas Portugal)** –\n6. **Público-alvo** *(idade, sexo, interesses)* –\n7. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\n**Recomendamos também:** *numa campanha publicitária, o ideal é escolher apenas um ou poucos produtos/serviços para divulgar. Com foco e objetivo claros, a taxa de sucesso é muito maior.*\n\n⚠️ Informação importante sobre o serviço: Para garantirmos agilidade, o nosso serviço foca-se na execução técnica e operacional. Por isso, não está incluída a definição de estratégia de marketing nem a criação de imagens ou vídeos. A campanha será estruturada inteiramente com base no material e na visão de negócio que nos fornecer.\n\nComo funciona o processo?\n• A campanha será criada no prazo máximo de 2 dias úteis após a receção das suas respostas.\n• Após a criação, enviaremos um preview da campanha para a sua revisão e aprovação.\n• Aguardaremos a sua resposta durante os 2 dias úteis seguintes.\n• Caso não recebamos resposta dentro desse prazo, a campanha será publicada com a versão enviada, de forma a garantir o cumprimento dos prazos do programa.\n\nAgradecemos a sua confiança.\n\nEstamos ansiosos por ajudar o seu negócio a chegar a mais clientes!\n\nCom os melhores cumprimentos,`,
+                    1500: `Olá,\n\nA sua subscrição foi recebida com sucesso. Bem-vindo(a)!\n\n🚨 Ação necessária: Estamos na reta final do programa de Vouchers. Para garantir que a sua campanha é criada e publicada dentro dos prazos, pedimos que acompanhe regularmente este e-mail e responda às nossas mensagens com a maior brevidade possível.\n\nPara iniciarmos a criação da sua campanha, responda às questões abaixo. Demora menos de 3 minutos.\n\nO que está incluído no seu voucher?\n\n• 🛠️ Criação de anúncios com recurso a IA, otimizada com base no seu website.\n• 📊 Acompanhamento por especialistas, com otimizações ao longo da campanha.\n• 📋 Relatórios mensais com os principais resultados.\n• 💰 Taxa de gestão incluída no valor do voucher, sem qualquer custo adicional pela gestão da campanha.\n• 🧾 Pré-pagamento do IVA – Antes da ativação da campanha será necessário efetuar o pagamento do IVA correspondente ao valor do voucher e enviar o respetivo comprovativo.\n\n🎯 Escolha o tipo de campanha:\n• Tráfego – Mais visitantes no seu site.\n• Geração de Leads – Para captar contactos de potenciais clientes. Nota: Requer a instalação de um script de rastreamento no seu website. Se não for instalado, a campanha será configurada automaticamente como Campanha de Tráfego.\n\nPara arrancarmos, responda apenas:\n1. **Nome comercial** –\n2. **Link do website** –\n3. **Número de contacto para o anúncio** –\n4. **Duração da campanha** *(data limite 31/10)* –\n5. **Segmentacao geografica? (Apenas Portugal)** –\n6. **Público-alvo** *(idade, sexo, interesses)* –\n7. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\n**Recomendamos também:** *numa campanha publicitária, o ideal é escolher apenas um ou poucos produtos/serviços para divulgar. Com foco e objetivo claros, a taxa de sucesso é muito maior.*\n\n⚠️ Informação importante sobre o serviço: Para garantirmos agilidade, o nosso serviço foca-se na execução técnica e operacional. Por isso, não está incluída a definição de estratégia de marketing nem a criação de imagens ou vídeos. A campanha será estruturada inteiramente com base no material e na visão de negócio que nos fornecer.\n\nComo funciona o processo?\n• A campanha será criada no prazo máximo de 2 dias úteis após a receção das suas respostas.\n• Após a criação, enviaremos um preview da campanha para a sua revisão e aprovação.\n• Aguardaremos a sua resposta durante os 2 dias úteis seguintes.\n• Caso não recebamos resposta dentro desse prazo, a campanha será publicada com a versão enviada, de forma a garantir o cumprimento dos prazos do programa.\n\nAgradecemos a sua confiança.\n\nEstamos ansiosos por ajudar o seu negócio a chegar a mais clientes!\n\nCom os melhores cumprimentos,`
+                },
+                meta: {
+                    500: `Olá,\n\nA sua subscrição foi recebida com sucesso. Bem-vindo(a)!\n\n🚨 Ação necessária: Estamos na reta final do programa de Vouchers. Para garantir que a sua campanha é criada e publicada dentro dos prazos, pedimos que acompanhe regularmente este e-mail e responda às nossas mensagens com a maior brevidade possível.\n\nPara iniciarmos a criação da sua campanha, responda às questões abaixo. Demora menos de 3 minutos.\n\nO que está incluído no seu voucher?\n\n• 🛠️ Criação de anúncios com recurso a IA, otimizada com base no seu website.\n• 📊 Acompanhamento por especialistas, com otimizações ao longo da campanha.\n• 📋 Relatórios mensais com os principais resultados.\n• 💰 Taxa de gestão incluída no valor do voucher, sem qualquer custo adicional pela gestão da campanha.\n• 🧾 Pré-pagamento do IVA – Antes da ativação da campanha será necessário efetuar o pagamento do IVA correspondente ao valor do voucher e enviar o respetivo comprovativo.\n\nPara arrancarmos, responda apenas:\n1. **Nome comercial** –\n2. **Link do website** –\n3. **E-mail administrador/owner da página** –\n4. **Número de contacto para o anúncio** –\n5. **Duração da campanha** *(data limite 31/10)* –\n6. **Segmentacao geografica? (Apenas Portugal)** –\n7. **Público-alvo** *(idade, sexo, interesses)* –\n8. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\nPara campanhas Meta, precisamos de fotos/criativos. Ou temos a opção de usar imagens do banco de imagens.\n\n**Recomendamos também:** *numa campanha publicitária, o ideal é escolher apenas um ou poucos produtos/serviços para divulgar. Com foco e objetivo claros, a taxa de sucesso é muito maior.*\n\n⚠️ Informação importante sobre o serviço: Para garantirmos agilidade, o nosso serviço foca-se na execução técnica e operacional. Por isso, não está incluída a definição de estratégia de marketing nem a criação de imagens ou vídeos. A campanha será estruturada inteiramente com base no material e na visão de negócio que nos fornecer.\n\nComo funciona o processo?\n• A campanha será criada no prazo máximo de 2 dias úteis após a receção das suas respostas.\n• Após a criação, enviaremos um preview da campanha para a sua revisão e aprovação.\n• Aguardaremos a sua resposta durante os 2 dias úteis seguintes.\n• Caso não recebamos resposta dentro desse prazo, a campanha será publicada com a versão enviada, de forma a garantir o cumprimento dos prazos do programa.\n\nAgradecemos a sua confiança.\n\nEstamos ansiosos por ajudar o seu negócio a chegar a mais clientes!\n\nCom os melhores cumprimentos,`,
+                    1000: `Olá,\n\nA sua subscrição foi recebida com sucesso. Bem-vindo(a)!\n\n🚨 Ação necessária: Estamos na reta final do programa de Vouchers. Para garantir que a sua campanha é criada e publicada dentro dos prazos, pedimos que acompanhe regularmente este e-mail e responda às nossas mensagens com a maior brevidade possível.\n\nPara iniciarmos a criação da sua campanha, responda às questões abaixo. Demora menos de 3 minutos.\n\nO que está incluído no seu voucher?\n\n• 🛠️ Criação de anúncios com recurso a IA, otimizada com base no seu website.\n• 📊 Acompanhamento por especialistas, com otimizações ao longo da campanha.\n• 📋 Relatórios mensais com os principais resultados.\n• 💰 Taxa de gestão incluída no valor do voucher, sem qualquer custo adicional pela gestão da campanha.\n• 🧾 Pré-pagamento do IVA – Antes da ativação da campanha será necessário efetuar o pagamento do IVA correspondente ao valor do voucher e enviar o respetivo comprovativo.\n\nPara arrancarmos, responda apenas:\n1. **Nome comercial** –\n2. **Link do website** –\n3. **E-mail administrador/owner da página** –\n4. **Número de contacto para o anúncio** –\n5. **Duração da campanha** *(data limite 31/10)* –\n6. **Segmentacao geografica? (Apenas Portugal)** –\n7. **Público-alvo** *(idade, sexo, interesses)* –\n8. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\nPara campanhas Meta, precisamos de fotos/criativos. Ou temos a opção de usar imagens do banco de imagens.\n\n**Recomendamos também:** *numa campanha publicitária, o ideal é escolher apenas um ou poucos produtos/serviços para divulgar. Com foco e objetivo claros, a taxa de sucesso é muito maior.*\n\n⚠️ Informação importante sobre o serviço: Para garantirmos agilidade, o nosso serviço foca-se na execução técnica e operacional. Por isso, não está incluída a definição de estratégia de marketing nem a criação de imagens ou vídeos. A campanha será estruturada inteiramente com base no material e na visão de negócio que nos fornecer.\n\nComo funciona o processo?\n• A campanha será criada no prazo máximo de 2 dias úteis após a receção das suas respostas.\n• Após a criação, enviaremos um preview da campanha para a sua revisão e aprovação.\n• Aguardaremos a sua resposta durante os 2 dias úteis seguintes.\n• Caso não recebamos resposta dentro desse prazo, a campanha será publicada com a versão enviada, de forma a garantir o cumprimento dos prazos do programa.\n\nAgradecemos a sua confiança.\n\nEstamos ansiosos por ajudar o seu negócio a chegar a mais clientes!\n\nCom os melhores cumprimentos,`,
+                    1500: `Olá,\n\nA sua subscrição foi recebida com sucesso. Bem-vindo(a)!\n\n🚨 Ação necessária: Estamos na reta final do programa de Vouchers. Para garantir que a sua campanha é criada e publicada dentro dos prazos, pedimos que acompanhe regularmente este e-mail e responda às nossas mensagens com a maior brevidade possível.\n\nPara iniciarmos a criação da sua campanha, responda às questões abaixo. Demora menos de 3 minutos.\n\nO que está incluído no seu voucher?\n\n• 🛠️ Criação de anúncios com recurso a IA, otimizada com base no seu website.\n• 📊 Acompanhamento por especialistas, com otimizações ao longo da campanha.\n• 📋 Relatórios mensais com os principais resultados.\n• 💰 Taxa de gestão incluída no valor do voucher, sem qualquer custo adicional pela gestão da campanha.\n• 🧾 Pré-pagamento do IVA – Antes da ativação da campanha será necessário efetuar o pagamento do IVA correspondente ao valor do voucher e enviar o respetivo comprovativo.\n\n🎯 Escolha o tipo de campanha:\n• **Tráfego** – Mais visitantes no seu site.\n• **Geração de Leads** – Para captar contactos de potenciais clientes. Nota: Requer a instalação de um script de rastreamento no seu website. Se não for instalado, a campanha será configurada automaticamente como Campanha de Tráfego.\n\nPara arrancarmos, responda apenas:\n1. **Nome comercial** –\n2. **Link do website** –\n3. **E-mail administrador/owner da página** –\n4. **Número de contacto para o anúncio** –\n5. **Duração da campanha** *(data limite 31/10)* –\n6. **Segmentacao geografica? (Apenas Portugal)** –\n7. **Público-alvo** *(idade, sexo, interesses)* –\n8. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\nPara campanhas Meta, precisamos de fotos/criativos. Ou temos a opção de usar imagens do banco de imagens.\n\n**Recomendamos também:** *numa campanha publicitária, o ideal é escolher apenas um ou poucos produtos/serviços para divulgar. Com foco e objetivo claros, a taxa de sucesso é muito maior.*\n\n⚠️ Informação importante sobre o serviço: Para garantirmos agilidade, o nosso serviço foca-se na execução técnica e operacional. Por isso, não está incluída a definição de estratégia de marketing nem a criação de imagens ou vídeos. A campanha será estruturada inteiramente com base no material e na visão de negócio que nos fornecer.\n\nComo funciona o processo?\n• A campanha será criada no prazo máximo de 2 dias úteis após a receção das suas respostas.\n• Após a criação, enviaremos um preview da campanha para a sua revisão e aprovação.\n• Aguardaremos a sua resposta durante os 2 dias úteis seguintes.\n• Caso não recebamos resposta dentro desse prazo, a campanha será publicada com a versão enviada, de forma a garantir o cumprimento dos prazos do programa.\n\nAgradecemos a sua confiança.\n\nEstamos ansiosos por ajudar o seu negócio a chegar a mais clientes!\n\nCom os melhores cumprimentos,`
+                }
+            };
+
+            const welcomePlanDetails = {
+                500: `📌 Estrutura da campanha:\n• 5 anúncios criados\n• 2 categorias de anúncios`,
+                1000: `📌 Estrutura da campanha:\n• 8 anúncios criados\n• 3 categorias de anúncios`,
+                1500: `📌 Estrutura da campanha:\n• 12 anúncios criados\n• 4 categorias de anúncios`
+            };
+
+            const welcomeTemplates = {
+                google: {
+                    '500-reforco': welcomeV2Templates.google[500].replace('⚠️ Informação importante sobre o serviço:', `${welcomePlanDetails[500]}\n\n⚠️ Informação importante sobre o serviço:`),
+                    '1000-reforco': welcomeV2Templates.google[1000].replace('⚠️ Informação importante sobre o serviço:', `${welcomePlanDetails[1000]}\n\n⚠️ Informação importante sobre o serviço:`),
+                    '1500-reforco': welcomeV2Templates.google[1500].replace('⚠️ Informação importante sobre o serviço:', `${welcomePlanDetails[1500]}\n\n⚠️ Informação importante sobre o serviço:`),
+                    'instante-site': `No seguimento da sua campanha connosco, e com o objetivo de apoiar empresas que ainda não têm presença online, temos o prazer de lhe oferecer um Instante Site gratuito durante 3 meses (tempo de duração da campanha).\n\nEsta oferta exclusiva, desenvolvida em parceria com a Páginas Amarelas, é dedicada a clientes sem website.\n\nO conteúdo do website será criado com base num formulário que terá de ser preenchido por si com as informações mais relevantes do seu negócio. Após a criação, terá acesso a uma área de gestão simples e intuitiva onde poderá alterar informações e imagens sempre que necessário.\n\nInformações importantes:\n\nA criação e gestão do Instante Site são da sua total responsabilidade.\n\nO website deve ser publicado ao mesmo tempo que a campanha para garantir que o período da oferta (3 meses) coincide com a duração da campanha e maximiza os resultados.\n\nO prazo de 3 meses gratuitos começa a contar a partir da publicação do site. Assim, pedimos que, no mesmo dia em que publicar o website, nos envie o URL para que possamos lançar a campanha e garantir que tudo funcione dentro do prazo dos 3 meses.\n\nA despublicação do website é automática no final dos 3 meses gratuitos. Caso queira manter o site ativo, poderá optar por continuar o serviço mediante pagamento.\n\nGostaríamos de saber se está interessado nesta oferta para avançarmos com o envio do formulário para criação do website.`,
+                    'link-redes-sociais': `Informamos,\n\nA utilização de um link de redes sociais (como Facebook ou Instagram) em vez de um site pode ter um impacto negativo nos resultados da campanha. As redes sociais são canais de apoio, mas uma campanha profissional orientada para conversão funciona melhor quando direciona os utilizadores para uma página própria, mais credível, controlável e otimizada para gerar negócio.\n\nCaso não tenha website, temos o prazer de lhe oferecer um Instante Site gratuito até 3 meses (tempo de duração da campanha), desenvolvido em parceria com a Páginas Amarelas.\n\nEsta oferta é dedicada a clientes sem presença online e garante uma página profissional e adequada aos objetivos da sua campanha.\n\nComo funciona:\nO conteúdo do website será criado com base num formulário preenchido por si. Após a criação, terá acesso a uma área de gestão simples onde poderá alterar informações e imagens sempre que necessário.\n\nInformações importantes:\n• A criação e gestão do Instante Site são da sua responsabilidade.\n• O website deve ser publicado ao mesmo tempo que a campanha.\n• O prazo de 3 meses gratuitos começa a contar a partir da publicação do site. Assim, pedimos que, no mesmo dia em que publicar o website, nos envie o URL para lançarmos a campanha.\n• A despublicação é automática no final dos 3 meses. Caso queira manter o site ativo, poderá optar pela continuidade do serviço mediante pagamento.\n\nGostaríamos de saber se está interessado nesta oferta para avançarmos com o envio do formulário para criação do website.\n\nCom os melhores cumprimentos,`,
+                    'taxa-simulacao': `Caro beneficiário,\n\nEsperamos que este e-mail o encontre bem.\n\nVerificámos que pretende direcionar as campanhas para outros paises além de territorio nacional. Gostaríamos de esclarecer que, tratando-se de campanhas internacionais, o custo por clique é significativamente mais elevado, o que faz com que o orçamento se esgote mais rapidamente.\n\nÉ possível realizar campanhas fora de Portugal, mas isso implica um valor adicional, uma vez que o custo por clique varia consoante o país.\n\nCaso pretenda avançar, podemos realizar uma simulação do custo, permitindo-lhe analisar e tomar uma decisão informada.\n\nFicamos a aguardar o seu feedback,`,
+                    'dados-recolhidos': `Olá,\n\nMuito obrigada pelo envio dos dados.\n\nAs informações já foram encaminhadas para a nossa equipa de construção, que irá dar início ao processo de criação da sua campanha.\n\nApós a criação, será enviada uma preview da campanha para que possa avaliar e aprovar.\n\nCom os melhores cumprimentos,`
+                },
+                meta: {
+                    '500-reforco': welcomeV2Templates.meta[500].replace('⚠️ Informação importante sobre o serviço:', `${welcomePlanDetails[500]}\n\n⚠️ Informação importante sobre o serviço:`),
+                    '1000-reforco': welcomeV2Templates.meta[1000].replace('⚠️ Informação importante sobre o serviço:', `${welcomePlanDetails[1000]}\n\n⚠️ Informação importante sobre o serviço:`),
+                    '1500-reforco': welcomeV2Templates.meta[1500].replace('⚠️ Informação importante sobre o serviço:', `${welcomePlanDetails[1500]}\n\n⚠️ Informação importante sobre o serviço:`),
+                    'instante-site': `No seguimento da sua campanha connosco, e com o objetivo de apoiar empresas que ainda não têm presença online, temos o prazer de lhe oferecer um Instante Site gratuito durante 3 meses (tempo de duração da campanha).\n\nEsta oferta exclusiva, desenvolvida em parceria com a Páginas Amarelas, é dedicada a clientes sem website.\n\nO conteúdo do website será criado com base num formulário que terá de ser preenchido por si com as informações mais relevantes do seu negócio. Após a criação, terá acesso a uma área de gestão simples e intuitiva onde poderá alterar informações e imagens sempre que necessário.\n\nInformações importantes:\n\nA criação e gestão do Instante Site são da sua total responsabilidade.\n\nO website deve ser publicado ao mesmo tempo que a campanha para garantir que o período da oferta (3 meses) coincide com a duração da campanha e maximiza os resultados.\n\nO prazo de 3 meses gratuitos começa a contar a partir da publicação do site. Assim, pedimos que, no mesmo dia em que publicar o website, nos envie o URL para que possamos lançar a campanha e garantir que tudo funcione dentro do prazo dos 3 meses.\n\nA despublicação do website é automática no final dos 3 meses gratuitos. Caso queira manter o site ativo, poderá optar por continuar o serviço mediante pagamento.\n\nGostaríamos de saber se está interessado nesta oferta para avançarmos com o envio do formulário para criação do website.`,
+                    'link-redes-sociais': `Informamos,\n\nA utilização de um link de redes sociais (como Facebook ou Instagram) em vez de um site pode ter um impacto negativo nos resultados da campanha. As redes sociais são canais de apoio, mas uma campanha profissional orientada para conversão funciona melhor quando direciona os utilizadores para uma página própria, mais credível, controlável e otimizada para gerar negócio.\n\nCaso não tenha website, temos o prazer de lhe oferecer um Instante Site gratuito até 3 meses (tempo de duração da campanha), desenvolvido em parceria com a Páginas Amarelas.\n\nEsta oferta é dedicada a clientes sem presença online e garante uma página profissional e adequada aos objetivos da sua campanha.\n\nComo funciona:\nO conteúdo do website será criado com base num formulário preenchido por si. Após a criação, terá acesso a uma área de gestão simples onde poderá alterar informações e imagens sempre que necessário.\n\nInformações importantes:\n• A criação e gestão do Instante Site são da sua responsabilidade.\n• O website deve ser publicado ao mesmo tempo que a campanha.\n• O prazo de 3 meses gratuitos começa a contar a partir da publicação do site. Assim, pedimos que, no mesmo dia em que publicar o website, nos envie o URL para lançarmos a campanha.\n• A despublicação é automática no final dos 3 meses. Caso queira manter o site ativo, poderá optar pela continuidade do serviço mediante pagamento.\n\nGostaríamos de saber se está interessado nesta oferta para avançarmos com o envio do formulário para criação do website.\n\nCom os melhores cumprimentos,`,
+                    'taxa-simulacao': `Caro beneficiário,\n\nEsperamos que este e-mail o encontre bem.\n\nVerificámos que pretende direcionar as campanhas para outros paises além de territorio nacional. Gostaríamos de esclarecer que, tratando-se de campanhas internacionais, o custo por clique é significativamente mais elevado, o que faz com que o orçamento se esgote mais rapidamente.\n\nÉ possível realizar campanhas fora de Portugal, mas isso implica um valor adicional, uma vez que o custo por clique varia consoante o país.\n\nCaso pretenda avançar, podemos realizar uma simulação do custo, permitindo-lhe analisar e tomar uma decisão informada.\n\nFicamos a aguardar o seu feedback,`,
+                    'dados-recolhidos': `Olá,\n\nMuito obrigada pelo envio dos dados.\n\nAs informações já foram encaminhadas para a nossa equipa de construção, que irá dar início ao processo de criação da sua campanha.\n\nApós a criação, será enviada uma preview da campanha para que possa avaliar e aprovar.\n\nCom os melhores cumprimentos,`
+                },
+                omnichannel: {
+                    'google-meta': `Olá,\n\nA sua subscrição foi recebida com sucesso. Bem-vindo(a)!\n\n🚨 Ação necessária: Estamos na reta final do programa de Vouchers. Para garantir que a sua campanha é criada e publicada dentro dos prazos, pedimos que acompanhe regularmente este e-mail e responda às nossas mensagens com a maior brevidade possível.\n\nPara iniciarmos a criação da sua campanha, responda às questões abaixo. Demora menos de 3 minutos.\n\nO que está incluído no seu voucher?\n\n• 🛠️ Criação de anúncios com recurso a IA, otimizada com base no seu website.\n• 📊 Acompanhamento por especialistas, com otimizações ao longo da campanha.\n• 📋 Relatórios mensais com os principais resultados.\n• 💰 Taxa de gestão incluída no valor do voucher, sem qualquer custo adicional pela gestão da campanha.\n• 🧾 Pré-pagamento do IVA – Antes da ativação da campanha será necessário efetuar o pagamento do IVA correspondente ao valor do voucher e enviar o respetivo comprovativo.\n\nPara arrancarmos, responda apenas:\n\nGoogle ads\n1. **Nome comercial** –\n2. **Link do website** –\n3. **Número de contacto para o anúncio** –\n4. **Duração da campanha** *(data limite 31/10)* –\n5. **Segmentacao geografica? (Apenas Portugal)** –\n6. **Público-alvo** *(idade, sexo, interesses)* –\n7. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\nMeta ads\n1. **Nome comercial** –\n2. **Link do website** –\n3. **E-mail administrador/owner da página** –\n4. **Número de contacto para o anúncio** –\n5. **Duração da campanha** *(data limite 31/10)* –\n6. **Segmentacao geografica? (Apenas Portugal)** –\n7. **Público-alvo** *(idade, sexo, interesses)* –\n8. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\n**Recomendamos também:** *numa campanha publicitária, o ideal é escolher apenas um ou poucos produtos/serviços para divulgar. Com foco e objetivo claros, a taxa de sucesso é muito maior.*\n\n⚠️ Informação importante sobre o serviço: Para garantirmos agilidade, o nosso serviço foca-se na execução técnica e operacional. Por isso, não está incluída a definição de estratégia de marketing nem a criação de imagens ou vídeos. A campanha será estruturada inteiramente com base no material e na visão de negócio que nos fornecer.\n\nComo funciona o processo?\n• A campanha será criada no prazo máximo de 2 dias úteis após a receção das suas respostas.\n• Após a criação, enviaremos um preview da campanha para a sua revisão e aprovação.\n• Aguardaremos a sua resposta durante os 2 dias úteis seguintes.\n• Caso não recebamos resposta dentro desse prazo, a campanha será publicada com a versão enviada, de forma a garantir o cumprimento dos prazos do programa.\n\nAgradecemos a sua confiança.\n\nEstamos ansiosos por ajudar o seu negócio a chegar a mais clientes!\n\nCom os melhores cumprimentos,`,
+                    'google-leads-meta': `Olá,\n\nA sua subscrição foi recebida com sucesso. Bem-vindo(a)!\n\n🚨 Ação necessária: Estamos na reta final do programa de Vouchers. Para garantir que a sua campanha é criada e publicada dentro dos prazos, pedimos que acompanhe regularmente este e-mail e responda às nossas mensagens com a maior brevidade possível.\n\nPara iniciarmos a criação da sua campanha, responda às questões abaixo. Demora menos de 3 minutos.\n\nO que está incluído no seu voucher?\n\n• 🛠️ Criação de anúncios com recurso a IA, otimizada com base no seu website.\n• 📊 Acompanhamento por especialistas, com otimizações ao longo da campanha.\n• 📋 Relatórios mensais com os principais resultados.\n• 💰 Taxa de gestão incluída no valor do voucher, sem qualquer custo adicional pela gestão da campanha.\n• 🧾 Pré-pagamento do IVA – Antes da ativação da campanha será necessário efetuar o pagamento do IVA correspondente ao valor do voucher e enviar o respetivo comprovativo.\n\nPara arrancarmos, responda apenas:\n\nGoogle ads\n🎯 Escolha o tipo de campanha:\n• **Tráfego** – Mais visitantes no seu site.\n• **Geração de Leads** – Para captar contactos de potenciais clientes. Nota: Requer a instalação de um script de rastreamento no seu website. Se não for instalado, a campanha será configurada automaticamente como Campanha de Tráfego.\n\n1. **Nome comercial** –\n2. **Link do website** –\n3. **Número de contacto para o anúncio** –\n4. **Duração da campanha** *(data limite 31/10)* –\n5. **Segmentacao geografica? (Apenas Portugal)** –\n6. **Público-alvo** *(idade, sexo, interesses)* –\n7. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\nMeta ads\n1. **Nome comercial** –\n2. **Link do website** –\n3. **E-mail administrador/owner da página** –\n4. **Número de contacto para o anúncio** –\n5. **Duração da campanha** *(data limite 31/10)* –\n6. **Segmentacao geografica? (Apenas Portugal)** –\n7. **Público-alvo** *(idade, sexo, interesses)* –\n8. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\n**Recomendamos também:** *numa campanha publicitária, o ideal é escolher apenas um ou poucos produtos/serviços para divulgar. Com foco e objetivo claros, a taxa de sucesso é muito maior.*\n\n⚠️ Informação importante sobre o serviço: Para garantirmos agilidade, o nosso serviço foca-se na execução técnica e operacional. Por isso, não está incluída a definição de estratégia de marketing nem a criação de imagens ou vídeos. A campanha será estruturada inteiramente com base no material e na visão de negócio que nos fornecer.\n\nComo funciona o processo?\n• A campanha será criada no prazo máximo de 2 dias úteis após a receção das suas respostas.\n• Após a criação, enviaremos um preview da campanha para a sua revisão e aprovação.\n• Aguardaremos a sua resposta durante os 2 dias úteis seguintes.\n• Caso não recebamos resposta dentro desse prazo, a campanha será publicada com a versão enviada, de forma a garantir o cumprimento dos prazos do programa.\n\nAgradecemos a sua confiança.\n\nEstamos ansiosos por ajudar o seu negócio a chegar a mais clientes!\n\nCom os melhores cumprimentos,`,
+                    'meta-leads-google': `Olá,\n\nA sua subscrição foi recebida com sucesso. Bem-vindo(a)!\n\n🚨 Ação necessária: Estamos na reta final do programa de Vouchers. Para garantir que a sua campanha é criada e publicada dentro dos prazos, pedimos que acompanhe regularmente este e-mail e responda às nossas mensagens com a maior brevidade possível.\n\nPara iniciarmos a criação da sua campanha, responda às questões abaixo. Demora menos de 3 minutos.\n\nO que está incluído no seu voucher?\n\n• 🛠️ Criação de anúncios com recurso a IA, otimizada com base no seu website.\n• 📊 Acompanhamento por especialistas, com otimizações ao longo da campanha.\n• 📋 Relatórios mensais com os principais resultados.\n• 💰 Taxa de gestão incluída no valor do voucher, sem qualquer custo adicional pela gestão da campanha.\n• 🧾 Pré-pagamento do IVA – Antes da ativação da campanha será necessário efetuar o pagamento do IVA correspondente ao valor do voucher e enviar o respetivo comprovativo.\n\nPara arrancarmos, responda apenas:\n\nMeta ads\n🎯 Escolha o tipo de campanha:\n• **Tráfego** – Mais visitantes no seu site.\n• **Geração de Leads** – Para captar contactos de potenciais clientes. Nota: Requer a instalação de um script de rastreamento no seu website. Se não for instalado, a campanha será configurada automaticamente como Campanha de Tráfego.\n\n1. **Nome comercial** –\n2. **Link do website** –\n3. **E-mail administrador/owner da página** –\n4. **Número de contacto para o anúncio** –\n5. **Duração da campanha** *(data limite 31/10)* –\n6. **Segmentacao geografica? (Apenas Portugal)** –\n7. **Público-alvo** *(idade, sexo, interesses)* –\n8. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\nGoogle ads\n1. **Nome comercial** –\n2. **Link do website** –\n3. **Número de contacto para o anúncio** –\n4. **Duração da campanha** *(data limite 31/10)* –\n5. **Segmentacao geografica? (Apenas Portugal)** –\n6. **Público-alvo** *(idade, sexo, interesses)* –\n7. **Qual é o principal produto ou serviço que gostaria de destacar nesta campanha?**\n\n**Recomendamos também:** *numa campanha publicitária, o ideal é escolher apenas um ou poucos produtos/serviços para divulgar. Com foco e objetivo claros, a taxa de sucesso é muito maior.*\n\n⚠️ Informação importante sobre o serviço: Para garantirmos agilidade, o nosso serviço foca-se na execução técnica e operacional. Por isso, não está incluída a definição de estratégia de marketing nem a criação de imagens ou vídeos. A campanha será estruturada inteiramente com base no material e na visão de negócio que nos fornecer.\n\nComo funciona o processo?\n• A campanha será criada no prazo máximo de 2 dias úteis após a receção das suas respostas.\n• Após a criação, enviaremos um preview da campanha para a sua revisão e aprovação.\n• Aguardaremos a sua resposta durante os 2 dias úteis seguintes.\n• Caso não recebamos resposta dentro desse prazo, a campanha será publicada com a versão enviada, de forma a garantir o cumprimento dos prazos do programa.\n\nAgradecemos a sua confiança.\n\nEstamos ansiosos por ajudar o seu negócio a chegar a mais clientes!\n\nCom os melhores cumprimentos,`
+                }
+            };
+
+            ['google', 'meta'].forEach(platform => {
+                [500, 1000, 1500].forEach(budget => {
+                    welcomeTemplates[platform][budget] = welcomeV2Templates[platform][budget]
+                        .replace('Para arrancarmos, responda apenas:', `${welcomePlanDetails[budget]}\n\nPara arrancarmos, responda apenas:`);
+                });
+            });
+
+            // Alternância entre plataformas de Welcome
+            welcomePlatformButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const platform = button.getAttribute('data-welcome-platform');
+
+                    welcomePlatformButtons.forEach(btn => btn.classList.remove('active'));
+                    welcomePlatforms.forEach(welcome => welcome.classList.remove('active'));
+
+                    button.classList.add('active');
+                    document.getElementById(`${platform}-welcomes`).classList.add('active');
+
+                    currentWelcomeText = '';
+                    welcomeTextElement.innerHTML = `
+                        <button class="copy-btn" data-action="copy-welcome" title="Clique para copiar">Copiar Welcome</button>
+                        Selecione uma plataforma e orçamento acima para visualizar e copiar o template de welcome correspondente.
+                    `;
+                });
+            });
+
+            // Scroll Horizontal nas linhas
+            const horizontalRows = document.querySelectorAll('[data-wheel-horizontal]');
+            horizontalRows.forEach(row => {
+                row.addEventListener('wheel', event => {
+                    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+                    event.preventDefault();
+                    row.scrollBy({ left: event.deltaY, behavior: 'smooth' });
+                }, { passive: false });
+            });
+
+            // Funções de Cópia e Formatação
+            function normalizeMessageText(text) {
+                if (!text) return '';
+                return text.replace(/\\n/g, '\n').replace(/\r\n/g, '\n').replace(/\u00a0/g, ' ').trim();
+            }
+
+            function escapeHtml(text) {
+                return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+            }
+
+            function parseInlineMarkdown(text) {
+                return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>');
+            }
+
+            function generateClipboardHtml(text) {
+                const normalizedText = normalizeMessageText(text);
+                if (!normalizedText) return '';
+                const formattedText = parseInlineMarkdown(normalizedText).replace(/\n/g, '<br>');
+                return `<div style="font-family:'Google Sans', Arial, sans-serif; font-size:11px; line-height:1.45; margin:0;">${formattedText}</div>`;
+            }
+
+            function setCopyFeedback(buttonElement, successText = '✓ Copiado!') {
+                if (!buttonElement) return;
+                const originalText = buttonElement.textContent;
+                buttonElement.textContent = successText;
+                buttonElement.classList.add('copied');
+                setTimeout(() => {
+                    buttonElement.textContent = originalText;
+                    buttonElement.classList.remove('copied');
+                }, 1500);
+            }
+
+            function copyToClipboard(text, buttonElement = null) {
+                const normalizedText = normalizeMessageText(text);
+                const htmlText = generateClipboardHtml(normalizedText);
+
+                if (!normalizedText) return;
+
+                if (typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write) {
+                    const clipboardItem = new ClipboardItem({
+                        'text/plain': new Blob([normalizedText], { type: 'text/plain' }),
+                        'text/html': new Blob([htmlText], { type: 'text/html' })
+                    });
+
+                    navigator.clipboard.write([clipboardItem])
+                        .then(() => setCopyFeedback(buttonElement))
+                        .catch(() => {
+                            const textArea = document.createElement('textarea');
+                            textArea.value = normalizedText;
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textArea);
+                            setCopyFeedback(buttonElement, 'Copiado!');
+                        });
+                    return;
+                }
+
+                const textArea = document.createElement('textarea');
+                textArea.value = normalizedText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                setCopyFeedback(buttonElement, 'Copiado!');
+            }
+
+            // Click nos botões de cópia
+            welcomeButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const budget = this.getAttribute('data-budget');
+                    const platform = this.getAttribute('data-platform') || 'google';
+                    
+                    const welcome = normalizeMessageText(welcomeTemplates[platform]?.[budget]);
+                    if (!welcome) return;
+
+                    currentWelcomeText = welcome;
+                    welcomeTextElement.innerHTML = `
+                        <button class="copy-btn" data-action="copy-welcome" title="Clique para copiar">Copiar Welcome</button>
+                        ${generateClipboardHtml(welcome)}
+                    `;
+                    copyToClipboard(welcome, this);
+                });
+            });
+
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.matches('.copy-btn[data-action="copy-welcome"]') && currentWelcomeText) {
+                    copyToClipboard(currentWelcomeText, e.target);
+                }
+            });
+
+            // Atalhos de Teclado (Ctrl+C)
+            document.addEventListener('keydown', function(event) {
+                if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c' && !event.shiftKey) {
+                    const selection = window.getSelection();
+                    if (selection.toString().length === 0 && currentWelcomeText) {
+                        event.preventDefault();
+                        const welcomeCopyButton = document.querySelector('[data-action="copy-welcome"]');
+                        copyToClipboard(currentWelcomeText, welcomeCopyButton);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
