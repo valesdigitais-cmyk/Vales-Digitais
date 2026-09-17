@@ -1223,7 +1223,7 @@
     <div class="tabs-container">
         <div class="tabs">
             <button class="tab-btn active" data-tab="welcomes-tab">Welcomes</button>
-            <button class="tab-btn" data-tab="leads-tab">Leads</button>
+            <button class="tab-btn" data-tab="leads-tab">Leadzai</button>
             <button class="tab-btn" data-tab="advertiser-tab">Anunciante</button>
             <button class="tab-btn" data-tab="prompts-tab">Prompts</button>
             <button class="tab-btn" data-tab="calculator-tab">Calculadora</button>
@@ -1243,52 +1243,39 @@
                 <h3>1. Briefing para Campanha de Leads</h3>
 
                 <div class="leads-form-group">
-                    <label for="leadCampaignName">Nome da Campanha</label>
-                    <input type="text" id="leadCampaignName" placeholder="Ex: Campanha Primavera 2026">
+                    <label for="leadCampaignCreation">Criação de campanhas -</label>
+                    <input type="text" id="leadCampaignCreation" placeholder="Personalize o texto da criação de campanhas">
                 </div>
-
                 <div class="leads-form-group">
                     <label for="leadBrandName">1. Nome Comercial (Marca)</label>
                     <input type="text" id="leadBrandName" placeholder="Ex: Marca XPTO">
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadLegalName">2. Nome Legal/Empresa</label>
-                    <input type="text" id="leadLegalName" placeholder="Ex: XPTO, Lda.">
+                    <label for="leadWebsite">2. Site/ Rede</label>
+                    <input type="text" id="leadWebsite" placeholder="https://... ou rede social">
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadWebsite">3. Site</label>
-                    <input type="text" id="leadWebsite" placeholder="https://...">
-                </div>
-                <div class="leads-form-group">
-                    <label for="leadContact">4. Contacto</label>
+                    <label for="leadContact">3. Contacto</label>
                     <input type="text" id="leadContact" placeholder="+351 ...">
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadBudget">5. Orçamento Total Disponível</label>
+                    <label for="leadBudget">4. Orçamento</label>
                     <input type="text" id="leadBudget" placeholder="Ex: 1500€">
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadDuration">6. Duração da Campanha</label>
+                    <label for="leadDuration">5. Duração da Campanha</label>
                     <input type="text" id="leadDuration" placeholder="Ex: 3 meses">
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadGeo">7. Segmentação Geográfica</label>
+                    <label for="leadGeo">6. Segmentação Geográfica</label>
                     <textarea id="leadGeo" placeholder="Cidades, regiões ou raio geográfico."></textarea>
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadLifestyle">8. Estilo de Vida/Hábitos</label>
-                    <textarea id="leadLifestyle" placeholder="Rotinas, comportamentos, hábitos de consumo."></textarea>
+                    <label for="leadAudience">7. Audiência</label>
+                    <textarea id="leadAudience" placeholder="Público-alvo da campanha."></textarea>
                 </div>
                 <div class="leads-form-group">
-                    <label for="leadInterests">9. Interesses</label>
-                    <textarea id="leadInterests" placeholder="Interesses principais do público-alvo."></textarea>
-                </div>
-                <div class="leads-form-group">
-                    <label for="leadCampaignDetails">10. Detalhes da Campanha</label>
-                    <textarea id="leadCampaignDetails" placeholder="Objetivos, oferta, canais e criativos."></textarea>
-                </div>
-                <div class="leads-form-group">
-                    <label for="leadNotes">11. Notas</label>
+                    <label for="leadNotes">8. Notas</label>
                     <textarea id="leadNotes" placeholder="Informação adicional relevante."></textarea>
                 </div>
 
@@ -2120,16 +2107,13 @@ Com os melhores cumprimentos,
 
             // Elementos da aba Leads
             const leadBrandName = document.getElementById('leadBrandName');
-            const leadCampaignName = document.getElementById('leadCampaignName');
-            const leadLegalName = document.getElementById('leadLegalName');
+            const leadCampaignCreation = document.getElementById('leadCampaignCreation');
             const leadWebsite = document.getElementById('leadWebsite');
             const leadContact = document.getElementById('leadContact');
             const leadBudget = document.getElementById('leadBudget');
             const leadDuration = document.getElementById('leadDuration');
-            const leadLifestyle = document.getElementById('leadLifestyle');
-            const leadInterests = document.getElementById('leadInterests');
             const leadGeo = document.getElementById('leadGeo');
-            const leadCampaignDetails = document.getElementById('leadCampaignDetails');
+            const leadAudience = document.getElementById('leadAudience');
             const leadNotes = document.getElementById('leadNotes');
             const leadHeadCode = document.getElementById('leadHeadCode');
             const leadBodyCode = document.getElementById('leadBodyCode');
@@ -4887,19 +4871,17 @@ Para cada categoria:
             }
 
             function generateBriefingTemplateText() {
-                return `📋Briefing para Campanha de Leads [${getValue(leadCampaignName)}]
+                return `📋Briefing para Campanha de Leads
 
+Criação de campanhas - ${getValue(leadCampaignCreation)}
 1. Nome Comercial (Marca): ${getValue(leadBrandName)}
-2. Nome Legal/Empresa: ${getValue(leadLegalName)}
-3. Site: ${getValue(leadWebsite)}
-4. Contacto: ${getValue(leadContact)}
-5. Orçamento Total Disponível: ${getValue(leadBudget)}
-6. Duração da Campanha: ${getValue(leadDuration)}
-7. Segmentação Geográfica: ${getValue(leadGeo)}
-8. Estilo de Vida/Hábitos: ${getValue(leadLifestyle)}
-9. Interesses: ${getValue(leadInterests)}
-10. Detalhes da Campanha: ${getValue(leadCampaignDetails)}
-11. Notas: ${getValue(leadNotes)}`;
+2. Site/ Rede: ${getValue(leadWebsite)}
+3. Contacto: ${getValue(leadContact)}
+4. Orçamento: ${getValue(leadBudget)}
+5. Duração da Campanha: ${getValue(leadDuration)}
+6. Segmentação Geográfica: ${getValue(leadGeo)}
+7. Audiência: ${getValue(leadAudience)}
+8. Notas: ${getValue(leadNotes)}`;
             }
 
             function generateScriptTemplateText() {
