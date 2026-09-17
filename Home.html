@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Equipa Vales Digitais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', Arial, sans-serif;
+            font-size: 11px;
+        }
+        
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            color: #000000;
+            max-width: 1000px;
+            margin: 0 auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 999;
+            border: 1px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e7e7e7;
+        }
+
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 { color: #f3f3f3; }
+        body.dark-mode .tabs, body.dark-mode h1, body.dark-mode .footer { border-color: #333333; }
+        body.dark-mode .home-section, body.dark-mode .nav-card {
+            background-color: #1b1b1b;
+            border-color: #333333;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode .tab-btn {
+            background-color: #2a2a2a;
+            color: #d7d7d7;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn:hover { background-color: #3a3a3a; }
+        body.dark-mode .tab-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+        
+        body.dark-mode .nav-card-desc { color: #bdbdbd; }
+
+        .tabs-container { margin-bottom: 20px; }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 18px;
+            background: #f1f1f1;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: #555;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        
+        .tab-btn:hover { background: #e8e8e8; }
+        .tab-btn.active {
+            background: #000;
+            color: white;
+            font-weight: 600;
+        }
+
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 24px;
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .home-section {
+            background-color: #ffffff;
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .welcome-banner {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .welcome-banner h2 { font-size: 18px; margin-bottom: 8px; }
+        .welcome-banner p { font-size: 12px; color: #666; }
+        body.dark-mode .welcome-banner p { color: #aaa; }
+
+        .grid-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .nav-card {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #000000;
+        }
+        body.dark-mode .nav-card:hover { border-color: #ffffff; }
+
+        .nav-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-card-desc {
+            font-size: 11px;
+            color: #666666;
+            line-height: 1.4;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777777;
+            font-size: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">🌙 Modo noturno</button>
+    <h1>Equipa Vales Digitais</h1>
+    
+    <div class="tabs-container">
+        <div class="tabs">
+            <a href="index.html" class="tab-btn active">Home</a>
+            <a href="welcome.html" class="tab-btn">Welcomes</a>
+            <a href="leadzai.html" class="tab-btn">Leadzai</a>
+            <a href="anunciante.html" class="tab-btn">Anunciante</a>
+            <a href="prompts.html" class="tab-btn">Prompts</a>
+            <a href="calculadora.html" class="tab-btn">Calculadora</a>
+            <a href="activacao.html" class="tab-btn">Ativação</a>
+            <a href="faturas.html" class="tab-btn">Faturas</a>
+            <a href="spinner.html" class="tab-btn">Spinner</a>
+        </div>
+    </div>
+
+    <div class="home-section">
+        <div class="welcome-banner">
+            <h2>Painel de Gestão e Fluxos de Trabalho</h2>
+            <p>Selecione um dos módulos abaixo para aceder rapidamente aos templates, geradores de email e calculadoras de apoio às campanhas.</p>
+        </div>
+
+        <div class="grid-nav">
+            <a href="welcome.html" class="nav-card">
+                <div>
+                    <div class="nav-card-title">👋 Welcomes</div>
+                    <div class="nav-card-desc">Templates de boas-vindas para clientes em Google Ads, Meta Ads e variantes multicanal.</div>
+                </div>
+            </a>
+
+            <a href="leadzai.html" class="nav-card">
+                <div>
+                    <div class="nav-card-title">🎯 Leadzai</div>
+                    <div class="nav-card-desc">Formulários de Briefing para campanhas de Leads e envio do script Google Tag Manager.</div>
+                </div>
+            </a>
+
+            <a href="anunciante.html" class="nav-card">
+                <div>
+                    <div class="nav-card-title">📢 Anunciante</div>
+                    <div class="nav-card-desc">Emails de confirmação de endereço da página de Facebook e validação de envio de pedidos.</div>
+                </div>
+            </a>
+
+            <a href="prompts.html" class="nav-card">
+                <div>
+                    <div class="nav-card-title">🤖 Prompts</div>
+                    <div class="nav-card-desc">Prompts otimizados de IA para geração de anúncios estruturados por orçamento (500€, 1000€, 1500€+).</div>
+                </div>
+            </a>
+
+            <a href="calculadora.html" class="nav-card">
+                <div>
+                    <div class="nav-card-title">🧮 Calculadora</div>
+                    <div class="nav-card-desc">Estimador de intervalo de cliques (±20%), divisão de orçamentos (55%) e gerador de email de aprovação.</div>
+                </div>
+            </a>
+
+            <a href="activacao.html" class="nav-card">
+                <div>
+                    <div class="nav-card-title">⚡ Ativação</div>
+                    <div class="nav-card-desc">Emails pré-formatados para comunicação de início de campanha (1 campanha, 2 campanhas e aviso 48h).</div>
+                </div>
+            </a>
+
+            <a href="faturas.html" class="nav-card">
+                <div>
+                    <div class="nav-card-title">🧾 Faturas</div>
+                    <div class="nav-card-desc">Comunicações para envio da fatura de IVA e confirmação de pagamento de clientes.</div>
+                </div>
+            </a>
+
+            <a href="spinner.html" class="nav-card">
+                <div>
+                    <div class="nav-card-title">⚙️ Spinner</div>
+                    <div class="nav-card-desc">Simulador interativo de contagem e registo histórico de Campanhas e Vouchers.</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        Gerador de Fluxo de Trabalho 3000
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+            function updateThemeButtonLabel() {
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggleBtn.textContent = '☀️ Modo claro';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo claro');
+                } else {
+                    themeToggleBtn.textContent = '🌙 Modo noturno';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo noturno');
+                }
+            }
+
+            if (localStorage.getItem('theme-preference') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            updateThemeButtonLabel();
+
+            themeToggleBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                localStorage.setItem('theme-preference', currentTheme);
+                updateThemeButtonLabel();
+            });
+        });
+    </script>
+</body>
+</html>
