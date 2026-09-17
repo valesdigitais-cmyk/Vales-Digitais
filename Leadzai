@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadzai - Equipa Vales Digitais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', Arial, sans-serif;
+            font-size: 11px;
+        }
+        
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            color: #000000;
+            max-width: 1000px;
+            margin: 0 auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 999;
+            border: 1px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e7e7e7;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3,
+        body.dark-mode label {
+            color: #f3f3f3;
+        }
+
+        body.dark-mode .tabs,
+        body.dark-mode h1,
+        body.dark-mode .footer {
+            border-color: #333333;
+        }
+
+        body.dark-mode .leads-section,
+        body.dark-mode .template-card {
+            background-color: #1b1b1b;
+            border-color: #333333;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode .tab-btn {
+            background-color: #2a2a2a;
+            color: #d7d7d7;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn:hover {
+            background-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode input[type="text"],
+        body.dark-mode textarea {
+            background-color: #1f1f1f;
+            color: #f3f3f3;
+            border-color: #3f3f3f;
+        }
+
+        body.dark-mode .shortcut-info,
+        body.dark-mode .footer,
+        body.dark-mode .toast {
+            color: #bdbdbd;
+        }
+
+        body.dark-mode .theme-toggle-btn,
+        body.dark-mode .leads-reset-btn {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode .theme-toggle-btn:hover,
+        body.dark-mode .leads-reset-btn:hover {
+            background-color: #ffffff;
+            color: #121212;
+        }
+
+        body.dark-mode .template-action-btn {
+            background-color: #ffffff;
+            color: #111111;
+        }
+
+        body.dark-mode .template-action-btn:hover {
+            background-color: #dcdcdc;
+        }
+        
+        .tabs-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 18px;
+            background: #f1f1f1;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: #555;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        
+        .tab-btn:hover {
+            background: #e8e8e8;
+        }
+        
+        .tab-btn.active {
+            background: #000;
+            color: white;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 11px;
+            }
+        }
+        
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 24px;
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        h2 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            color: #000000;
+            margin-bottom: 12px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .leads-section {
+            background-color: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .template-card {
+            border: 1px solid #e0e0e0;
+            padding: 16px;
+            margin-bottom: 16px;
+            background: #fff;
+            position: relative;
+            padding-top: 44px;
+        }
+
+        .leads-reset-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 10px;
+            border: 1px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .leads-reset-btn:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .leads-form-group {
+            margin-bottom: 14px;
+        }
+
+        .leads-form-group label {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 13px;
+            border: 1px solid #b0b0b0;
+            border-radius: 0;
+            transition: all 0.3s;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+            line-height: 1.45;
+            font-family: 'Google Sans', Arial, sans-serif;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        .leads-code-textarea {
+            min-height: 160px !important;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 11px;
+        }
+
+        .script-section-title {
+            font-weight: 700;
+            margin: 22px 0 8px;
+            font-size: 12px;
+        }
+
+        .gtm-line {
+            margin-top: 20px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .gtm-line input {
+            margin-top: 8px;
+        }
+
+        .template-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .template-action-btn {
+            padding: 8px 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .template-action-btn:hover {
+            background-color: #333333;
+        }
+
+        .toast {
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            font-size: 10px;
+            color: #333;
+            min-width: 70px;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .shortcut-info {
+            margin-top: 10px;
+            color: #777777;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777777;
+            font-size: 10px;
+            font-weight: 400;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">🌙 Modo noturno</button>
+    <h1>Equipa Vales Digitais</h1>
+    
+    <div class="tabs-container">
+        <div class="tabs">
+            <a href="welcome.html" class="tab-btn">Welcomes</a>
+            <a href="leadzai.html" class="tab-btn active">Leadzai</a>
+            <a href="anunciante.html" class="tab-btn">Anunciante</a>
+            <a href="prompts.html" class="tab-btn">Prompts</a>
+            <a href="calculadora.html" class="tab-btn">Calculadora</a>
+            <a href="activacao.html" class="tab-btn">Ativação</a>
+            <a href="faturas.html" class="tab-btn">Faturas</a>
+            <a href="spinner.html" class="tab-btn">Spinner</a>
+        </div>
+    </div>
+
+    <!-- Aba Leadzai -->
+    <div class="leads-section">
+        <h2>Templates de Leads</h2>
+
+        <div class="template-card" id="leadBriefingCard">
+            <button class="leads-reset-btn" data-reset-target="leadBriefingCard">Reset</button>
+            <h3>1. Briefing para Campanha de Leads</h3>
+
+            <div class="leads-form-group">
+                <label for="leadCampaignCreation">Criação de campanhas -</label>
+                <input type="text" id="leadCampaignCreation" placeholder="Personalize o texto da criação de campanhas">
+            </div>
+            <div class="leads-form-group">
+                <label for="leadBrandName">1. Nome Comercial (Marca)</label>
+                <input type="text" id="leadBrandName" placeholder="Ex: Marca XPTO">
+            </div>
+            <div class="leads-form-group">
+                <label for="leadWebsite">2. Site/ Rede</label>
+                <input type="text" id="leadWebsite" placeholder="https://... ou rede social">
+            </div>
+            <div class="leads-form-group">
+                <label for="leadContact">3. Contacto</label>
+                <input type="text" id="leadContact" placeholder="+351 ...">
+            </div>
+            <div class="leads-form-group">
+                <label for="leadBudget">4. Orçamento</label>
+                <input type="text" id="leadBudget" placeholder="Ex: 1500€">
+            </div>
+            <div class="leads-form-group">
+                <label for="leadDuration">5. Duração da Campanha</label>
+                <input type="text" id="leadDuration" placeholder="Ex: 3 meses">
+            </div>
+            <div class="leads-form-group">
+                <label for="leadGeo">6. Segmentação Geográfica</label>
+                <textarea id="leadGeo" placeholder="Cidades, regiões ou raio geográfico."></textarea>
+            </div>
+            <div class="leads-form-group">
+                <label for="leadAudience">7. Audiência</label>
+                <textarea id="leadAudience" placeholder="Público-alvo da campanha."></textarea>
+            </div>
+            <div class="leads-form-group">
+                <label for="leadNotes">8. Notas</label>
+                <textarea id="leadNotes" placeholder="Informação adicional relevante."></textarea>
+            </div>
+
+            <div class="template-actions">
+                <button class="template-action-btn" id="copyLeadBriefingBtn">Copiar Template</button>
+                <span class="toast" id="leadBriefingToast">Copiado ✅</span>
+            </div>
+        </div>
+
+        <div class="template-card" id="leadScriptCard">
+            <button class="leads-reset-btn" data-reset-target="leadScriptCard">Reset</button>
+            <h3>2. Template de Script (Email GTM)</h3>
+
+            <p>Caro beneficiário,</p>
+            <br>
+            <p>Conforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.</p>
+            <br>
+            <p><strong>CÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO</strong><br>
+            Este código deve ser instalado em TODAS as páginas do website:</p>
+
+            <div class="script-section-title">1ª PARTE - Colar no &lt;head&gt; (o mais alto possível, idealmente como primeiro item):</div>
+            <div class="leads-form-group">
+                <textarea id="leadHeadCode" class="leads-code-textarea" placeholder="Cole aqui o código do &lt;head&gt;"></textarea>
+            </div>
+
+            <div class="script-section-title">2ª PARTE - Colar imediatamente após a abertura da tag &lt;body&gt;:</div>
+            <div class="leads-form-group">
+                <textarea id="leadBodyCode" class="leads-code-textarea" placeholder="Cole aqui o código após &lt;body&gt;"></textarea>
+            </div>
+
+            <p class="gtm-line"><strong>NOTA:</strong> Algumas plataformas necessitan apenas do ID do Google Tag Manager.
+            Aqui está o seu ID GTM:
+            <input type="text" id="leadGtmId" placeholder="GTM-XXXXXXX"></p>
+            <br>
+            <p><strong>IMPORTANTE:</strong> Ambas as partes do código são necessárias para o funcionamento correto.
+            O código deve ser implementado em todas as páginas do site.
+            Após a instalação, podemos prosseguir com a configuração das tags e eventos.</p>
+            <br>
+            <p>Fico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.</p>
+            <br>
+            <p>Com os melhores cumprimentos,</p>
+
+            <div class="template-actions">
+                <button class="template-action-btn" id="copyLeadScriptBtn">Copiar Script Completo</button>
+                <span class="toast" id="leadScriptToast">Copiado ✅</span>
+            </div>
+        </div>
+        
+        <p class="shortcut-info">Pressione Ctrl+C para copiar o template mais recente gerado</p>
+    </div>
+
+    <div class="footer">
+        Gerador de Fluxo de Trabalho 3000
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const leadBrandName = document.getElementById('leadBrandName');
+            const leadCampaignCreation = document.getElementById('leadCampaignCreation');
+            const leadWebsite = document.getElementById('leadWebsite');
+            const leadContact = document.getElementById('leadContact');
+            const leadBudget = document.getElementById('leadBudget');
+            const leadDuration = document.getElementById('leadDuration');
+            const leadGeo = document.getElementById('leadGeo');
+            const leadAudience = document.getElementById('leadAudience');
+            const leadNotes = document.getElementById('leadNotes');
+            const leadHeadCode = document.getElementById('leadHeadCode');
+            const leadBodyCode = document.getElementById('leadBodyCode');
+            const leadGtmId = document.getElementById('leadGtmId');
+            const copyLeadBriefingBtn = document.getElementById('copyLeadBriefingBtn');
+            const copyLeadScriptBtn = document.getElementById('copyLeadScriptBtn');
+            const leadBriefingToast = document.getElementById('leadBriefingToast');
+            const leadScriptToast = document.getElementById('leadScriptToast');
+            const leadResetButtons = document.querySelectorAll('.leads-reset-btn');
+            let currentLeadsText = '';
+
+            // Gestão do Modo Noturno
+            function updateThemeButtonLabel() {
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggleBtn.textContent = '☀️ Modo claro';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo claro');
+                } else {
+                    themeToggleBtn.textContent = '🌙 Modo noturno';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo noturno');
+                }
+            }
+
+            if (localStorage.getItem('theme-preference') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            updateThemeButtonLabel();
+
+            themeToggleBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                localStorage.setItem('theme-preference', currentTheme);
+                updateThemeButtonLabel();
+            });
+
+            function getValue(element) {
+                return element ? element.value.trim() : '';
+            }
+
+            // Gerador do Briefing com o texto alterado conforme pedido
+            function generateBriefingTemplateText() {
+                return `Briefing para Campanha\n\nCriação de campanhas - ${getValue(leadCampaignCreation)}\n1. Nome Comercial (Marca): ${getValue(leadBrandName)}\n2. Site/ Rede: ${getValue(leadWebsite)}\n3. Contacto: ${getValue(leadContact)}\n4. Orçamento: ${getValue(leadBudget)}\n5. Duração da Campanha: ${getValue(leadDuration)}\n6. Segmentação Geográfica: ${getValue(leadGeo)}\n7. Audiência: ${getValue(leadAudience)}\n8. Notas: ${getValue(leadNotes)}`;
+            }
+
+            function generateScriptTemplateText() {
+                return `Caro beneficiário,\n\nConforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.\n\nCÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO\nEste código deve ser instalado em TODAS as páginas do website:\n\n1ª PARTE - Colar no <head> (o mais alto possível, idealmente como primeiro item):\n${getValue(leadHeadCode)}\n\n2ª PARTE - Colar imediatamente após a abertura da tag <body>:\n${getValue(leadBodyCode)}\n\nNOTA: Algumas plataformas necessitam apenas do ID do Google Tag Manager.\nID GTM: ${getValue(leadGtmId)}\n\nIMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto.\nO código deve ser implementado em todas as páginas do site.\nApós a instalação, podemos prosseguir com a configuração das tags e eventos.\n\nFico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.\n\nCom os melhores cumprimentos,`;
+            }
+
+            function copyTextWithFallback(textToCopy) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(textToCopy)
+                        .catch(() => {
+                            const textArea = document.createElement('textarea');
+                            textArea.value = textToCopy;
+                            textArea.style.position = 'fixed';
+                            textArea.style.opacity = '0';
+                            document.body.appendChild(textArea);
+                            textArea.focus();
+                            textArea.select();
+                            const copied = document.execCommand('copy');
+                            document.body.removeChild(textArea);
+                            if (!copied) throw new Error('Não foi possível copiar.');
+                        });
+                }
+
+                return new Promise((resolve, reject) => {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = textToCopy;
+                    textArea.style.position = 'fixed';
+                    textArea.style.opacity = '0';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    const copied = document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    if (copied) resolve();
+                    else reject(new Error('Não foi possível copiar.'));
+                });
+            }
+
+            function showTemplateToast(toastElement) {
+                if (!toastElement) return;
+                toastElement.classList.add('show');
+                setTimeout(() => {
+                    toastElement.classList.remove('show');
+                }, 800);
+            }
+
+            if (copyLeadBriefingBtn) {
+                copyLeadBriefingBtn.addEventListener('click', function() {
+                    const briefingText = generateBriefingTemplateText();
+                    currentLeadsText = briefingText;
+                    copyTextWithFallback(briefingText)
+                        .then(() => showTemplateToast(leadBriefingToast))
+                        .catch(err => console.error('Erro ao copiar briefing:', err));
+                });
+            }
+
+            if (copyLeadScriptBtn) {
+                copyLeadScriptBtn.addEventListener('click', function() {
+                    const scriptText = generateScriptTemplateText();
+                    currentLeadsText = scriptText;
+                    copyTextWithFallback(scriptText)
+                        .then(() => showTemplateToast(leadScriptToast))
+                        .catch(err => console.error('Erro ao copiar script:', err));
+                });
+            }
+
+            if (leadResetButtons.length > 0) {
+                leadResetButtons.forEach((button) => {
+                    button.addEventListener('click', function() {
+                        const targetCardId = this.dataset.resetTarget;
+                        if (!targetCardId) return;
+
+                        const targetCard = document.getElementById(targetCardId);
+                        if (!targetCard) return;
+
+                        const fieldsToClear = targetCard.querySelectorAll('input[type="text"], textarea');
+                        fieldsToClear.forEach((field) => {
+                            field.value = '';
+                        });
+                    });
+                });
+            }
+
+            // Atalho teclado (Ctrl+C)
+            document.addEventListener('keydown', function(event) {
+                if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c' && !event.shiftKey) {
+                    const selection = window.getSelection();
+                    if (selection.toString().length === 0 && currentLeadsText) {
+                        event.preventDefault();
+                        copyTextWithFallback(currentLeadsText);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
