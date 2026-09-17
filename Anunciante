@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anunciante - Equipa Vales Digitais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', Arial, sans-serif;
+            font-size: 11px;
+        }
+        
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            color: #000000;
+            max-width: 1000px;
+            margin: 0 auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 999;
+            border: 1px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e7e7e7;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3,
+        body.dark-mode label {
+            color: #f3f3f3;
+        }
+
+        body.dark-mode .tabs,
+        body.dark-mode h1,
+        body.dark-mode .footer,
+        body.dark-mode .template-container {
+            border-color: #333333;
+        }
+
+        body.dark-mode .advertiser-section {
+            background-color: #1b1b1b;
+            border-color: #333333;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode .template-text {
+            background-color: #242424;
+            border-color: #3a3a3a;
+            color: #ebebeb;
+        }
+
+        body.dark-mode .tab-btn {
+            background-color: #2a2a2a;
+            color: #d7d7d7;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn:hover {
+            background-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode input[type="email"] {
+            background-color: #1f1f1f;
+            color: #f3f3f3;
+            border-color: #3f3f3f;
+        }
+
+        body.dark-mode .shortcut-info,
+        body.dark-mode .footer {
+            color: #bdbdbd;
+        }
+
+        body.dark-mode .theme-toggle-btn {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode .theme-toggle-btn:hover {
+            background-color: #ffffff;
+            color: #121212;
+        }
+        
+        .tabs-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 18px;
+            background: #f1f1f1;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: #555;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        
+        .tab-btn:hover {
+            background: #e8e8e8;
+        }
+        
+        .tab-btn.active {
+            background: #000;
+            color: white;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 11px;
+            }
+        }
+        
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 24px;
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        h2 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            color: #000000;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .advertiser-section {
+            background-color: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+        }
+                
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #000000;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        input[type="email"] {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 15px;
+            border: 1px solid #b0b0b0;
+            border-radius: 0;
+            transition: all 0.3s;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        input[type="email"]:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+        
+        .template-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+        
+        .template-btn:hover {
+            background-color: #333333;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .template-container {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .template-container:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .template-text {
+            background-color: #f8f8f8;
+            border-radius: 0;
+            padding: 25px;
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            font-size: 12px;
+            color: #000000;
+            min-height: 250px;
+            position: relative;
+            font-family: 'Google Sans', Arial, sans-serif;
+            text-align: left;
+        }
+
+        .email-input {
+            background-color: #d9d9d9;
+            color: inherit;
+            padding: 2px 4px;
+            border-radius: 0;
+            font-weight: 600;
+            border: 1px dashed #ffcc00;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        
+        .copy-btn:hover {
+            background-color: #333333;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .copy-btn.copied {
+            background-color: #4CAF50;
+        }
+
+        .shortcut-info {
+            margin-top: 10px;
+            color: #777777;
+            font-size: 10px;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777777;
+            font-size: 10px;
+            font-weight: 400;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">🌙 Modo noturno</button>
+    <h1>Equipa Vales Digitais</h1>
+    
+    <div class="tabs-container">
+        <div class="tabs">
+            <a href="welcome.html" class="tab-btn">Welcomes</a>
+            <a href="leadzai.html" class="tab-btn">Leadzai</a>
+            <a href="anunciante.html" class="tab-btn active">Anunciante</a>
+            <a href="prompts.html" class="tab-btn">Prompts</a>
+            <a href="calculadora.html" class="tab-btn">Calculadora</a>
+            <a href="activacao.html" class="tab-btn">Ativação</a>
+            <a href="faturas.html" class="tab-btn">Faturas</a>
+            <a href="spinner.html" class="tab-btn">Spinner</a>
+        </div>
+    </div>
+
+    <!-- Aba Anunciante -->
+    <div class="advertiser-section">
+        <h2>Templates para Anunciante</h2>
+        
+        <!-- Template 1: Confirmação -->
+        <div class="template-container">
+            <h3>1. Confirmação de Email</h3>
+            
+            <div class="input-group">
+                <label for="confirmationEmail">Insira o email do cliente:</label>
+                <input type="email" id="confirmationEmail" placeholder="exemplo@empresa.com" autofocus>
+            </div>
+            
+            <button class="template-btn" id="generateConfirmationBtn">Gerar Email de Confirmação</button>
+            
+            <div class="template-text" id="confirmationText">
+                <button class="copy-btn" data-action="copy-confirmation" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+Caro beneficiário,
+
+Gostaria apenas de confirmar se o endereço de e-mail associado à página de Facebook da vossa empresa é <span class="email-input" id="confirmationEmailPlaceholder">[INSERIR EMAIL AQUI]</span>
+
+Se estiver correto, perfeito. Caso o contacto tenha sido alterado, agradeço que me indiquem o e-mail atual para que possa direcionar o meu pedido para o sítio certo.
+
+Obrigada pela ajuda.
+
+Com os melhores cumprimentos,
+            </div>
+        </div>
+        
+        <!-- Template 2: Confirmação do Envio do Pedido -->
+        <div class="template-container">
+            <h3>2. Confirmação do Envio do Pedido</h3>
+
+            <div class="input-group">
+                <label for="warningEmail">Insira o email que recebeu o pedido:</label>
+                <input type="email" id="warningEmail" placeholder="exemplo@empresa.com">
+            </div>
+            
+            <button class="template-btn" id="generateWarningBtn">Copiar Email de Confirmação do Envio</button>
+            
+            <div class="template-text" id="warningText">
+                <button class="copy-btn" data-action="copy-warning" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+Caro beneficiário,
+
+No seguimento do pedido enviado, foi encaminhado um e-mail para o endereço <span class="email-input" id="warningEmailPlaceholder">[INSERIR EMAIL AQUI]</span>.
+
+Solicitamos, por favor, que verifique se este e-mail foi recebido. Caso não se encontre na caixa de entrada, pedimos que verifique também a pasta de Spam ou Lixo Eletrónico. Adicionalmente, enviamos em anexo os guias para ajudar no processo.
+
+Ficamos a aguardar o vosso retorno.
+
+Com os melhores cumprimentos,
+            </div>
+        </div>
+        
+        <p class="shortcut-info">Pressione Ctrl+C para copiar o texto ou clique no botão "Copiar Tudo"</p>
+    </div>
+
+    <div class="footer">
+        Gerador de Fluxo de Trabalho 3000
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const confirmationEmailInput = document.getElementById('confirmationEmail');
+            const warningEmailInput = document.getElementById('warningEmail');
+            const generateConfirmationBtn = document.getElementById('generateConfirmationBtn');
+            const generateWarningBtn = document.getElementById('generateWarningBtn');
+            const copyConfirmationBtn = document.querySelector('[data-action="copy-confirmation"]');
+            const copyWarningBtn = document.querySelector('[data-action="copy-warning"]');
+            const confirmationEmailPlaceholder = document.getElementById('confirmationEmailPlaceholder');
+            const warningEmailPlaceholder = document.getElementById('warningEmailPlaceholder');
+
+            // Gestão do Modo Noturno
+            function updateThemeButtonLabel() {
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggleBtn.textContent = '☀️ Modo claro';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo claro');
+                } else {
+                    themeToggleBtn.textContent = '🌙 Modo noturno';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo noturno');
+                }
+            }
+
+            if (localStorage.getItem('theme-preference') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            updateThemeButtonLabel();
+
+            themeToggleBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                localStorage.setItem('theme-preference', currentTheme);
+                updateThemeButtonLabel();
+            });
+
+            // Templates Anunciante
+            const advertiserTemplates = {
+                confirmation: (email) => `Caro beneficiário,\n\nGostaria apenas de confirmar se o endereço de e-mail associado à página de Facebook da vossa empresa é ${email}\n\nSe estiver correto, perfeito. Caso o contacto tenha sido alterado, agradeço que me indiquem o e-mail atual para que possa direcionar o meu pedido para o sítio certo.\n\nObrigada pela ajuda.\n\nCom os melhores cumprimentos,`,
+
+                warning: (email) => `Caro beneficiário,\n\nNo seguimento do pedido enviado, foi encaminhado um e-mail para o endereço ${email}.\n\nSolicitamos, por favor, que verifique se este e-mail foi recebido. Caso não se encontre na caixa de entrada, pedimos que verifique também a pasta de Spam ou Lixo Eletrónico. Adicionalmente, enviamos em anexo os guias para ajudar no processo.\n\nFicamos a aguardar o vosso retorno.\n\nCom os melhores cumprimentos,`
+            };
+
+            function setCopyFeedback(buttonElement, successText = '✓ Copiado!') {
+                if (!buttonElement) return;
+                const originalText = buttonElement.textContent;
+                buttonElement.textContent = successText;
+                buttonElement.classList.add('copied');
+                setTimeout(() => {
+                    buttonElement.textContent = originalText;
+                    buttonElement.classList.remove('copied');
+                }, 1500);
+            }
+
+            function copyToClipboard(text, buttonElement = null) {
+                if (!text) return;
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text)
+                        .then(() => setCopyFeedback(buttonElement))
+                        .catch(() => {
+                            const textArea = document.createElement('textarea');
+                            textArea.value = text;
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textArea);
+                            setCopyFeedback(buttonElement, 'Copiado!');
+                        });
+                    return;
+                }
+
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                setCopyFeedback(buttonElement, 'Copiado!');
+            }
+
+            // Geração de Emails
+            generateConfirmationBtn.addEventListener('click', function() {
+                const email = confirmationEmailInput.value.trim();
+                if (!email) {
+                    alert('Por favor, insira um email válido.');
+                    confirmationEmailInput.focus();
+                    return;
+                }
+                
+                confirmationEmailPlaceholder.textContent = email;
+                const fullText = advertiserTemplates.confirmation(email);
+                copyToClipboard(fullText, copyConfirmationBtn);
+            });
+            
+            generateWarningBtn.addEventListener('click', function() {
+                const email = warningEmailInput.value.trim();
+                if (!email) {
+                    alert('Por favor, insira um email válido.');
+                    warningEmailInput.focus();
+                    return;
+                }
+
+                warningEmailPlaceholder.textContent = email;
+                const fullText = advertiserTemplates.warning(email);
+                copyToClipboard(fullText, copyWarningBtn);
+            });
+
+            // Botões de Cópia
+            copyConfirmationBtn.addEventListener('click', function() {
+                const email = confirmationEmailInput.value.trim();
+                if (!email) {
+                    alert('Por favor, insira um email e clique em "Gerar Email de Confirmação" primeiro.');
+                    return;
+                }
+                
+                const fullText = advertiserTemplates.confirmation(email);
+                copyToClipboard(fullText, this);
+            });
+            
+            copyWarningBtn.addEventListener('click', function() {
+                const email = warningEmailInput.value.trim();
+                if (!email) {
+                    alert('Por favor, insira um email e clique em "Copiar Email de Confirmação do Envio" primeiro.');
+                    return;
+                }
+
+                copyToClipboard(advertiserTemplates.warning(email), this);
+            });
+
+            // Tecla Enter nos Inputs
+            confirmationEmailInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    generateConfirmationBtn.click();
+                }
+            });
+
+            warningEmailInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    generateWarningBtn.click();
+                }
+            });
+
+            // Atalho Teclado (Ctrl+C)
+            document.addEventListener('keydown', function(event) {
+                if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c' && !event.shiftKey) {
+                    const selection = window.getSelection();
+                    if (selection.toString().length === 0) {
+                        const confirmationEmail = confirmationEmailInput.value.trim();
+                        const warningEmail = warningEmailInput.value.trim();
+                        if (confirmationEmail) {
+                            event.preventDefault();
+                            copyToClipboard(advertiserTemplates.confirmation(confirmationEmail), copyConfirmationBtn);
+                        } else if (warningEmail) {
+                            event.preventDefault();
+                            copyToClipboard(advertiserTemplates.warning(warningEmail), copyWarningBtn);
+                        }
+                    }
+                }
+            });
+
+            // Foco inicial
+            setTimeout(() => {
+                if (confirmationEmailInput) confirmationEmailInput.focus();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
