@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora - Equipa Vales Digitais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Google Sans', Arial, sans-serif;
+            font-size: 11px;
+        }
+        
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            color: #000000;
+            max-width: 1000px;
+            margin: 0 auto;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 999;
+            border: 1px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e7e7e7;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3,
+        body.dark-mode label,
+        body.dark-mode .budget-price {
+            color: #f3f3f3;
+        }
+
+        body.dark-mode .tabs,
+        body.dark-mode h1,
+        body.dark-mode .footer {
+            border-color: #333333;
+        }
+
+        body.dark-mode .calculator-section,
+        body.dark-mode .text-section {
+            background-color: #1b1b1b;
+            border-color: #333333;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        body.dark-mode .result-container,
+        body.dark-mode .generated-text,
+        body.dark-mode .formula {
+            background-color: #242424;
+            border-color: #3a3a3a;
+            color: #ebebeb;
+        }
+
+        body.dark-mode .tab-btn {
+            background-color: #2a2a2a;
+            color: #d7d7d7;
+            border-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn:hover {
+            background-color: #3a3a3a;
+        }
+
+        body.dark-mode .tab-btn.active {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode input[type="number"],
+        body.dark-mode select {
+            background-color: #1f1f1f;
+            color: #f3f3f3;
+            border-color: #3f3f3f;
+        }
+
+        body.dark-mode .result-label,
+        body.dark-mode .shortcut-info,
+        body.dark-mode .footer {
+            color: #bdbdbd;
+        }
+
+        body.dark-mode .theme-toggle-btn {
+            background-color: #1f1f1f;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        body.dark-mode .theme-toggle-btn:hover {
+            background-color: #ffffff;
+            color: #121212;
+        }
+
+        body.dark-mode .alert-box {
+            background-color: #1b1b1b;
+            border-color: #333333;
+            color: #ebebeb;
+        }
+        
+        .tabs-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 18px;
+            background: #f1f1f1;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: #555;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        
+        .tab-btn:hover {
+            background: #e8e8e8;
+        }
+        
+        .tab-btn.active {
+            background: #000;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 11px;
+            }
+        }
+        
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 24px;
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        h2 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            color: #000000;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .calculator-section, .text-section {
+            background-color: #ffffff;
+            border-radius: 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+        }
+                
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #000000;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        input[type="number"], select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 15px;
+            border: 1px solid #b0b0b0;
+            border-radius: 0;
+            transition: all 0.3s;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        input[type="number"]:focus, select:focus {
+            border-color: #000000;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #333333;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .result-container {
+            background-color: #f8f8f8;
+            border-radius: 0;
+            padding: 20px;
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #d0d0d0;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            color: #555555;
+            font-weight: 500;
+            font-size: 12px;
+        }
+        
+        .result-value {
+            color: #000000;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .copyable-total {
+            cursor: pointer;
+            transition: color 0.25s ease;
+        }
+
+        .copyable-total.copied {
+            color: #0f9d58;
+        }
+        
+        .formula {
+            background-color: #f0f0f0;
+            padding: 12px;
+            border-radius: 0;
+            margin-top: 20px;
+            font-size: 11.5px;
+            color: #333333;
+            text-align: center;
+            border-left: 3px solid #000000;
+        }
+        
+        .generated-text {
+            background-color: #f8f8f8;
+            border-radius: 0;
+            padding: 25px;
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            font-size: 12px;
+            color: #000000;
+            min-height: 550px;
+            position: relative;
+            font-family: 'Google Sans', Arial, sans-serif;
+            text-align: left;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 15px;
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 0;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        
+        .copy-btn:hover {
+            background-color: #333333;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .copy-btn.copied {
+            background-color: #4CAF50;
+        }
+
+        .shortcut-info {
+            margin-top: 10px;
+            color: #777777;
+            font-size: 10px;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777777;
+            font-size: 10px;
+            font-weight: 400;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .highlight {
+            background-color: #d9d9d9;
+            color: inherit;
+            padding: 2px 4px;
+            border-radius: 0;
+            font-weight: 600;
+        }
+        
+        .alert-box {
+            background-color: #f0f0f0;
+            border: 1px solid #d0d0d0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">🌙 Modo noturno</button>
+    <h1>Equipa Vales Digitais</h1>
+    
+    <div class="tabs-container">
+        <div class="tabs">
+            <a href="welcome.html" class="tab-btn">Welcomes</a>
+            <a href="leadzai.html" class="tab-btn">Leadzai</a>
+            <a href="anunciante.html" class="tab-btn">Anunciante</a>
+            <a href="prompts.html" class="tab-btn">Prompts</a>
+            <a href="calculadora.html" class="tab-btn active">Calculadora</a>
+            <a href="activacao.html" class="tab-btn">Ativação</a>
+            <a href="faturas.html" class="tab-btn">Faturas</a>
+            <a href="spinner.html" class="tab-btn">Spinner</a>
+        </div>
+    </div>
+
+    <!-- Aba Calculadora -->
+    <div class="container">
+        <div class="calculator-section">
+            <h2>Calculadora de Intervalo ±20%</h2>
+            
+            <div class="input-group">
+                <label for="numberInput">Digite o valor estimado de cliques:</label>
+                <input type="number" id="numberInput" placeholder="Ex: 0" min="0" step="any" autofocus>
+            </div>
+            
+            <button class="calculate-btn" id="calculateBtn">Calcular Intervalo</button>
+            
+            <div class="result-container" id="resultContainer">
+                <div class="result-item">
+                    <span class="result-label">Valor original:</span>
+                    <span class="result-value" id="originalValue">0</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">20% do valor:</span>
+                    <span class="result-value" id="twentyPercent">0</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Valor mínimo (-20%):</span>
+                    <span class="result-value" id="minValue">0</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Valor máximo (+20%):</span>
+                    <span class="result-value" id="maxValue">0</span>
+                </div>
+                
+                <div class="formula">
+                    <strong>Fórmula:</strong> Mínimo = Valor - (Valor × 20%) | Máximo = Valor + (Valor × 20%)
+                </div>
+            </div>
+
+            <h3 style="margin-top: 30px;">Calculadora de orçamento × 55%</h3>
+            <div class="input-group">
+                <label for="dividerInput">Dividir por:</label>
+                <select id="dividerInput">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+
+            <div class="result-container" id="fiftyFiveContainer" style="display: block; margin-top: 15px;">
+                <div class="result-item">
+                    <span class="result-label">500€ × 55% ÷ <span id="selectedDivider">1</span>:</span>
+                    <span class="result-value copyable-total" id="calc500" title="Clique para copiar o total">275.00€</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">1000€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
+                    <span class="result-value copyable-total" id="calc1000" title="Clique para copiar o total">550.00€</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">1500€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
+                    <span class="result-value copyable-total" id="calc1500" title="Clique para copiar o total">825.00€</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">2000€ × 55% ÷ <span class="selected-divider-copy">1</span>:</span>
+                    <span class="result-value copyable-total" id="calc2000" title="Clique para copiar o total">1100.00€</span>
+                </div>
+            </div>
+
+            <button class="calculate-btn" id="copyAllTotalsBtn" style="margin-top: 15px;">Copiar todos os totais</button>
+            
+            <p class="shortcut-info">Pressione Enter no campo numérico para calcular rapidamente</p>
+        </div>
+        
+        <div class="text-section">
+            <h2>Email gerado</h2>
+            
+            <div class="generated-text" id="generatedText">
+                <button class="copy-btn" data-action="copy-campaign" title="Clique para copiar ou pressione Ctrl+C">Copiar Tudo</button>
+Caro beneficiário,
+
+A sua campanha está criada e encontra-se em anexo para que possa analisar. Estimamos que o potencial de cliques esperado por mês se situe entre <span id="minText">0</span> e <span id="maxText">0</span>.
+
+• Nota: Esta projeção é feita sob a premissa de que a campanha e o seu website se mantêm integralmente elegíveis e em conformidade com as políticas das plataformas (Meta/Google). O número real de cliques poderá variar significativamente caso existam restrições políticas, limitações técnicas no website, ou outros fatores que possam impactar o desempenho. Por favor, analise os anúncios e responda a este email com a sua aprovação.
+
+Gostaria de salientar que esta análise serve apenas como uma primeira impressão. <strong>Tudo o que consta nos anúncios e nos textos poderá ser alterado e ajustado posteriormente</strong>, conforme a revisão e o seu feedback. Os anexos constituem um exemplo do formato final, e não uma versão definitiva e imutável.
+
+<div class="alert-box">
+<strong>Alerta de Prazo Limite:</strong> Informamos que tem dois (2) dias úteis a contar da data de envio deste email para nos enviar a sua resposta e aprovação.
+
+*Caso não recebamos qualquer resposta ou feedback dentro deste prazo, entenderemos por subentendido que os anúncios estão aceites e que a campanha pode ser ativada de imediato. A campanha poderá ser colocada em pausa assim que enviar novos ajustes ou pedidos de alteração.
+</div>
+
+Ficamos a aguardar a sua resposta o mais breve possível para garantirmos o sucesso e a rapidez da ativação da sua campanha.
+Com os melhores cumprimentos,
+            </div>
+            
+            <p class="shortcut-info">Pressione Ctrl+C para copiar o texto ou clique no botão "Copiar Tudo"</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        Gerador de Fluxo de Trabalho 3000
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const numberInput = document.getElementById('numberInput');
+            const calculateBtn = document.getElementById('calculateBtn');
+            const resultContainer = document.getElementById('resultContainer');
+            const originalValueElement = document.getElementById('originalValue');
+            const twentyPercentElement = document.getElementById('twentyPercent');
+            const minValueElement = document.getElementById('minValue');
+            const maxValueElement = document.getElementById('maxValue');
+            const minTextElement = document.getElementById('minText');
+            const maxTextElement = document.getElementById('maxText');
+            const copyCampaignBtn = document.querySelector('[data-action="copy-campaign"]');
+            const generatedText = document.getElementById('generatedText');
+            const dividerInput = document.getElementById('dividerInput');
+            const selectedDividerElement = document.getElementById('selectedDivider');
+            const selectedDividerCopies = document.querySelectorAll('.selected-divider-copy');
+            const calc500Element = document.getElementById('calc500');
+            const calc1000Element = document.getElementById('calc1000');
+            const calc1500Element = document.getElementById('calc1500');
+            const calc2000Element = document.getElementById('calc2000');
+            const copyAllTotalsBtn = document.getElementById('copyAllTotalsBtn');
+            const copyableTotals = document.querySelectorAll('.copyable-total');
+
+            // Gestão do Modo Noturno
+            function updateThemeButtonLabel() {
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggleBtn.textContent = '☀️ Modo claro';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo claro');
+                } else {
+                    themeToggleBtn.textContent = '🌙 Modo noturno';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo noturno');
+                }
+            }
+
+            if (localStorage.getItem('theme-preference') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            updateThemeButtonLabel();
+
+            themeToggleBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                localStorage.setItem('theme-preference', currentTheme);
+                updateThemeButtonLabel();
+            });
+
+            // Funções de Cálculo e Formatação
+            function roundNumber(num) {
+                return Math.round(num);
+            }
+
+            function formatNumber(num) {
+                return String(Math.round(num));
+            }
+
+            function formatEuro(num) {
+                return `${Number(num).toFixed(2)}€`;
+            }
+
+            function calculateInterval() {
+                const value = parseFloat(numberInput.value);
+                
+                if (isNaN(value) || value < 0) {
+                    alert('Por favor, insira um número válido (maior ou igual a zero).');
+                    numberInput.focus();
+                    return;
+                }
+                
+                const twentyPercent = value * 0.2;
+                const minValue = roundNumber(value - twentyPercent);
+                const maxValue = roundNumber(value + twentyPercent);
+                
+                originalValueElement.textContent = formatNumber(value);
+                twentyPercentElement.textContent = formatNumber(twentyPercent);
+                minValueElement.textContent = formatNumber(minValue);
+                maxValueElement.textContent = formatNumber(maxValue);
+                
+                minTextElement.textContent = formatNumber(minValue);
+                maxTextElement.textContent = formatNumber(maxValue);
+                
+                minTextElement.classList.add('highlight');
+                maxTextElement.classList.add('highlight');
+                
+                resultContainer.style.display = 'block';
+            }
+
+            function calculateFiftyFive() {
+                const divider = parseInt(dividerInput.value, 10) || 1;
+                const baseValues = [500, 1000, 1500, 2000];
+                const results = baseValues.map(value => (value * 0.55) / divider);
+
+                selectedDividerElement.textContent = divider;
+                selectedDividerCopies.forEach(element => {
+                    element.textContent = divider;
+                });
+
+                calc500Element.textContent = formatEuro(results[0]);
+                calc1000Element.textContent = formatEuro(results[1]);
+                calc1500Element.textContent = formatEuro(results[2]);
+                calc2000Element.textContent = formatEuro(results[3]);
+            }
+
+            // Funções de Cópia
+            function copyTextWithFallback(textToCopy) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(textToCopy);
+                }
+
+                return new Promise((resolve, reject) => {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = textToCopy;
+                    textArea.style.position = 'fixed';
+                    textArea.style.opacity = '0';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    const copied = document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    if (copied) resolve();
+                    else reject(new Error('Não foi possível copiar.'));
+                });
+            }
+
+            function flashCopiedTotal(element) {
+                element.classList.add('copied');
+                setTimeout(() => {
+                    element.classList.remove('copied');
+                }, 1000);
+            }
+
+            function flashCopiedButton(buttonElement, text = 'Copiado!') {
+                const originalText = buttonElement.textContent;
+                buttonElement.textContent = text;
+                buttonElement.classList.add('copied');
+                setTimeout(() => {
+                    buttonElement.textContent = originalText;
+                    buttonElement.classList.remove('copied');
+                }, 1500);
+            }
+
+            // Event Listeners
+            calculateBtn.addEventListener('click', calculateInterval);
+            
+            numberInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    calculateInterval();
+                }
+            });
+
+            dividerInput.addEventListener('change', calculateFiftyFive);
+
+            copyableTotals.forEach(totalElement => {
+                totalElement.addEventListener('click', function() {
+                    const totalValue = totalElement.textContent.replace('€', '').trim();
+                    copyTextWithFallback(totalValue)
+                        .then(() => flashCopiedTotal(totalElement))
+                        .catch(err => console.error('Erro ao copiar o total: ', err));
+                });
+            });
+
+            copyAllTotalsBtn.addEventListener('click', function() {
+                const divider = parseInt(dividerInput.value, 10) || 1;
+                const baseValues = [500, 1000, 1500, 2000];
+                const lines = baseValues.map(value => {
+                    const total = formatEuro((value * 0.55) / divider);
+                    return `${value}€ × 55% ÷ ${divider}:\n${total}`;
+                });
+
+                const allTotalsText = `${divider}\n${lines.join('\n')}`;
+
+                copyTextWithFallback(allTotalsText)
+                    .then(() => flashCopiedButton(copyAllTotalsBtn, 'Copiado!'))
+                    .catch(err => console.error('Erro ao copiar todos os totais: ', err));
+            });
+
+            copyCampaignBtn.addEventListener('click', function() {
+                const textToCopy = generatedText.innerText.replace('Copiar Tudo', '').trim();
+                copyTextWithFallback(textToCopy)
+                    .then(() => flashCopiedButton(copyCampaignBtn, 'Copiado!'))
+                    .catch(err => console.error('Erro ao copiar campanha: ', err));
+            });
+
+            // Atalho Teclado (Ctrl+C)
+            document.addEventListener('keydown', function(event) {
+                if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'c' && !event.shiftKey) {
+                    const selection = window.getSelection();
+                    if (selection.toString().length === 0) {
+                        event.preventDefault();
+                        const textToCopy = generatedText.innerText.replace('Copiar Tudo', '').trim();
+                        copyTextWithFallback(textToCopy)
+                            .then(() => flashCopiedButton(copyCampaignBtn, 'Copiado!'));
+                    }
+                }
+            });
+
+            // Inicializações
+            if (numberInput && numberInput.value) {
+                calculateInterval();
+            } else if (numberInput) {
+                numberInput.value = "0";
+                calculateInterval();
+            }
+
+            if (dividerInput) {
+                calculateFiftyFive();
+            }
+
+            setTimeout(() => {
+                if (numberInput) numberInput.focus();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
