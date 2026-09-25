@@ -409,7 +409,8 @@
                     <div class="budget-price">500€</div>
                     <ul class="budget-features">
                         <li>Identificar até 2 categorias principais com maior relevância SEO</li>
-                        <li>Criar 5 anúncios separados por categorias</li>
+                        <li>Criar 5 anúncios dinâmicos no total</li>
+                        <li>Criar 1 anúncio responsivo por categoria</li>
                     </ul>
                     <button class="prompt-btn copy-prompt-btn" data-budget="500" data-platform="google">Copiar Prompt 500€</button>
                 </div>
@@ -418,8 +419,8 @@
                     <div class="budget-price">1000€</div>
                     <ul class="budget-features">
                         <li>Identificar até 3 categorias principais com maior relevância SEO</li>
-                        <li>Criar 8 anúncios separados por categorias</li>
-                        <li>Criar apenas 1 anúncio responsivo por categoria</li>
+                        <li>Criar 8 anúncios dinâmicos no total</li>
+                        <li>Criar 1 anúncio responsivo por categoria</li>
                     </ul>
                     <button class="prompt-btn copy-prompt-btn" data-budget="1000" data-platform="google">Copiar Prompt 1000€</button>
                 </div>
@@ -428,8 +429,8 @@
                     <div class="budget-price">1500€+</div>
                     <ul class="budget-features">
                         <li>Identificar até 4 categorias principais com maior relevância SEO</li>
-                        <li>Criar 12 anúncios separados por categorias</li>
-                        <li>Criar apenas 2 anúncio responsivo por categoria</li>
+                        <li>Criar 12 anúncios dinâmicos no total</li>
+                        <li>Criar 2 anúncios responsivos por categoria</li>
                     </ul>
                     <button class="prompt-btn copy-prompt-btn" data-budget="1500" data-platform="google">Copiar Prompt 1500€+</button>
                 </div>
@@ -442,8 +443,8 @@
                 <div class="budget-card">
                     <div class="budget-price">500€</div>
                     <ul class="budget-features">
-                        <li>Melhores categorias (SEO)</li>
-                        <li>Máx. 5 anúncios separados</li>
+                        <li>Identificar até 2 categorias/serviços mais relevantes</li>
+                        <li>Criar 5 anúncios por categoria</li>
                         <li>Modelo Universal Meta Ads</li>
                     </ul>
                     <button class="prompt-btn copy-prompt-btn" data-budget="500" data-platform="meta">Copiar Prompt 500€</button>
@@ -452,8 +453,8 @@
                 <div class="budget-card">
                     <div class="budget-price">1000€</div>
                     <ul class="budget-features">
-                        <li>Melhores categorias (SEO)</li>
-                        <li>Máx. 8 anúncios separados</li>
+                        <li>Identificar até 3 categorias/serviços mais relevantes</li>
+                        <li>Criar 8 anúncios por categoria</li>
                         <li>Modelo Universal Meta Ads</li>
                     </ul>
                     <button class="prompt-btn copy-prompt-btn" data-budget="1000" data-platform="meta">Copiar Prompt 1000€</button>
@@ -462,8 +463,8 @@
                 <div class="budget-card">
                     <div class="budget-price">1500€+</div>
                     <ul class="budget-features">
-                        <li>Melhores categorias (SEO)</li>
-                        <li>Máx. 12 anúncios separados</li>
+                        <li>Identificar até 4 categorias/serviços mais relevantes</li>
+                        <li>Criar 12 anúncios por categoria</li>
                         <li>Modelo Universal Meta Ads</li>
                     </ul>
                     <button class="prompt-btn copy-prompt-btn" data-budget="1500" data-platform="meta">Copiar Prompt 1500€+</button>
@@ -516,252 +517,926 @@
                 updateThemeButtonLabel();
             });
 
-            // Prompts predefinidos Google Ads
+            // Prompts Google Ads — coerentes com a quantidade de anúncios de cada orçamento
             const googlePrompts = {
-                500: `Cria anúncios Google Ads em português de Portugal, exclusivamente com base
-nas informações fornecidas nas fontes do Cliente (não inferir, não inventar).
+                500: `CRIAÇÃO DE CAMPANHAS GOOGLE ADS
 
-Regras obrigatórias:
-- Escrever sempre na 3.ª pessoa
-- Tom profissional, claro e orientado à conversão
-- Utilizar apenas informação presente nas fontes do Cliente
-- Não adicionar claims, preços, garantias ou dados não fornecidos
-- Respeitar rigorosamente os limites de caracteres
-  (espaços, pontuação e acentuação contam como caracteres)
-- Caso não seja possível cumprir um requisito, indicar claramente qual
+Cria uma proposta de campanha Google Ads em português de Portugal, utilizando exclusivamente as informações fornecidas nas fontes do Cliente.
 
-Orçamento: 500€
+A campanha deve ser construída com base na relevância comercial, intenção de pesquisa e clareza da oferta, e não apenas através da repetição de palavras-chave.
 
-Objetivo:
-- Identificar até 2 categorias principais com maior relevância SEO
-- Criar 5 anúncios separados por categorias
+REGRAS FUNDAMENTAIS
+Escrever sempre na 3.ª pessoa.
+Utilizar português de Portugal.
+Manter um tom profissional, claro, natural e orientado à conversão.
+Utilizar exclusivamente informação presente nas fontes do Cliente.
+Não inferir características, benefícios, resultados, preços, garantias, certificações ou outras informações que não estejam explicitamente presentes.
+Não criar vantagens competitivas que não estejam comprovadas pelas fontes.
+Não utilizar informação externa para completar lacunas.
+Evitar linguagem genérica ou excessivamente promocional quando não estiver sustentada pelas fontes.
+Priorizar mensagens que correspondam àquilo que o potencial cliente procura.
+Evitar repetições desnecessárias entre anúncios.
+Respeitar rigorosamente todos os limites de caracteres indicados.
+Espaços, pontuação e acentuação contam como caracteres.
+Antes de apresentar a versão final, validar individualmente os caracteres de cada headline e descrição.
+Caso uma informação necessária não esteja disponível nas fontes, indicar claramente essa limitação em vez de inventar conteúdo.
 
-Estrutura dos anúncios:
+ORÇAMENTO
+Orçamento mensal disponível: 500€
+O orçamento deve ser considerado na estrutura da campanha, evitando uma dispersão excessiva por categorias ou temas com pouca relevância comercial.
 
-🟢 Anúncios Dinâmicos
-- 2 frases por anúncio
+QUANTIDADE DE ANÚNCIOS
+- Até 2 categorias principais
+- 5 anúncios dinâmicos no total (distribuídos pelas categorias)
+- 1 anúncio responsivo por categoria
+
+1. ANÁLISE DA OFERTA
+Antes de criar os anúncios:
+Identificar os principais produtos, serviços ou soluções apresentados pelo Cliente.
+Identificar as principais necessidades ou intenções de pesquisa às quais esses produtos ou serviços respondem.
+Identificar até 2 categorias principais com maior relevância para a campanha.
+Priorizar categorias que tenham:
+- relevância comercial;
+- procura/intenção de pesquisa clara;
+- informação suficiente nas fontes do Cliente para criar anúncios específicos;
+- potencial de correspondência entre pesquisa, anúncio e oferta.
+Não criar categorias apenas para preencher o número máximo permitido.
+
+2. ESTRUTURA POR CATEGORIA
+Para cada categoria selecionada, criar uma estrutura de anúncios coerente com a intenção de pesquisa identificada.
+Cada categoria deve ter mensagens próprias e não ser apenas uma repetição da categoria anterior.
+
+🟢 ANÚNCIOS DINÂMICOS
+Criar 5 anúncios dinâmicos no total, distribuídos pelas categorias selecionadas.
+Cada anúncio deve conter:
+- 2 frases
 - Cada frase deve ter entre 76 e 84 caracteres
-- Linguagem direta, clara e focada na conversão
+- As duas frases devem funcionar em conjunto.
+- Utilizar linguagem direta e natural.
+- A primeira frase deve captar a intenção ou necessidade do potencial cliente.
+- A segunda frase deve apresentar a solução, benefício ou ação relevante, desde que essa informação esteja presente nas fontes.
+Evitar que as variações sejam apenas alterações mínimas da mesma frase.
+As variações devem explorar diferentes ângulos presentes nas fontes, como:
+- serviço ou solução;
+- benefício;
+- característica relevante;
+- necessidade do cliente;
+- processo;
+- área de atuação;
+- diferenciação comprovada;
+- chamada à ação.
+Não utilizar um ângulo quando este não estiver sustentado pelas fontes.
 
-🔵 Anúncio Responsivo
-- 7 headlines (máximo 20 caracteres cada)
-  • Apenas letras, números e espaços (sem símbolos especiais)
-- 2 descrições
-  • Cada descrição entre 76 e 84 caracteres
-  • Foco nos principais benefícios do serviço
+🔵 ANÚNCIO RESPONSIVO
+Criar 1 conjunto de anúncio responsivo por categoria.
 
-SEO:
-- Listar as melhores palavras-chave SEO para cada categoria
-- Separar palavras-chave por vírgulas
+Headlines
+Criar 7 headlines por categoria.
+Cada headline deve:
+- Ter no máximo 20 caracteres.
+- Conter apenas letras, números e espaços.
+- Não utilizar símbolos, emojis ou pontuação.
+- Ser clara e relevante para a categoria.
+- Evitar repetir exatamente a mesma ideia em várias headlines.
+- Priorizar termos e conceitos relevantes para a intenção de pesquisa.
+Sempre que possível, distribuir as headlines entre diferentes funções:
+- Serviço/produto principal
+- Categoria ou intenção de pesquisa
+- Benefício comprovado
+- Característica relevante
+- Diferenciação comprovada
+- Necessidade do potencial cliente
+- CTA ou orientação para ação
+Não preencher uma função com informação inventada caso as fontes não forneçam conteúdo adequado.
 
-Formato de saída obrigatório:
-- Títulos e descrições claramente identificados
-- Cada categoria separada por um cabeçalho
-- Palavras-chave listadas no final de cada categoria`,
+Descrições
+Criar 2 descrições por categoria.
+Cada descrição deve ter entre 76 e 84 caracteres.
+As descrições devem:
+- Complementar as headlines.
+- Desenvolver benefícios ou características presentes nas fontes.
+- Ser naturais e orientadas à conversão.
+- Evitar repetir exatamente as mesmas palavras ou argumentos.
+- Não incluir informação que não esteja comprovada.
 
-                1000: `Cria anúncios Google Ads em português de Portugal, exclusivamente com base
-nas informações fornecidas nas fontes do Cliente (não inferir, não inventar).
+3. PALAVRAS-CHAVE / SEO
+Para cada categoria, identificar as principais palavras-chave relacionadas com a oferta e a intenção de pesquisa.
+As palavras-chave devem ser baseadas exclusivamente nas informações disponíveis nas fontes do Cliente.
+Não adicionar termos apenas porque parecem relevantes para o setor.
+Listar as palavras-chave separadas por vírgulas.
+Quando existir diferença clara entre termos relacionados com diferentes intenções de pesquisa, agrupá-los de forma lógica.
 
-Regras obrigatórias:
-- Escrever sempre na 3.ª pessoa
-- Tom profissional, claro e orientado à conversão
-- Utilizar apenas informação presente nas fontes do Cliente
-- Não adicionar claims, preços, garantias ou dados não fornecidos
-- Respeitar rigorosamente os limites de caracteres
-  (espaços, pontuação e acentuação contam como caracteres)
-- Caso não seja possível cumprir um requisito, indicar claramente qual
+4. COERÊNCIA DA CAMPANHA
+A campanha deve manter uma relação clara entre:
+Intenção de pesquisa → Categoria → Palavra-chave → Anúncio → Oferta do Cliente
+Evitar:
+- categorias demasiado abrangentes;
+- anúncios genéricos;
+- keywords sem relação clara com a oferta;
+- repetição excessiva;
+- claims não comprovados;
+- CTAs artificiais;
+- linguagem que pareça escrita apenas para atingir o limite de caracteres.
+A prioridade é a relevância e qualidade da mensagem, mantendo os limites técnicos obrigatórios.
 
-Orçamento: 1000€
+5. VALIDAÇÃO FINAL
+Antes de apresentar a resposta final, verificar:
+- Todos os anúncios estão em português de Portugal.
+- Todos estão escritos na 3.ª pessoa.
+- Nenhuma informação foi inventada ou inferida.
+- Cada headline respeita o máximo de 20 caracteres.
+- As headlines do anúncio responsivo não contêm pontuação ou símbolos.
+- Cada descrição tem entre 76 e 84 caracteres.
+- Cada frase dos anúncios dinâmicos tem entre 76 e 84 caracteres.
+- Foram criados 5 anúncios dinâmicos no total.
+- Foi criado 1 anúncio responsivo por categoria.
+- Não existem repetições desnecessárias.
+- As categorias escolhidas são coerentes com a oferta.
+- As palavras-chave correspondem efetivamente às categorias.
+- Todos os elementos da campanha são suportados pelas fontes do Cliente.
+Se algum requisito não puder ser cumprido com a informação disponível, não inventar uma solução. Indicar qual requisito não foi possível cumprir e porquê.`,
 
-Objetivo:
-- Identificar até 3 categorias principais com maior relevância SEO
-- Criar 8 anúncios separados por categorias
-- Criar apenas 1 anúncio responsivo por categoria
+                1000: `CRIAÇÃO DE CAMPANHAS GOOGLE ADS
 
-Estrutura dos anúncios:
+Cria uma proposta de campanha Google Ads em português de Portugal, utilizando exclusivamente as informações fornecidas nas fontes do Cliente.
 
-🟢 Anúncios Dinâmicos
-- 2 frases por anúncio
+A campanha deve ser construída com base na relevância comercial, intenção de pesquisa e clareza da oferta, e não apenas através da repetição de palavras-chave.
+
+REGRAS FUNDAMENTAIS
+Escrever sempre na 3.ª pessoa.
+Utilizar português de Portugal.
+Manter um tom profissional, claro, natural e orientado à conversão.
+Utilizar exclusivamente informação presente nas fontes do Cliente.
+Não inferir características, benefícios, resultados, preços, garantias, certificações ou outras informações que não estejam explicitamente presentes.
+Não criar vantagens competitivas que não estejam comprovadas pelas fontes.
+Não utilizar informação externa para completar lacunas.
+Evitar linguagem genérica ou excessivamente promocional quando não estiver sustentada pelas fontes.
+Priorizar mensagens que correspondam àquilo que o potencial cliente procura.
+Evitar repetições desnecessárias entre anúncios.
+Respeitar rigorosamente todos os limites de caracteres indicados.
+Espaços, pontuação e acentuação contam como caracteres.
+Antes de apresentar a versão final, validar individualmente os caracteres de cada headline e descrição.
+Caso uma informação necessária não esteja disponível nas fontes, indicar claramente essa limitação em vez de inventar conteúdo.
+
+ORÇAMENTO
+Orçamento mensal disponível: 1000€
+O orçamento deve ser considerado na estrutura da campanha, evitando uma dispersão excessiva por categorias ou temas com pouca relevância comercial.
+
+QUANTIDADE DE ANÚNCIOS
+- Até 3 categorias principais
+- 8 anúncios dinâmicos no total (distribuídos pelas categorias)
+- 1 anúncio responsivo por categoria
+
+1. ANÁLISE DA OFERTA
+Antes de criar os anúncios:
+Identificar os principais produtos, serviços ou soluções apresentados pelo Cliente.
+Identificar as principais necessidades ou intenções de pesquisa às quais esses produtos ou serviços respondem.
+Identificar até 3 categorias principais com maior relevância para a campanha.
+Priorizar categorias que tenham:
+- relevância comercial;
+- procura/intenção de pesquisa clara;
+- informação suficiente nas fontes do Cliente para criar anúncios específicos;
+- potencial de correspondência entre pesquisa, anúncio e oferta.
+Não criar categorias apenas para preencher o número máximo permitido.
+
+2. ESTRUTURA POR CATEGORIA
+Para cada categoria selecionada, criar uma estrutura de anúncios coerente com a intenção de pesquisa identificada.
+Cada categoria deve ter mensagens próprias e não ser apenas uma repetição da categoria anterior.
+
+🟢 ANÚNCIOS DINÂMICOS
+Criar 8 anúncios dinâmicos no total, distribuídos pelas categorias selecionadas.
+Cada anúncio deve conter:
+- 2 frases
 - Cada frase deve ter entre 76 e 84 caracteres
-- Linguagem direta, clara e focada na conversão
+- As duas frases devem funcionar em conjunto.
+- Utilizar linguagem direta e natural.
+- A primeira frase deve captar a intenção ou necessidade do potencial cliente.
+- A segunda frase deve apresentar a solução, benefício ou ação relevante, desde que essa informação esteja presente nas fontes.
+Evitar que as variações sejam apenas alterações mínimas da mesma frase.
+As variações devem explorar diferentes ângulos presentes nas fontes, como:
+- serviço ou solução;
+- benefício;
+- característica relevante;
+- necessidade do cliente;
+- processo;
+- área de atuação;
+- diferenciação comprovada;
+- chamada à ação.
+Não utilizar um ângulo quando este não estiver sustentado pelas fontes.
 
-🔵 Anúncio Responsivo
-- 7 headlines (máximo 20 caracteres cada)
-  • Apenas letras, números e espaços (sem símbolos especiais)
-- 2 descrições
-  • Cada descrição entre 76 e 84 caracteres
-  • Foco nos principais benefícios do serviço
+🔵 ANÚNCIO RESPONSIVO
+Criar 1 conjunto de anúncio responsivo por categoria.
 
-SEO:
-- Listar as melhores palavras-chave SEO para cada categoria
-- Separar palavras-chave por vírgulas
+Headlines
+Criar 7 headlines por categoria.
+Cada headline deve:
+- Ter no máximo 20 caracteres.
+- Conter apenas letras, números e espaços.
+- Não utilizar símbolos, emojis ou pontuação.
+- Ser clara e relevante para a categoria.
+- Evitar repetir exatamente a mesma ideia em várias headlines.
+- Priorizar termos e conceitos relevantes para a intenção de pesquisa.
+Sempre que possível, distribuir as headlines entre diferentes funções:
+- Serviço/produto principal
+- Categoria ou intenção de pesquisa
+- Benefício comprovado
+- Característica relevante
+- Diferenciação comprovada
+- Necessidade do potencial cliente
+- CTA ou orientação para ação
+Não preencher uma função com informação inventada caso as fontes não forneçam conteúdo adequado.
 
-Formato de saída obrigatório:
-- Títulos e descrições claramente identificados
-- Cada categoria separada por um cabeçalho
-- Palavras-chave listadas no final de cada categoria`,
+Descrições
+Criar 2 descrições por categoria.
+Cada descrição deve ter entre 76 e 84 caracteres.
+As descrições devem:
+- Complementar as headlines.
+- Desenvolver benefícios ou características presentes nas fontes.
+- Ser naturais e orientadas à conversão.
+- Evitar repetir exatamente as mesmas palavras ou argumentos.
+- Não incluir informação que não esteja comprovada.
 
-                1500: `Cria anúncios Google Ads em português de Portugal, exclusivamente com base
-nas informações fornecidas nas fontes do Cliente (não inferir, não inventar).
+3. PALAVRAS-CHAVE / SEO
+Para cada categoria, identificar as principais palavras-chave relacionadas com a oferta e a intenção de pesquisa.
+As palavras-chave devem ser baseadas exclusivamente nas informações disponíveis nas fontes do Cliente.
+Não adicionar termos apenas porque parecem relevantes para o setor.
+Listar as palavras-chave separadas por vírgulas.
+Quando existir diferença clara entre termos relacionados com diferentes intenções de pesquisa, agrupá-los de forma lógica.
 
-Regras obrigatórias:
-- Escrever sempre na 3.ª pessoa
-- Tom profissional, claro e orientado à conversão
-- Utilizar apenas informação presente nas fontes do Cliente
-- Não adicionar claims, preços, garantias ou dados não fornecidos
-- Respeitar rigorosamente os limites de caracteres
-  (espaços, pontuação e acentuação contam como caracteres)
-- Caso não seja possível cumprir um requisito, indicar claramente qual
+4. COERÊNCIA DA CAMPANHA
+A campanha deve manter uma relação clara entre:
+Intenção de pesquisa → Categoria → Palavra-chave → Anúncio → Oferta do Cliente
+Evitar:
+- categorias demasiado abrangentes;
+- anúncios genéricos;
+- keywords sem relação clara com a oferta;
+- repetição excessiva;
+- claims não comprovados;
+- CTAs artificiais;
+- linguagem que pareça escrita apenas para atingir o limite de caracteres.
+A prioridade é a relevância e qualidade da mensagem, mantendo os limites técnicos obrigatórios.
 
-Orçamento: 1500€+
+5. VALIDAÇÃO FINAL
+Antes de apresentar a resposta final, verificar:
+- Todos os anúncios estão em português de Portugal.
+- Todos estão escritos na 3.ª pessoa.
+- Nenhuma informação foi inventada ou inferida.
+- Cada headline respeita o máximo de 20 caracteres.
+- As headlines do anúncio responsivo não contêm pontuação ou símbolos.
+- Cada descrição tem entre 76 e 84 caracteres.
+- Cada frase dos anúncios dinâmicos tem entre 76 e 84 caracteres.
+- Foram criados 8 anúncios dinâmicos no total.
+- Foi criado 1 anúncio responsivo por categoria.
+- Não existem repetições desnecessárias.
+- As categorias escolhidas são coerentes com a oferta.
+- As palavras-chave correspondem efetivamente às categorias.
+- Todos os elementos da campanha são suportados pelas fontes do Cliente.
+Se algum requisito não puder ser cumprido com a informação disponível, não inventar uma solução. Indicar qual requisito não foi possível cumprir e porquê.`,
 
-Objetivo:
-- Identificar até 4 categorias principais com maior relevância SEO
-- Criar 12 anúncios separados por categorias
-- Criar apenas 2 anúncio responsivo por categoria
+                1500: `CRIAÇÃO DE CAMPANHAS GOOGLE ADS
 
-Estrutura dos anúncios:
+Cria uma proposta de campanha Google Ads em português de Portugal, utilizando exclusivamente as informações fornecidas nas fontes do Cliente.
 
-🟢 Anúncios Dinâmicos
-- 2 frases por anúncio
+A campanha deve ser construída com base na relevância comercial, intenção de pesquisa e clareza da oferta, e não apenas através da repetição de palavras-chave.
+
+REGRAS FUNDAMENTAIS
+Escrever sempre na 3.ª pessoa.
+Utilizar português de Portugal.
+Manter um tom profissional, claro, natural e orientado à conversão.
+Utilizar exclusivamente informação presente nas fontes do Cliente.
+Não inferir características, benefícios, resultados, preços, garantias, certificações ou outras informações que não estejam explicitamente presentes.
+Não criar vantagens competitivas que não estejam comprovadas pelas fontes.
+Não utilizar informação externa para completar lacunas.
+Evitar linguagem genérica ou excessivamente promocional quando não estiver sustentada pelas fontes.
+Priorizar mensagens que correspondam àquilo que o potencial cliente procura.
+Evitar repetições desnecessárias entre anúncios.
+Respeitar rigorosamente todos os limites de caracteres indicados.
+Espaços, pontuação e acentuação contam como caracteres.
+Antes de apresentar a versão final, validar individualmente os caracteres de cada headline e descrição.
+Caso uma informação necessária não esteja disponível nas fontes, indicar claramente essa limitação em vez de inventar conteúdo.
+
+ORÇAMENTO
+Orçamento mensal disponível: 1500€+
+O orçamento deve ser considerado na estrutura da campanha, evitando uma dispersão excessiva por categorias ou temas com pouca relevância comercial.
+
+QUANTIDADE DE ANÚNCIOS
+- Até 4 categorias principais
+- 12 anúncios dinâmicos no total (distribuídos pelas categorias)
+- 2 anúncios responsivos por categoria
+
+1. ANÁLISE DA OFERTA
+Antes de criar os anúncios:
+Identificar os principais produtos, serviços ou soluções apresentados pelo Cliente.
+Identificar as principais necessidades ou intenções de pesquisa às quais esses produtos ou serviços respondem.
+Identificar até 4 categorias principais com maior relevância para a campanha.
+Priorizar categorias que tenham:
+- relevância comercial;
+- procura/intenção de pesquisa clara;
+- informação suficiente nas fontes do Cliente para criar anúncios específicos;
+- potencial de correspondência entre pesquisa, anúncio e oferta.
+Não criar categorias apenas para preencher o número máximo permitido.
+
+2. ESTRUTURA POR CATEGORIA
+Para cada categoria selecionada, criar uma estrutura de anúncios coerente com a intenção de pesquisa identificada.
+Cada categoria deve ter mensagens próprias e não ser apenas uma repetição da categoria anterior.
+
+🟢 ANÚNCIOS DINÂMICOS
+Criar 12 anúncios dinâmicos no total, distribuídos pelas categorias selecionadas.
+Cada anúncio deve conter:
+- 2 frases
 - Cada frase deve ter entre 76 e 84 caracteres
-- Linguagem direta, clara e focada na conversão
+- As duas frases devem funcionar em conjunto.
+- Utilizar linguagem direta e natural.
+- A primeira frase deve captar a intenção ou necessidade do potencial cliente.
+- A segunda frase deve apresentar a solução, benefício ou ação relevante, desde que essa informação esteja presente nas fontes.
+Evitar que as variações sejam apenas alterações mínimas da mesma frase.
+As variações devem explorar diferentes ângulos presentes nas fontes, como:
+- serviço ou solução;
+- benefício;
+- característica relevante;
+- necessidade do cliente;
+- processo;
+- área de atuação;
+- diferenciação comprovada;
+- chamada à ação.
+Não utilizar um ângulo quando este não estiver sustentado pelas fontes.
 
-🔵 Anúncio Responsivo
-- 7 headlines (máximo 20 caracteres cada)
-  • Apenas letras, números e espaços (sem símbolos especiais)
-- 2 descrições
-  • Cada descrição entre 76 e 84 caracteres
-  • Foco nos principais benefícios do serviço
+🔵 ANÚNCIO RESPONSIVO
+Criar 2 conjuntos de anúncio responsivo por categoria.
 
-SEO:
-- Listar as melhores palavras-chave SEO para cada categoria
-- Separar palavras-chave por vírgulas
+Headlines
+Criar 7 headlines por anúncio responsivo.
+Cada headline deve:
+- Ter no máximo 20 caracteres.
+- Conter apenas letras, números e espaços.
+- Não utilizar símbolos, emojis ou pontuação.
+- Ser clara e relevante para a categoria.
+- Evitar repetir exatamente a mesma ideia em várias headlines.
+- Priorizar termos e conceitos relevantes para a intenção de pesquisa.
+Sempre que possível, distribuir as headlines entre diferentes funções:
+- Serviço/produto principal
+- Categoria ou intenção de pesquisa
+- Benefício comprovado
+- Característica relevante
+- Diferenciação comprovada
+- Necessidade do potencial cliente
+- CTA ou orientação para ação
+Não preencher uma função com informação inventada caso as fontes não forneçam conteúdo adequado.
 
-Formato de saída obrigatório:
-- Títulos e descrições claramente identificados
-- Cada categoria separada por um cabeçalho
-- Palavras-chave listadas no final de cada categoria`
+Descrições
+Criar 2 descrições por anúncio responsivo.
+Cada descrição deve ter entre 76 e 84 caracteres.
+As descrições devem:
+- Complementar as headlines.
+- Desenvolver benefícios ou características presentes nas fontes.
+- Ser naturais e orientadas à conversão.
+- Evitar repetir exatamente as mesmas palavras ou argumentos.
+- Não incluir informação que não esteja comprovada.
+
+3. PALAVRAS-CHAVE / SEO
+Para cada categoria, identificar as principais palavras-chave relacionadas com a oferta e a intenção de pesquisa.
+As palavras-chave devem ser baseadas exclusivamente nas informações disponíveis nas fontes do Cliente.
+Não adicionar termos apenas porque parecem relevantes para o setor.
+Listar as palavras-chave separadas por vírgulas.
+Quando existir diferença clara entre termos relacionados com diferentes intenções de pesquisa, agrupá-los de forma lógica.
+
+4. COERÊNCIA DA CAMPANHA
+A campanha deve manter uma relação clara entre:
+Intenção de pesquisa → Categoria → Palavra-chave → Anúncio → Oferta do Cliente
+Evitar:
+- categorias demasiado abrangentes;
+- anúncios genéricos;
+- keywords sem relação clara com a oferta;
+- repetição excessiva;
+- claims não comprovados;
+- CTAs artificiais;
+- linguagem que pareça escrita apenas para atingir o limite de caracteres.
+A prioridade é a relevância e qualidade da mensagem, mantendo os limites técnicos obrigatórios.
+
+5. VALIDAÇÃO FINAL
+Antes de apresentar a resposta final, verificar:
+- Todos os anúncios estão em português de Portugal.
+- Todos estão escritos na 3.ª pessoa.
+- Nenhuma informação foi inventada ou inferida.
+- Cada headline respeita o máximo de 20 caracteres.
+- As headlines do anúncio responsivo não contêm pontuação ou símbolos.
+- Cada descrição tem entre 76 e 84 caracteres.
+- Cada frase dos anúncios dinâmicos tem entre 76 e 84 caracteres.
+- Foram criados 12 anúncios dinâmicos no total.
+- Foram criados 2 anúncios responsivos por categoria.
+- Não existem repetições desnecessárias.
+- As categorias escolhidas são coerentes com a oferta.
+- As palavras-chave correspondem efetivamente às categorias.
+- Todos os elementos da campanha são suportados pelas fontes do Cliente.
+Se algum requisito não puder ser cumprido com a informação disponível, não inventar uma solução. Indicar qual requisito não foi possível cumprir e porquê.`
             };
 
-            // Prompts predefinidos Meta Ads
+            // Prompts Meta Ads — novo formato do anexo CRIAÇÃO DE CAMPANHAS META ADS
             const metaPrompts = {
-                500: `Cria anúncios para Meta Ads em português de Portugal, com base EXCLUSIVAMENTE
-nas fontes do cliente (não inferir, não inventar, não adicionar dados externos).
+                500: `CRIAÇÃO DE CAMPANHAS META ADS
 
-Regras obrigatórias:
-- Escrever sempre na 3.ª pessoa
-- Tom profissional e informativo, orientado à conversão
-- Manter a linguagem, termos e estilo do site do cliente (se o briefing incluir exemplos)
-- Usar apenas informação presente no briefing (serviços, localização, preços, claims, etc.)
-- Não incluir promessas, garantias, superlativos vagos (“o melhor”, “único”) ou comparações
-  se isso não estiver explicitamente no briefing
-- Respeitar rigorosamente os limites de caracteres (espaços, pontuação e acentuação contam)
-- Se faltar informação nas fontes para cumprir algum campo, indicar.
+Cria uma proposta de campanha Meta Ads em português de Portugal, utilizando exclusivamente as informações fornecidas nas fontes do Cliente.
 
-Objetivo e estrutura:
-Orçamento: 500€
-- Identificar as 2 categorias/serviços mais relevantes para SEO e intenção de compra
-- Criar 5 anúncios separados por categorias
+A campanha deve ser construída com base na relevância comercial, necessidade do público, clareza da oferta e potencial de conversão, e não através da simples repetição de características ou palavras-chave.
 
-Modelo Universal Meta Ads (por anúncio):
-1) Headline: 23–25 caracteres
-2) Sub-headline: 28–30 caracteres
-3) Descrição: 100–300 caracteres
+REGRAS FUNDAMENTAIS
+Escrever sempre na 3.ª pessoa.
+Utilizar português de Portugal.
+Manter um tom profissional, claro, natural e orientado à conversão.
+Utilizar exclusivamente informação presente nas fontes do Cliente.
+Não inferir características, benefícios, resultados, preços, garantias, certificações ou outras informações que não estejam explicitamente presentes.
+Não criar vantagens competitivas que não estejam comprovadas pelas fontes.
+Não utilizar informação externa para completar lacunas.
+Evitar linguagem genérica ou excessivamente promocional quando não estiver sustentada pelas fontes.
+Priorizar mensagens que correspondam às necessidades e motivações identificadas nas fontes.
+Evitar repetições desnecessárias entre anúncios.
+Não utilizar linguagem que pareça artificial apenas para preencher limites de caracteres.
+Respeitar rigorosamente todos os limites de caracteres indicados.
+Espaços, pontuação e acentuação contam como caracteres.
+Antes de apresentar a versão final, validar individualmente os caracteres de cada headline, sub-headline e descrição.
+Caso uma informação necessária não esteja disponível nas fontes, indicar claramente essa limitação em vez de inventar conteúdo.
 
-Formato da descrição (sem inventar):
-["Problema" do cliente] A solução oferece [Benefício 1], [Benefício 2] e [Benefício 3]. [CTA clara]!
+ORÇAMENTO
+Orçamento mensal disponível: 500€
+O orçamento deve ser considerado na estrutura da campanha, evitando uma dispersão excessiva por categorias, serviços ou ângulos de comunicação com pouca relevância comercial.
 
-Imagens:
-- Para cada anúncio, sugerir imagem coerentes com as fontes e com o site
-- Se não houver assets, sugerir apenas conceitos (ex: “foto real do serviço”, “antes/depois”,
-  “equipa em ação”, “produto em destaque”, “close-up do detalhe”, etc.) sem mencionar marcas
+QUANTIDADE DE ANÚNCIOS
+- Até 2 categorias ou serviços principais
+- 5 anúncios por categoria
 
-Formato de saída obrigatório:
-Para cada categoria:
-- Categoria:
-- Headline (com contagem de caracteres):
-- Sub-headline (com contagem de caracteres):
-- Descrição (com contagem de caracteres):
-- Sugestões de imagem:`,
+1. ANÁLISE DA OFERTA
+Antes de criar os anúncios:
+Identificar os principais produtos, serviços ou soluções apresentados pelo Cliente.
+Identificar as principais necessidades, problemas ou motivações que podem ser diretamente associados a esses produtos ou serviços, desde que estejam presentes nas fontes.
+Identificar até 2 categorias ou serviços principais com maior relevância para a campanha.
+Identificar os principais benefícios e características comprovados para cada categoria.
+Identificar os possíveis ângulos de comunicação suportados pelas fontes.
+Priorizar categorias que tenham:
+- relevância comercial;
+- oferta claramente definida;
+- informação suficiente para criar anúncios específicos;
+- benefícios ou características concretas que possam ser comunicados;
+- potencial para criar diferentes ângulos de comunicação.
+Não criar categorias apenas para preencher o número máximo permitido.
 
-                1000: `Cria anúncios para Meta Ads em português de Portugal, com base EXCLUSIVAMENTE
-nas fontes do cliente (não inferir, não inventar, não adicionar dados externos).
+2. ESTRUTURA DA CAMPANHA
+Para cada categoria selecionada, criar uma estrutura de anúncios coerente com a oferta e com as necessidades do público.
+Cada categoria deve ter mensagens próprias e não ser apenas uma repetição da categoria anterior.
+Criar 5 anúncios separados por categoria.
+Cada anúncio deve explorar um ângulo de comunicação diferente sempre que existam informações suficientes para isso.
+Os ângulos podem incluir, quando suportados pelas fontes:
+- necessidade ou problema;
+- principal benefício;
+- característica diferenciadora;
+- utilização ou aplicação do serviço;
+- resultado ou transformação, apenas quando explicitamente comprovado;
+- processo ou forma de funcionamento;
+- conveniência;
+- confiança ou experiência, apenas quando comprovada;
+- chamada à ação.
+Não forçar diferentes ângulos quando as fontes do Cliente não disponibilizarem informação suficiente.
 
-Regras obrigatórias:
-- Escrever sempre na 3.ª pessoa
-- Tom profissional e informativo, orientado à conversão
-- Manter a linguagem, termos e estilo do site do cliente (se o briefing incluir exemplos)
-- Usar apenas informação presente no briefing (serviços, localização, preços, claims, etc.)
-- Não incluir promessas, garantias, superlativos vagos (“o melhor”, “único”) ou comparações
-  se isso não estiver explicitamente no briefing
-- Respeitar rigorosamente os limites de caracteres (espaços, pontuação e acentuação contam)
-- Se faltar informação nas fontes para cumprir algum campo, indicar.
+3. MODELO UNIVERSAL META ADS
+Para cada anúncio, utilizar:
+Headline
+- Entre 23 e 25 caracteres.
+Sub-headline
+- Entre 28 e 30 caracteres.
+Descrição
+- Entre 100 e 300 caracteres.
+A headline deve apresentar de forma rápida o principal argumento ou oferta do anúncio.
+A sub-headline deve complementar a headline e acrescentar contexto ou reforçar o benefício principal.
+A descrição deve desenvolver a mensagem e terminar com uma chamada à ação adequada.
 
-Objetivo e estrutura:
-Orçamento: 1000€
-- Identificar as 3 categorias/serviços mais relevantes para SEO e intenção de compra
-- Criar 8 anúncios separados por categorias
+4. ESTRUTURA DA DESCRIÇÃO
+Utilizar a seguinte lógica como orientação:
+Necessidade/problema → solução → benefícios comprovados → CTA
+Exemplo estrutural:
+[Necessidade do cliente] + [solução apresentada pelo Cliente] + [benefícios ou características comprovadas] + [CTA clara].
+Não é obrigatório utilizar esta estrutura palavra por palavra.
+A descrição deve adaptar-se às informações disponíveis nas fontes e pode utilizar apenas os benefícios efetivamente suportados.
+Nunca adicionar um benefício apenas para completar a estrutura.
+A CTA deve ser clara, natural e coerente com a ação que o Cliente pretende que o potencial cliente realize.
+Não inventar CTAs relacionadas com ações que não estejam disponíveis ou não sejam adequadas à oferta.
 
-Modelo Universal Meta Ads (por anúncio):
-1) Headline: 23–25 caracteres
-2) Sub-headline: 28–30 caracteres
-3) Descrição: 100–300 caracteres
+5. IMAGENS / CRIATIVOS
+Para cada anúncio, sugerir um conceito visual coerente com:
+- a mensagem do anúncio;
+- a oferta do Cliente;
+- as informações disponíveis no site;
+- os elementos visuais efetivamente presentes nas fontes.
+Quando existirem imagens ou assets fornecidos pelo Cliente, indicar quais são mais adequados para cada anúncio.
+Quando não existirem assets suficientes, sugerir apenas conceitos visuais, sem inventar características do produto ou serviço.
+Exemplos de conceitos visuais:
+- foto real do serviço;
+- produto em destaque;
+- equipa em ação;
+- utilização do produto ou serviço;
+- detalhe do produto;
+- ambiente relacionado com o serviço;
+- resultado visual comprovado;
+- composição gráfica simples com informação presente no site.
+Não mencionar marcas, pessoas, instalações, produtos ou situações que não estejam presentes nas fontes do Cliente.
 
-Formato da descrição (sem inventar):
-["Problema" do cliente] A solução oferece [Benefício 1], [Benefício 2] e [Benefício 3]. [CTA clara]!
+6. VARIAÇÃO CRIATIVA
+Os 5 anúncios de cada categoria devem apresentar diferenças reais na abordagem.
+Evitar criar cinco versões que apenas alterem algumas palavras.
+Sempre que as fontes permitirem, distribuir os anúncios por diferentes ângulos:
+Anúncio 1: Oferta / serviço principal
+Anúncio 2: Necessidade do público
+Anúncio 3: Principal benefício
+Anúncio 4: Característica ou diferenciação comprovada
+Anúncio 5: CTA / ação pretendida
+Esta distribuição é orientadora e deve ser adaptada às informações efetivamente disponíveis.
+Se determinado ângulo não estiver suportado pelas fontes, substituí-lo por outro ângulo comprovado.
 
-Imagens:
-- Para cada anúncio, sugerir imagem coerentes com as fontes e com o site
-- Se não houver assets, sugerir apenas conceitos (ex: “foto real do serviço”, “antes/depois”,
-  “equipa em ação”, “produto em destaque”, “close-up do detalhe”, etc.) sem mencionar marcas
+7. TERMOS RELEVANTES
+O Meta Ads não deve ser tratado como uma campanha de pesquisa baseada em palavras-chave.
+Por isso, não criar uma lista de palavras-chave SEO como requisito da estrutura dos anúncios.
+Em vez disso, para cada categoria, identificar:
+Termos e conceitos relevantes
+Listar os principais termos utilizados nas fontes do Cliente que podem ajudar a definir:
+- a oferta;
+- a necessidade;
+- o público;
+- o serviço ou produto;
+- os principais benefícios;
+- a comunicação da campanha.
+Os termos devem ser apresentados separados por vírgulas.
+Não adicionar termos apenas porque parecem relevantes para o setor.
 
-Formato de saída obrigatório:
-Para cada categoria:
-- Categoria:
-- Headline (com contagem de caracteres):
-- Sub-headline (com contagem de caracteres):
-- Descrição (com contagem de caracteres):
-- Sugestões de imagem:`,
+8. COERÊNCIA DA CAMPANHA
+A campanha deve manter uma relação clara entre:
+Público / necessidade → Categoria → Ângulo criativo → Anúncio → Oferta → CTA
+Evitar:
+- categorias demasiado abrangentes;
+- anúncios genéricos;
+- benefícios não comprovados;
+- claims não suportados;
+- repetição excessiva;
+- CTAs artificiais;
+- excesso de texto promocional;
+- linguagem que pareça escrita apenas para atingir o limite de caracteres;
+- utilização de keywords sem contexto;
+- imagens que não correspondam à oferta real.
+A prioridade é a relevância da mensagem e a clareza da oferta, mantendo os limites técnicos obrigatórios.
 
-                1500: `Cria anúncios para Meta Ads em português de Portugal, com base EXCLUSIVAMENTE
-nas fontes do cliente (não inferir, não inventar, não adicionar dados externos).
+9. VALIDAÇÃO FINAL
+Antes de apresentar a resposta final, verificar individualmente:
+- Todos os anúncios estão em português de Portugal.
+- Todos estão escritos na 3.ª pessoa.
+- Nenhuma informação foi inventada ou inferida.
+- Cada headline tem entre 23 e 25 caracteres.
+- Cada sub-headline tem entre 28 e 30 caracteres.
+- Cada descrição tem entre 100 e 300 caracteres.
+- Os anúncios apresentam variações reais de comunicação.
+- Não existem repetições desnecessárias.
+- As categorias escolhidas são coerentes com a oferta.
+- Os ângulos utilizados são suportados pelas fontes.
+- As imagens sugeridas são coerentes com o site e as fontes.
+- Os termos e conceitos apresentados estão presentes ou diretamente suportados pelas fontes.
+- Todos os elementos da campanha são suportados pelas fontes do Cliente.
+Se algum requisito não puder ser cumprido com a informação disponível, não inventar uma solução.`,
 
-Regras obrigatórias:
-- Escrever sempre na 3.ª pessoa
-- Tom profissional e informativo, orientado à conversão
-- Manter a linguagem, termos e estilo do site do cliente (se o briefing incluir exemplos)
-- Usar apenas informação presente no briefing (serviços, localização, preços, claims, etc.)
-- Não incluir promessas, garantias, superlativos vagos (“o melhor”, “único”) ou comparações
-  se isso não estiver explicitamente no briefing
-- Respeitar rigorosamente os limites de caracteres (espaços, pontuação e acentuação contam)
-- Se faltar informação nas fontes para cumprir algum campo, indicar.
+                1000: `CRIAÇÃO DE CAMPANHAS META ADS
 
-Objetivo e estrutura:
-Orçamento: 1500€+
-- Identificar as 4 categorias/serviços mais relevantes para SEO e intenção de compra
-- Criar 12 anúncios separados por categorias
+Cria uma proposta de campanha Meta Ads em português de Portugal, utilizando exclusivamente as informações fornecidas nas fontes do Cliente.
 
-Modelo Universal Meta Ads (por anúncio):
-1) Headline: 23–25 caracteres
-2) Sub-headline: 28–30 caracteres
-3) Descrição: 100–300 caracteres
+A campanha deve ser construída com base na relevância comercial, necessidade do público, clareza da oferta e potencial de conversão, e não através da simples repetição de características ou palavras-chave.
 
-Formato da descrição (sem inventar):
-["Problema" do cliente] A solução oferece [Benefício 1], [Benefício 2] e [Benefício 3]. [CTA clara]!
+REGRAS FUNDAMENTAIS
+Escrever sempre na 3.ª pessoa.
+Utilizar português de Portugal.
+Manter um tom profissional, claro, natural e orientado à conversão.
+Utilizar exclusivamente informação presente nas fontes do Cliente.
+Não inferir características, benefícios, resultados, preços, garantias, certificações ou outras informações que não estejam explicitamente presentes.
+Não criar vantagens competitivas que não estejam comprovadas pelas fontes.
+Não utilizar informação externa para completar lacunas.
+Evitar linguagem genérica ou excessivamente promocional quando não estiver sustentada pelas fontes.
+Priorizar mensagens que correspondam às necessidades e motivações identificadas nas fontes.
+Evitar repetições desnecessárias entre anúncios.
+Não utilizar linguagem que pareça artificial apenas para preencher limites de caracteres.
+Respeitar rigorosamente todos os limites de caracteres indicados.
+Espaços, pontuação e acentuação contam como caracteres.
+Antes de apresentar a versão final, validar individualmente os caracteres de cada headline, sub-headline e descrição.
+Caso uma informação necessária não esteja disponível nas fontes, indicar claramente essa limitação em vez de inventar conteúdo.
 
-Imagens:
-- Para cada anúncio, sugerir imagem coerentes com as fontes e com o site
-- Se não houver assets, sugerir apenas conceitos (ex: “foto real do serviço”, “antes/depois”,
-  “equipa em ação”, “produto em destaque”, “close-up do detalhe”, etc.) sem mencionar marcas
+ORÇAMENTO
+Orçamento mensal disponível: 1000€
+O orçamento deve ser considerado na estrutura da campanha, evitando uma dispersão excessiva por categorias, serviços ou ângulos de comunicação com pouca relevância comercial.
 
-Formato de saída obrigatório:
-Para cada categoria:
-- Categoria:
-- Headline (com contagem de caracteres):
-- Sub-headline (com contagem de caracteres):
-- Descrição (com contagem de caracteres):
-- Sugestões de imagem:`
+QUANTIDADE DE ANÚNCIOS
+- Até 3 categorias ou serviços principais
+- 8 anúncios por categoria
+
+1. ANÁLISE DA OFERTA
+Antes de criar os anúncios:
+Identificar os principais produtos, serviços ou soluções apresentados pelo Cliente.
+Identificar as principais necessidades, problemas ou motivações que podem ser diretamente associados a esses produtos ou serviços, desde que estejam presentes nas fontes.
+Identificar até 3 categorias ou serviços principais com maior relevância para a campanha.
+Identificar os principais benefícios e características comprovados para cada categoria.
+Identificar os possíveis ângulos de comunicação suportados pelas fontes.
+Priorizar categorias que tenham:
+- relevância comercial;
+- oferta claramente definida;
+- informação suficiente para criar anúncios específicos;
+- benefícios ou características concretas que possam ser comunicados;
+- potencial para criar diferentes ângulos de comunicação.
+Não criar categorias apenas para preencher o número máximo permitido.
+
+2. ESTRUTURA DA CAMPANHA
+Para cada categoria selecionada, criar uma estrutura de anúncios coerente com a oferta e com as necessidades do público.
+Cada categoria deve ter mensagens próprias e não ser apenas uma repetição da categoria anterior.
+Criar 8 anúncios separados por categoria.
+Cada anúncio deve explorar um ângulo de comunicação diferente sempre que existam informações suficientes para isso.
+Os ângulos podem incluir, quando suportados pelas fontes:
+- necessidade ou problema;
+- principal benefício;
+- característica diferenciadora;
+- utilização ou aplicação do serviço;
+- resultado ou transformação, apenas quando explicitamente comprovado;
+- processo ou forma de funcionamento;
+- conveniência;
+- confiança ou experiência, apenas quando comprovada;
+- chamada à ação.
+Não forçar diferentes ângulos quando as fontes do Cliente não disponibilizarem informação suficiente.
+
+3. MODELO UNIVERSAL META ADS
+Para cada anúncio, utilizar:
+Headline
+- Entre 23 e 25 caracteres.
+Sub-headline
+- Entre 28 e 30 caracteres.
+Descrição
+- Entre 100 e 300 caracteres.
+A headline deve apresentar de forma rápida o principal argumento ou oferta do anúncio.
+A sub-headline deve complementar a headline e acrescentar contexto ou reforçar o benefício principal.
+A descrição deve desenvolver a mensagem e terminar com uma chamada à ação adequada.
+
+4. ESTRUTURA DA DESCRIÇÃO
+Utilizar a seguinte lógica como orientação:
+Necessidade/problema → solução → benefícios comprovados → CTA
+Exemplo estrutural:
+[Necessidade do cliente] + [solução apresentada pelo Cliente] + [benefícios ou características comprovadas] + [CTA clara].
+Não é obrigatório utilizar esta estrutura palavra por palavra.
+A descrição deve adaptar-se às informações disponíveis nas fontes e pode utilizar apenas os benefícios efetivamente suportados.
+Nunca adicionar um benefício apenas para completar a estrutura.
+A CTA deve ser clara, natural e coerente com a ação que o Cliente pretende que o potencial cliente realize.
+Não inventar CTAs relacionadas com ações que não estejam disponíveis ou não sejam adequadas à oferta.
+
+5. IMAGENS / CRIATIVOS
+Para cada anúncio, sugerir um conceito visual coerente com:
+- a mensagem do anúncio;
+- a oferta do Cliente;
+- as informações disponíveis no site;
+- os elementos visuais efetivamente presentes nas fontes.
+Quando existirem imagens ou assets fornecidos pelo Cliente, indicar quais são mais adequados para cada anúncio.
+Quando não existirem assets suficientes, sugerir apenas conceitos visuais, sem inventar características do produto ou serviço.
+Exemplos de conceitos visuais:
+- foto real do serviço;
+- produto em destaque;
+- equipa em ação;
+- utilização do produto ou serviço;
+- detalhe do produto;
+- ambiente relacionado com o serviço;
+- resultado visual comprovado;
+- composição gráfica simples com informação presente no site.
+Não mencionar marcas, pessoas, instalações, produtos ou situações que não estejam presentes nas fontes do Cliente.
+
+6. VARIAÇÃO CRIATIVA
+Os 8 anúncios de cada categoria devem apresentar diferenças reais na abordagem.
+Evitar criar oito versões que apenas alterem algumas palavras.
+Sempre que as fontes permitirem, distribuir os anúncios por diferentes ângulos:
+Anúncio 1: Oferta / serviço principal
+Anúncio 2: Necessidade do público
+Anúncio 3: Principal benefício
+Anúncio 4: Característica ou diferenciação comprovada
+Anúncio 5: CTA / ação pretendida
+Anúncio 6: Utilização ou aplicação do serviço
+Anúncio 7: Processo ou forma de funcionamento
+Anúncio 8: Conveniência ou confiança comprovada
+Esta distribuição é orientadora e deve ser adaptada às informações efetivamente disponíveis.
+Se determinado ângulo não estiver suportado pelas fontes, substituí-lo por outro ângulo comprovado.
+
+7. TERMOS RELEVANTES
+O Meta Ads não deve ser tratado como uma campanha de pesquisa baseada em palavras-chave.
+Por isso, não criar uma lista de palavras-chave SEO como requisito da estrutura dos anúncios.
+Em vez disso, para cada categoria, identificar:
+Termos e conceitos relevantes
+Listar os principais termos utilizados nas fontes do Cliente que podem ajudar a definir:
+- a oferta;
+- a necessidade;
+- o público;
+- o serviço ou produto;
+- os principais benefícios;
+- a comunicação da campanha.
+Os termos devem ser apresentados separados por vírgulas.
+Não adicionar termos apenas porque parecem relevantes para o setor.
+
+8. COERÊNCIA DA CAMPANHA
+A campanha deve manter uma relação clara entre:
+Público / necessidade → Categoria → Ângulo criativo → Anúncio → Oferta → CTA
+Evitar:
+- categorias demasiado abrangentes;
+- anúncios genéricos;
+- benefícios não comprovados;
+- claims não suportados;
+- repetição excessiva;
+- CTAs artificiais;
+- excesso de texto promocional;
+- linguagem que pareça escrita apenas para atingir o limite de caracteres;
+- utilização de keywords sem contexto;
+- imagens que não correspondam à oferta real.
+A prioridade é a relevância da mensagem e a clareza da oferta, mantendo os limites técnicos obrigatórios.
+
+9. VALIDAÇÃO FINAL
+Antes de apresentar a resposta final, verificar individualmente:
+- Todos os anúncios estão em português de Portugal.
+- Todos estão escritos na 3.ª pessoa.
+- Nenhuma informação foi inventada ou inferida.
+- Cada headline tem entre 23 e 25 caracteres.
+- Cada sub-headline tem entre 28 e 30 caracteres.
+- Cada descrição tem entre 100 e 300 caracteres.
+- Os anúncios apresentam variações reais de comunicação.
+- Não existem repetições desnecessárias.
+- As categorias escolhidas são coerentes com a oferta.
+- Os ângulos utilizados são suportados pelas fontes.
+- As imagens sugeridas são coerentes com o site e as fontes.
+- Os termos e conceitos apresentados estão presentes ou diretamente suportados pelas fontes.
+- Todos os elementos da campanha são suportados pelas fontes do Cliente.
+Se algum requisito não puder ser cumprido com a informação disponível, não inventar uma solução.`,
+
+                1500: `CRIAÇÃO DE CAMPANHAS META ADS
+
+Cria uma proposta de campanha Meta Ads em português de Portugal, utilizando exclusivamente as informações fornecidas nas fontes do Cliente.
+
+A campanha deve ser construída com base na relevância comercial, necessidade do público, clareza da oferta e potencial de conversão, e não através da simples repetição de características ou palavras-chave.
+
+REGRAS FUNDAMENTAIS
+Escrever sempre na 3.ª pessoa.
+Utilizar português de Portugal.
+Manter um tom profissional, claro, natural e orientado à conversão.
+Utilizar exclusivamente informação presente nas fontes do Cliente.
+Não inferir características, benefícios, resultados, preços, garantias, certificações ou outras informações que não estejam explicitamente presentes.
+Não criar vantagens competitivas que não estejam comprovadas pelas fontes.
+Não utilizar informação externa para completar lacunas.
+Evitar linguagem genérica ou excessivamente promocional quando não estiver sustentada pelas fontes.
+Priorizar mensagens que correspondam às necessidades e motivações identificadas nas fontes.
+Evitar repetições desnecessárias entre anúncios.
+Não utilizar linguagem que pareça artificial apenas para preencher limites de caracteres.
+Respeitar rigorosamente todos os limites de caracteres indicados.
+Espaços, pontuação e acentuação contam como caracteres.
+Antes de apresentar a versão final, validar individualmente os caracteres de cada headline, sub-headline e descrição.
+Caso uma informação necessária não esteja disponível nas fontes, indicar claramente essa limitação em vez de inventar conteúdo.
+
+ORÇAMENTO
+Orçamento mensal disponível: 1500€+
+O orçamento deve ser considerado na estrutura da campanha, evitando uma dispersão excessiva por categorias, serviços ou ângulos de comunicação com pouca relevância comercial.
+
+QUANTIDADE DE ANÚNCIOS
+- Até 4 categorias ou serviços principais
+- 12 anúncios por categoria
+
+1. ANÁLISE DA OFERTA
+Antes de criar os anúncios:
+Identificar os principais produtos, serviços ou soluções apresentados pelo Cliente.
+Identificar as principais necessidades, problemas ou motivações que podem ser diretamente associados a esses produtos ou serviços, desde que estejam presentes nas fontes.
+Identificar até 4 categorias ou serviços principais com maior relevância para a campanha.
+Identificar os principais benefícios e características comprovados para cada categoria.
+Identificar os possíveis ângulos de comunicação suportados pelas fontes.
+Priorizar categorias que tenham:
+- relevância comercial;
+- oferta claramente definida;
+- informação suficiente para criar anúncios específicos;
+- benefícios ou características concretas que possam ser comunicados;
+- potencial para criar diferentes ângulos de comunicação.
+Não criar categorias apenas para preencher o número máximo permitido.
+
+2. ESTRUTURA DA CAMPANHA
+Para cada categoria selecionada, criar uma estrutura de anúncios coerente com a oferta e com as necessidades do público.
+Cada categoria deve ter mensagens próprias e não ser apenas uma repetição da categoria anterior.
+Criar 12 anúncios separados por categoria.
+Cada anúncio deve explorar um ângulo de comunicação diferente sempre que existam informações suficientes para isso.
+Os ângulos podem incluir, quando suportados pelas fontes:
+- necessidade ou problema;
+- principal benefício;
+- característica diferenciadora;
+- utilização ou aplicação do serviço;
+- resultado ou transformação, apenas quando explicitamente comprovado;
+- processo ou forma de funcionamento;
+- conveniência;
+- confiança ou experiência, apenas quando comprovada;
+- chamada à ação.
+Não forçar diferentes ângulos quando as fontes do Cliente não disponibilizarem informação suficiente.
+
+3. MODELO UNIVERSAL META ADS
+Para cada anúncio, utilizar:
+Headline
+- Entre 23 e 25 caracteres.
+Sub-headline
+- Entre 28 e 30 caracteres.
+Descrição
+- Entre 100 e 300 caracteres.
+A headline deve apresentar de forma rápida o principal argumento ou oferta do anúncio.
+A sub-headline deve complementar a headline e acrescentar contexto ou reforçar o benefício principal.
+A descrição deve desenvolver a mensagem e terminar com uma chamada à ação adequada.
+
+4. ESTRUTURA DA DESCRIÇÃO
+Utilizar a seguinte lógica como orientação:
+Necessidade/problema → solução → benefícios comprovados → CTA
+Exemplo estrutural:
+[Necessidade do cliente] + [solução apresentada pelo Cliente] + [benefícios ou características comprovadas] + [CTA clara].
+Não é obrigatório utilizar esta estrutura palavra por palavra.
+A descrição deve adaptar-se às informações disponíveis nas fontes e pode utilizar apenas os benefícios efetivamente suportados.
+Nunca adicionar um benefício apenas para completar a estrutura.
+A CTA deve ser clara, natural e coerente com a ação que o Cliente pretende que o potencial cliente realize.
+Não inventar CTAs relacionadas com ações que não estejam disponíveis ou não sejam adequadas à oferta.
+
+5. IMAGENS / CRIATIVOS
+Para cada anúncio, sugerir um conceito visual coerente com:
+- a mensagem do anúncio;
+- a oferta do Cliente;
+- as informações disponíveis no site;
+- os elementos visuais efetivamente presentes nas fontes.
+Quando existirem imagens ou assets fornecidos pelo Cliente, indicar quais são mais adequados para cada anúncio.
+Quando não existirem assets suficientes, sugerir apenas conceitos visuais, sem inventar características do produto ou serviço.
+Exemplos de conceitos visuais:
+- foto real do serviço;
+- produto em destaque;
+- equipa em ação;
+- utilização do produto ou serviço;
+- detalhe do produto;
+- ambiente relacionado com o serviço;
+- resultado visual comprovado;
+- composição gráfica simples com informação presente no site.
+Não mencionar marcas, pessoas, instalações, produtos ou situações que não estejam presentes nas fontes do Cliente.
+
+6. VARIAÇÃO CRIATIVA
+Os 12 anúncios de cada categoria devem apresentar diferenças reais na abordagem.
+Evitar criar doze versões que apenas alterem algumas palavras.
+Sempre que as fontes permitirem, distribuir os anúncios por diferentes ângulos:
+Anúncio 1: Oferta / serviço principal
+Anúncio 2: Necessidade do público
+Anúncio 3: Principal benefício
+Anúncio 4: Característica ou diferenciação comprovada
+Anúncio 5: CTA / ação pretendida
+Anúncio 6: Utilização ou aplicação do serviço
+Anúncio 7: Processo ou forma de funcionamento
+Anúncio 8: Conveniência ou confiança comprovada
+Anúncio 9: Ângulo adicional comprovado nas fontes
+Anúncio 10: Ângulo adicional comprovado nas fontes
+Anúncio 11: Ângulo adicional comprovado nas fontes
+Anúncio 12: Ângulo adicional comprovado nas fontes
+Esta distribuição é orientadora e deve ser adaptada às informações efetivamente disponíveis.
+Se determinado ângulo não estiver suportado pelas fontes, substituí-lo por outro ângulo comprovado.
+
+7. TERMOS RELEVANTES
+O Meta Ads não deve ser tratado como uma campanha de pesquisa baseada em palavras-chave.
+Por isso, não criar uma lista de palavras-chave SEO como requisito da estrutura dos anúncios.
+Em vez disso, para cada categoria, identificar:
+Termos e conceitos relevantes
+Listar os principais termos utilizados nas fontes do Cliente que podem ajudar a definir:
+- a oferta;
+- a necessidade;
+- o público;
+- o serviço ou produto;
+- os principais benefícios;
+- a comunicação da campanha.
+Os termos devem ser apresentados separados por vírgulas.
+Não adicionar termos apenas porque parecem relevantes para o setor.
+
+8. COERÊNCIA DA CAMPANHA
+A campanha deve manter uma relação clara entre:
+Público / necessidade → Categoria → Ângulo criativo → Anúncio → Oferta → CTA
+Evitar:
+- categorias demasiado abrangentes;
+- anúncios genéricos;
+- benefícios não comprovados;
+- claims não suportados;
+- repetição excessiva;
+- CTAs artificiais;
+- excesso de texto promocional;
+- linguagem que pareça escrita apenas para atingir o limite de caracteres;
+- utilização de keywords sem contexto;
+- imagens que não correspondam à oferta real.
+A prioridade é a relevância da mensagem e a clareza da oferta, mantendo os limites técnicos obrigatórios.
+
+9. VALIDAÇÃO FINAL
+Antes de apresentar a resposta final, verificar individualmente:
+- Todos os anúncios estão em português de Portugal.
+- Todos estão escritos na 3.ª pessoa.
+- Nenhuma informação foi inventada ou inferida.
+- Cada headline tem entre 23 e 25 caracteres.
+- Cada sub-headline tem entre 28 e 30 caracteres.
+- Cada descrição tem entre 100 e 300 caracteres.
+- Os anúncios apresentam variações reais de comunicação.
+- Não existem repetições desnecessárias.
+- As categorias escolhidas são coerentes com a oferta.
+- Os ângulos utilizados são suportados pelas fontes.
+- As imagens sugeridas são coerentes com o site e as fontes.
+- Os termos e conceitos apresentados estão presentes ou diretamente suportados pelas fontes.
+- Todos os elementos da campanha são suportados pelas fontes do Cliente.
+Se algum requisito não puder ser cumprido com a informação disponível, não inventar uma solução.`
             };
 
             // Alternar plataformas
