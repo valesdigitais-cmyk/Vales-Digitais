@@ -6,330 +6,351 @@
     <title>Welcomes - Equipa Vales Digitais</title>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ============================================================
+           VARIÁVEIS DE TEMA (Light / Dark)
+           ============================================================ */
+        :root {
+            --transition-speed: 0.25s;
+            --border-radius: 8px;
+            --border-radius-sm: 6px;
+            --border-radius-pill: 999px;
+
+            /* Light theme */
+            --bg-body: #f5f5f5;
+            --bg-card: #ffffff;
+            --bg-elevated: #fafafa;
+            --bg-subtle: #f8f9fa;
+            --bg-tab-hover: #f0f0f0;
+            --bg-platform: #f0f0f0;
+            --bg-platform-hover: #e0e0e0;
+            --bg-row-title: #444444;
+
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-muted: #888888;
+            --text-inverse: #ffffff;
+
+            --border-color: #e8e8e8;
+            --border-strong: #e0e0e0;
+            --border-platform: #dddddd;
+
+            --btn-bg: #1a1a1a;
+            --btn-text: #ffffff;
+            --btn-bg-hover: #333333;
+
+            --accent-check: #2e7d32;
+            --accent-copied: #2e7d32;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.08);
+            --shadow-btn: 0 2px 6px rgba(0, 0, 0, 0.1);
+            --shadow-btn-hover: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+            --scrollbar-thumb: #c7c7c7;
+            --focus-ring: #1a1a1a;
+        }
+
+        body.dark-mode {
+            --bg-body: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --bg-elevated: #222222;
+            --bg-subtle: #222222;
+            --bg-tab-hover: #222222;
+            --bg-platform: #242424;
+            --bg-platform-hover: #333333;
+            --bg-row-title: #b0b0b0;
+
+            --text-primary: #f5f5f5;
+            --text-secondary: #c8c8c8;
+            --text-muted: #a0a0a0;
+            --text-inverse: #0f0f0f;
+
+            --border-color: #2a2a2a;
+            --border-strong: #333333;
+            --border-platform: #3a3a3a;
+
+            --btn-bg: #ffffff;
+            --btn-text: #0f0f0f;
+            --btn-bg-hover: #e0e0e0;
+
+            --accent-check: #4caf50;
+            --accent-copied: #2e7d32;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 5px 25px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.5);
+            --shadow-btn: 0 2px 8px rgba(0, 0, 0, 0.4);
+            --shadow-btn-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+            --scrollbar-thumb: #444444;
+            --focus-ring: #ffffff;
+        }
+
+        /* ============================================================
+           RESET
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Google Sans', Arial, sans-serif;
-            font-size: 11px;
-        }
-        
-        body {
-            background-color: #ffffff;
-            min-height: 100vh;
-            padding: 20px;
-            color: #000000;
-            max-width: 1000px;
-            margin: 0 auto;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-size: 13px;
         }
 
+        body {
+            background-color: var(--bg-body);
+            min-height: 100vh;
+            padding: 32px 24px;
+            color: var(--text-primary);
+            max-width: 1100px;
+            margin: 0 auto;
+            transition: background-color var(--transition-speed) ease,
+                        color var(--transition-speed) ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ============================================================
+           THEME TOGGLE
+           ============================================================ */
         .theme-toggle-btn {
             position: fixed;
-            top: 15px;
-            right: 15px;
+            top: 20px;
+            right: 20px;
             z-index: 999;
-            border: 1px solid #000000;
-            background: #ffffff;
-            color: #000000;
-            border-radius: 999px;
-            padding: 8px 14px;
+            border: 1px solid var(--text-primary);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-radius: var(--border-radius-pill);
+            padding: 10px 18px;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
+            box-shadow: var(--shadow-sm);
+            letter-spacing: 0.3px;
         }
 
         .theme-toggle-btn:hover {
-            background-color: #000000;
-            color: #ffffff;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            box-shadow: var(--shadow-btn-hover);
+            transform: translateY(-1px);
         }
 
-        body.dark-mode {
-            background-color: #121212;
-            color: #e7e7e7;
+        .theme-toggle-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
         }
 
-        body.dark-mode h1,
-        body.dark-mode h2,
-        body.dark-mode h3,
-        body.dark-mode label {
-            color: #f3f3f3;
-        }
-
-        body.dark-mode .tabs,
-        body.dark-mode h1,
-        body.dark-mode .footer,
-        body.dark-mode .welcome-section h3 {
-            border-color: #333333;
-        }
-
-        body.dark-mode .welcome-section,
-        body.dark-mode .budget-card {
-            background-color: #1b1b1b;
-            border-color: #333333;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
-        }
-
-        body.dark-mode .welcome-text {
-            background-color: #242424;
-            border-color: #3a3a3a;
-            color: #ebebeb;
-        }
-
-        body.dark-mode .tab-btn,
-        body.dark-mode .platform-btn {
-            background-color: #2a2a2a;
-            color: #d7d7d7;
-            border-color: #3a3a3a;
-        }
-
-        body.dark-mode .tab-btn:hover,
-        body.dark-mode .platform-btn:hover {
-            background-color: #3a3a3a;
-        }
-
-        body.dark-mode .tab-btn.active,
-        body.dark-mode .platform-btn.active {
-            background-color: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
-        }
-
-        body.dark-mode .budget-features li,
-        body.dark-mode .shortcut-info,
-        body.dark-mode .footer {
-            color: #bdbdbd;
-        }
-
-        body.dark-mode .theme-toggle-btn {
-            background-color: #1f1f1f;
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-
-        body.dark-mode .theme-toggle-btn:hover {
-            background-color: #ffffff;
-            color: #121212;
-        }
-        
+        /* ============================================================
+           TABS
+           ============================================================ */
         .tabs-container {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
-        
+
         .tabs {
             display: flex;
-            gap: 5px;
-            margin-bottom: 0;
-            border-bottom: 1px solid #e0e0e0;
+            gap: 4px;
+            border-bottom: 1px solid var(--border-strong);
             flex-wrap: wrap;
         }
-        
+
         .tab-btn {
-            padding: 12px 18px;
-            background: #f1f1f1;
+            padding: 12px 20px;
+            background: transparent;
             border: none;
-            border-radius: 0;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 500;
-            color: #555;
-            transition: all 0.3s;
+            color: var(--text-secondary);
+            transition: all var(--transition-speed) ease;
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
             gap: 6px;
             text-decoration: none;
+            position: relative;
+            margin-bottom: -1px;
+            letter-spacing: 0.2px;
+            border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
         }
-        
+
         .tab-btn:hover {
-            background: #e8e8e8;
+            color: var(--text-primary);
+            background: var(--bg-tab-hover);
         }
-        
+
         .tab-btn.active {
-            background: #000;
-            color: white;
+            color: var(--text-primary);
             font-weight: 600;
+            border-bottom-color: var(--text-primary);
+            background: transparent;
+        }
+
+        .tab-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
         }
 
         @media (max-width: 768px) {
             .tabs {
                 overflow-x: auto;
                 padding-bottom: 5px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
             }
-            
+            .tabs::-webkit-scrollbar {
+                display: none;
+            }
             .tab-btn {
-                padding: 10px 15px;
-                font-size: 11px;
+                padding: 10px 16px;
+                font-size: 11.5px;
             }
         }
-        
+
+        /* ============================================================
+           TIPOGRAFIA
+           ============================================================ */
         h1 {
-            color: #000000;
+            color: var(--text-primary);
             text-align: center;
-            margin-bottom: 12px;
-            font-size: 24px;
+            margin-bottom: 24px;
+            font-size: 28px;
             font-weight: 600;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-strong);
+            letter-spacing: -0.3px;
         }
-        
+
         h2 {
-            color: #000000;
-            margin-bottom: 15px;
-            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            font-size: 20px;
             font-weight: 600;
+            letter-spacing: -0.2px;
         }
-        
+
         h3 {
-            color: #000000;
-            margin-bottom: 10px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
             font-size: 16px;
             font-weight: 600;
+            letter-spacing: -0.1px;
         }
 
+        /* ============================================================
+           WELCOME SECTION
+           ============================================================ */
         .welcome-section {
-            background-color: #ffffff;
-            border-radius: 0;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .prompt-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #000000;
-            color: #ffffff;
-            border: none;
-            border-radius: 0;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .prompt-btn:hover {
-            background-color: #333333;
-            transform: translateY(-1px);
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
         }
 
-        .welcome-text {
-            background-color: #f8f8f8;
-            border-radius: 0;
-            padding: 30px;
-            margin-top: 15px;
-            border: 1px solid #e0e0e0;
-            line-height: 1.28;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-size: 10.5px;
-            color: #000000;
-            min-height: 550px;
-            position: relative;
-            font-family: 'Google Sans', Arial, sans-serif;
-            text-align: left;
-        }
-        
-        .copy-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            padding: 8px 15px;
-            background-color: #000000;
-            color: #ffffff;
-            border: none;
-            border-radius: 0;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 10;
-        }
-        
-        .copy-btn:hover {
-            background-color: #333333;
-        }
-        
-        .copy-btn:active {
-            transform: scale(0.98);
-        }
-        
-        .copy-btn.copied {
-            background-color: #4CAF50;
-        }
-
+        /* ============================================================
+           PLATFORM BUTTONS
+           ============================================================ */
         .platform-buttons {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: var(--bg-subtle);
+            padding: 4px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
         }
-        
+
         .platform-btn {
             padding: 10px 20px;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 0;
+            background-color: transparent;
+            border: none;
+            border-radius: var(--border-radius-sm);
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all var(--transition-speed) ease;
             flex: 1;
             text-align: center;
+            color: var(--text-secondary);
+            letter-spacing: 0.2px;
+            font-family: inherit;
         }
-        
+
         .platform-btn:hover {
-            background-color: #e0e0e0;
+            color: var(--text-primary);
+            background-color: var(--bg-platform-hover);
         }
-        
+
         .platform-btn.active {
-            background-color: #000;
-            color: white;
-            border-color: #000;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            font-weight: 600;
+            box-shadow: var(--shadow-btn);
         }
-        
+
+        .platform-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        /* ============================================================
+           BUDGET GRID
+           ============================================================ */
         .budget-grid {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 22px;
+            margin-bottom: 24px;
         }
 
         .welcome-row {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .welcome-row-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.03em;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            color: #444;
+            color: var(--bg-row-title);
+            padding-left: 2px;
         }
 
         .welcome-row-track {
             display: flex;
-            gap: 15px;
+            gap: 16px;
             overflow-x: auto;
             overflow-y: hidden;
             scroll-behavior: smooth;
-            padding-bottom: 6px;
+            padding-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--scrollbar-thumb) transparent;
         }
 
         .welcome-row-track::-webkit-scrollbar {
             height: 8px;
         }
 
+        .welcome-row-track::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
         .welcome-row-track::-webkit-scrollbar-thumb {
-            background: #c7c7c7;
+            background: var(--scrollbar-thumb);
             border-radius: 999px;
+        }
+
+        .welcome-row-track::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
         }
 
         .welcome-row-track .budget-card {
@@ -339,89 +360,268 @@
 
         @media (max-width: 768px) {
             .welcome-row-track .budget-card {
-                flex-basis: 90%;
-                min-width: 90%;
+                flex-basis: 88%;
+                min-width: 88%;
             }
         }
-        
+
+        /* ============================================================
+           BUDGET CARD
+           ============================================================ */
         .budget-card {
-            background: #f8f9fa;
-            border-radius: 0;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            transition: all 0.3s;
+            background: var(--bg-elevated);
+            border-radius: var(--border-radius);
+            padding: 22px;
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
         }
-        
+
         .budget-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-strong);
         }
-        
+
         .budget-price {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
-            color: #000;
-            margin-bottom: 10px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            letter-spacing: -0.4px;
+            line-height: 1.2;
         }
-        
+
         .budget-features {
             list-style: none;
             padding: 0;
-            margin: 15px 0;
+            margin: 0 0 18px 0;
+            flex: 1;
         }
-        
+
         .budget-features li {
             padding: 5px 0;
             font-size: 11.5px;
-            color: #555;
+            color: var(--text-secondary);
             position: relative;
-            padding-left: 15px;
+            padding-left: 20px;
+            line-height: 1.5;
+            letter-spacing: 0.1px;
         }
-        
+
         .budget-features li:before {
             content: "✓";
             position: absolute;
             left: 0;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-        
-        .shortcut-info {
-            margin-top: 10px;
-            color: #777777;
-            font-size: 10px;
-            text-align: center;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #777777;
-            font-size: 10px;
-            font-weight: 400;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0;
+            color: var(--accent-check);
+            font-weight: 700;
+            font-size: 11px;
         }
 
+        /* ============================================================
+           PROMPT BUTTON
+           ============================================================ */
+        .prompt-btn {
+            width: 100%;
+            padding: 11px 16px;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            border-radius: var(--border-radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            letter-spacing: 0.3px;
+            font-family: inherit;
+        }
+
+        .prompt-btn:hover {
+            background-color: var(--btn-bg-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-btn-hover);
+        }
+
+        .prompt-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .prompt-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        /* ============================================================
+           WELCOME TEXT AREA
+           ============================================================ */
+        .welcome-text {
+            background-color: var(--bg-elevated);
+            border-radius: var(--border-radius);
+            padding: 28px;
+            margin-top: 18px;
+            border: 1px solid var(--border-color);
+            line-height: 1.55;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 11.5px;
+            color: var(--text-primary);
+            min-height: 500px;
+            position: relative;
+            text-align: left;
+            letter-spacing: 0.1px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* ============================================================
+           COPY BUTTON
+           ============================================================ */
+        .copy-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 9px 16px;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            border-radius: var(--border-radius-sm);
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            z-index: 10;
+            letter-spacing: 0.3px;
+            box-shadow: var(--shadow-btn);
+            font-family: inherit;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--btn-bg-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-btn-hover);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.97);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--accent-copied);
+            color: #ffffff;
+        }
+
+        .copy-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        /* ============================================================
+           SHORTCUT INFO + FOOTER
+           ============================================================ */
+        .shortcut-info {
+            margin-top: 16px;
+            color: var(--text-muted);
+            font-size: 10.5px;
+            text-align: center;
+            letter-spacing: 0.2px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            color: var(--text-muted);
+            font-size: 10.5px;
+            font-weight: 400;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-strong);
+            letter-spacing: 0.3px;
+        }
+
+        /* ============================================================
+           PLATFORM WELCOMES (visibilidade)
+           ============================================================ */
         .platform-welcomes {
             display: none;
         }
 
         .platform-welcomes.active {
             display: block;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.25s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            .welcome-section {
+                padding: 20px 16px;
+            }
+
+            h1 {
+                font-size: 22px;
+                padding-bottom: 14px;
+                margin-bottom: 18px;
+            }
+
+            h2 {
+                font-size: 17px;
+            }
+
+            h3 {
+                font-size: 15px;
+            }
+
+            .budget-card {
+                padding: 18px;
+            }
+
+            .welcome-text {
+                padding: 20px 16px;
+                font-size: 11px;
+                min-height: 300px;
+            }
+
+            .theme-toggle-btn {
+                top: 12px;
+                right: 12px;
+                padding: 8px 14px;
+                font-size: 11px;
+            }
+
+            .copy-btn {
+                top: 12px;
+                right: 12px;
+                padding: 7px 12px;
+                font-size: 10.5px;
+            }
+
+            .platform-btn {
+                padding: 9px 14px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
     <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">🌙 Modo noturno</button>
     <h1>Equipa Vales Digitais</h1>
-    
+
     <div class="tabs-container">
         <div class="tabs">
             <a href="welcome.html" class="tab-btn active">Welcomes</a>
@@ -431,7 +631,6 @@
             <a href="calculadora.html" class="tab-btn">Calculadora</a>
             <a href="activacao.html" class="tab-btn">Ativação</a>
             <a href="faturas.html" class="tab-btn">Faturas</a>
-            <a href="spinner.html" class="tab-btn">Spinner</a>
         </div>
     </div>
 
@@ -945,7 +1144,7 @@
                     e.preventDefault();
                     const budget = this.getAttribute('data-budget');
                     const platform = this.getAttribute('data-platform') || 'google';
-                    
+
                     const welcome = normalizeMessageText(welcomeTemplates[platform]?.[budget]);
                     if (!welcome) return;
 
