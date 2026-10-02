@@ -6,377 +6,581 @@
     <title>Leadzai - Equipa Vales Digitais</title>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ============================================================
+           VARIÁVEIS DE TEMA (Light / Dark)
+           ============================================================ */
+        :root {
+            --transition-speed: 0.25s;
+            --border-radius: 8px;
+            --border-radius-sm: 6px;
+            --border-radius-pill: 999px;
+
+            /* Light theme */
+            --bg-body: #f5f5f5;
+            --bg-card: #ffffff;
+            --bg-elevated: #fafafa;
+            --bg-subtle: #f5f5f5;
+            --bg-tab-hover: #f0f0f0;
+            --bg-input: #ffffff;
+            --bg-platform: #f0f0f0;
+            --bg-platform-hover: #e0e0e0;
+            --bg-code: #fafafa;
+
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-muted: #888888;
+            --text-inverse: #ffffff;
+
+            --border-color: #e8e8e8;
+            --border-strong: #e0e0e0;
+            --border-input: #b0b0b0;
+            --border-platform: #cccccc;
+
+            --btn-bg: #1a1a1a;
+            --btn-text: #ffffff;
+            --btn-bg-hover: #333333;
+
+            --accent-copied: #2e7d32;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.08);
+            --shadow-btn: 0 2px 6px rgba(0, 0, 0, 0.1);
+            --shadow-btn-hover: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+            --focus-ring: #1a1a1a;
+            --focus-input: rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-body: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --bg-elevated: #222222;
+            --bg-subtle: #222222;
+            --bg-tab-hover: #222222;
+            --bg-input: #1f1f1f;
+            --bg-platform: #242424;
+            --bg-platform-hover: #333333;
+            --bg-code: #242424;
+
+            --text-primary: #f5f5f5;
+            --text-secondary: #c8c8c8;
+            --text-muted: #a0a0a0;
+            --text-inverse: #0f0f0f;
+
+            --border-color: #2a2a2a;
+            --border-strong: #333333;
+            --border-input: #3f3f3f;
+            --border-platform: #3a3a3a;
+
+            --btn-bg: #ffffff;
+            --btn-text: #0f0f0f;
+            --btn-bg-hover: #e0e0e0;
+
+            --accent-copied: #2e7d32;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 5px 25px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.5);
+            --shadow-btn: 0 2px 8px rgba(0, 0, 0, 0.4);
+            --shadow-btn-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+            --focus-ring: #ffffff;
+            --focus-input: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ============================================================
+           RESET
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Google Sans', Arial, sans-serif;
-            font-size: 11px;
-        }
-        
-        body {
-            background-color: #ffffff;
-            min-height: 100vh;
-            padding: 20px;
-            color: #000000;
-            max-width: 1000px;
-            margin: 0 auto;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-size: 13px;
         }
 
+        body {
+            background-color: var(--bg-body);
+            min-height: 100vh;
+            padding: 32px 24px;
+            color: var(--text-primary);
+            max-width: 1100px;
+            margin: 0 auto;
+            transition: background-color var(--transition-speed) ease,
+                        color var(--transition-speed) ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ============================================================
+           THEME TOGGLE
+           ============================================================ */
         .theme-toggle-btn {
             position: fixed;
-            top: 15px;
-            right: 15px;
+            top: 20px;
+            right: 20px;
             z-index: 999;
-            border: 1px solid #000000;
-            background: #ffffff;
-            color: #000000;
-            border-radius: 999px;
-            padding: 8px 14px;
+            border: 1px solid var(--text-primary);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-radius: var(--border-radius-pill);
+            padding: 10px 18px;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
+            box-shadow: var(--shadow-sm);
+            letter-spacing: 0.3px;
         }
 
         .theme-toggle-btn:hover {
-            background-color: #000000;
-            color: #ffffff;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            box-shadow: var(--shadow-btn-hover);
+            transform: translateY(-1px);
         }
 
-        body.dark-mode {
-            background-color: #121212;
-            color: #e7e7e7;
+        .theme-toggle-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
         }
 
-        body.dark-mode h1,
-        body.dark-mode h2,
-        body.dark-mode h3,
-        body.dark-mode label {
-            color: #f3f3f3;
-        }
-
-        body.dark-mode .tabs,
-        body.dark-mode h1,
-        body.dark-mode .footer {
-            border-color: #333333;
-        }
-
-        body.dark-mode .leads-section,
-        body.dark-mode .template-card {
-            background-color: #1b1b1b;
-            border-color: #333333;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
-        }
-
-        body.dark-mode .tab-btn,
-        body.dark-mode .platform-btn {
-            background-color: #2a2a2a;
-            color: #d7d7d7;
-            border-color: #3a3a3a;
-        }
-
-        body.dark-mode .tab-btn:hover,
-        body.dark-mode .platform-btn:hover {
-            background-color: #3a3a3a;
-        }
-
-        body.dark-mode .tab-btn.active,
-        body.dark-mode .platform-btn.active {
-            background-color: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
-        }
-
-        body.dark-mode input[type="text"],
-        body.dark-mode textarea {
-            background-color: #1f1f1f;
-            color: #f3f3f3;
-            border-color: #3f3f3f;
-        }
-
-        body.dark-mode .shortcut-info,
-        body.dark-mode .footer,
-        body.dark-mode .toast {
-            color: #bdbdbd;
-        }
-
-        body.dark-mode .theme-toggle-btn,
-        body.dark-mode .leads-reset-btn {
-            background-color: #1f1f1f;
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-
-        body.dark-mode .theme-toggle-btn:hover,
-        body.dark-mode .leads-reset-btn:hover {
-            background-color: #ffffff;
-            color: #121212;
-        }
-
-        body.dark-mode .template-action-btn {
-            background-color: #ffffff;
-            color: #111111;
-        }
-
-        body.dark-mode .template-action-btn:hover {
-            background-color: #dcdcdc;
-        }
-        
+        /* ============================================================
+           TABS
+           ============================================================ */
         .tabs-container {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
-        
+
         .tabs {
             display: flex;
-            gap: 5px;
-            margin-bottom: 0;
-            border-bottom: 1px solid #e0e0e0;
+            gap: 4px;
+            border-bottom: 1px solid var(--border-strong);
             flex-wrap: wrap;
         }
-        
+
         .tab-btn {
-            padding: 12px 18px;
-            background: #f1f1f1;
+            padding: 12px 20px;
+            background: transparent;
             border: none;
-            border-radius: 0;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 500;
-            color: #555;
-            transition: all 0.3s;
+            color: var(--text-secondary);
+            transition: all var(--transition-speed) ease;
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
             gap: 6px;
             text-decoration: none;
+            position: relative;
+            margin-bottom: -1px;
+            letter-spacing: 0.2px;
+            border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
         }
-        
+
         .tab-btn:hover {
-            background: #e8e8e8;
+            color: var(--text-primary);
+            background: var(--bg-tab-hover);
         }
-        
+
         .tab-btn.active {
-            background: #000;
-            color: white;
+            color: var(--text-primary);
             font-weight: 600;
+            border-bottom-color: var(--text-primary);
+            background: transparent;
+        }
+
+        .tab-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
         }
 
         @media (max-width: 768px) {
             .tabs {
                 overflow-x: auto;
                 padding-bottom: 5px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
             }
-            
+            .tabs::-webkit-scrollbar {
+                display: none;
+            }
             .tab-btn {
-                padding: 10px 15px;
-                font-size: 11px;
+                padding: 10px 16px;
+                font-size: 11.5px;
             }
         }
-        
+
+        /* ============================================================
+           TIPOGRAFIA
+           ============================================================ */
         h1 {
-            color: #000000;
+            color: var(--text-primary);
             text-align: center;
-            margin-bottom: 12px;
-            font-size: 24px;
+            margin-bottom: 24px;
+            font-size: 28px;
             font-weight: 600;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-strong);
+            letter-spacing: -0.3px;
         }
-        
+
         h2 {
-            color: #000000;
-            margin-bottom: 15px;
-            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 18px;
+            font-size: 20px;
             font-weight: 600;
+            letter-spacing: -0.2px;
         }
-        
+
         h3 {
-            color: #000000;
+            color: var(--text-primary);
             margin-bottom: 12px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
+            letter-spacing: -0.1px;
         }
 
+        /* ============================================================
+           LEADS SECTION
+           ============================================================ */
         .leads-section {
-            background-color: #ffffff;
-            border-radius: 0;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-            border: 1px solid #e0e0e0;
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            transition: all var(--transition-speed) ease;
         }
 
+        /* ============================================================
+           TEMPLATE CARD
+           ============================================================ */
         .template-card {
-            border: 1px solid #e0e0e0;
-            padding: 16px;
-            margin-bottom: 16px;
-            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            padding-top: 52px;
+            margin-bottom: 20px;
+            background: var(--bg-elevated);
             position: relative;
-            padding-top: 44px;
+            transition: all var(--transition-speed) ease;
+            box-shadow: var(--shadow-sm);
         }
 
+        .template-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .template-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-strong);
+        }
+
+        /* ============================================================
+           RESET BUTTON
+           ============================================================ */
         .leads-reset-btn {
             position: absolute;
-            top: 12px;
-            right: 12px;
-            padding: 6px 10px;
-            border: 1px solid #000000;
-            background: #ffffff;
-            color: #000000;
-            font-size: 10px;
+            top: 14px;
+            right: 14px;
+            padding: 7px 12px;
+            border: 1px solid var(--border-strong);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-radius: var(--border-radius-sm);
+            font-size: 10.5px;
             font-weight: 600;
             cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            letter-spacing: 0.3px;
         }
 
         .leads-reset-btn:hover {
-            background: #000000;
-            color: #ffffff;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border-color: var(--btn-bg);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-btn);
         }
 
+        .leads-reset-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        /* ============================================================
+           FORM GROUPS
+           ============================================================ */
         .leads-form-group {
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .leads-form-group label {
             display: block;
-            font-size: 12px;
-            margin-bottom: 6px;
+            font-size: 12.5px;
+            margin-bottom: 8px;
             font-weight: 500;
+            color: var(--text-primary);
+            letter-spacing: 0.1px;
         }
 
+        /* ============================================================
+           PLATFORM / TYPE BUTTONS
+           ============================================================ */
         .platform-buttons {
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .platform-btn {
-            padding: 8px 16px;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            border-radius: 0;
-            font-size: 11px;
+            padding: 9px 18px;
+            background-color: var(--bg-platform);
+            border: 1px solid var(--border-platform);
+            border-radius: var(--border-radius-sm);
+            font-size: 11.5px;
             font-weight: 600;
+            color: var(--text-primary);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all var(--transition-speed) ease;
+            letter-spacing: 0.2px;
+            font-family: inherit;
         }
 
         .platform-btn:hover {
-            background-color: #e0e0e0;
+            background-color: var(--bg-platform-hover);
+            transform: translateY(-1px);
         }
 
         .platform-btn.active {
-            background-color: #000000;
-            color: #ffffff;
-            border-color: #000000;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border-color: var(--btn-bg);
+            box-shadow: var(--shadow-btn);
         }
 
-        input[type="text"], textarea {
+        .platform-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        /* ============================================================
+           INPUTS / TEXTAREAS
+           ============================================================ */
+        input[type="text"],
+        textarea {
             width: 100%;
-            padding: 10px 12px;
+            padding: 12px 16px;
             font-size: 13px;
-            border: 1px solid #b0b0b0;
-            border-radius: 0;
-            transition: all 0.3s;
-            background-color: #ffffff;
-            color: #000000;
+            border: 1px solid var(--border-input);
+            border-radius: var(--border-radius-sm);
+            transition: all var(--transition-speed) ease;
+            background-color: var(--bg-input);
+            color: var(--text-primary);
+            font-family: inherit;
+            letter-spacing: 0.2px;
         }
 
         textarea {
             resize: vertical;
-            min-height: 80px;
-            line-height: 1.45;
-            font-family: 'Google Sans', Arial, sans-serif;
+            min-height: 90px;
+            line-height: 1.55;
         }
 
-        input[type="text"]:focus, textarea:focus {
-            border-color: #000000;
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 0 3px var(--focus-input);
             outline: none;
         }
 
-        .leads-code-textarea {
-            min-height: 140px !important;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 11px;
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: var(--text-muted);
         }
 
+        /* ============================================================
+           CODE TEXTAREA
+           ============================================================ */
+        .leads-code-textarea {
+            min-height: 150px !important;
+            font-family: 'SF Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 11.5px;
+            line-height: 1.6;
+            background-color: var(--bg-code);
+            letter-spacing: 0.1px;
+        }
+
+        /* ============================================================
+           SCRIPT SECTION TITLE
+           ============================================================ */
         .script-section-title {
             font-weight: 700;
-            margin: 22px 0 8px;
+            margin: 24px 0 10px;
             font-size: 12px;
+            color: var(--text-primary);
+            letter-spacing: 0.3px;
         }
 
+        .script-section-title:first-child {
+            margin-top: 0;
+        }
+
+        /* ============================================================
+           GTM LINE
+           ============================================================ */
         .gtm-line {
-            margin-top: 20px;
+            margin-top: 22px;
             font-size: 13px;
-            line-height: 1.5;
+            line-height: 1.6;
+            color: var(--text-primary);
         }
 
         .gtm-line input {
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
+        /* ============================================================
+           TEMPLATE ACTIONS
+           ============================================================ */
         .template-actions {
-            margin-top: 15px;
+            margin-top: 20px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .template-action-btn {
-            padding: 8px 15px;
-            background-color: #000000;
-            color: #ffffff;
+            padding: 11px 20px;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
             border: none;
-            border-radius: 0;
-            font-size: 11px;
+            border-radius: var(--border-radius-sm);
+            font-size: 11.5px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all var(--transition-speed) ease;
+            letter-spacing: 0.3px;
+            font-family: inherit;
+            box-shadow: var(--shadow-btn);
         }
 
         .template-action-btn:hover {
-            background-color: #333333;
+            background-color: var(--btn-bg-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-btn-hover);
         }
 
+        .template-action-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .template-action-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        /* ============================================================
+           TOAST
+           ============================================================ */
         .toast {
             opacity: 0;
-            transition: opacity 0.15s ease;
-            font-size: 10px;
-            color: #333;
+            transition: opacity var(--transition-speed) ease;
+            font-size: 11px;
+            color: var(--accent-copied);
+            font-weight: 600;
             min-width: 70px;
+            letter-spacing: 0.2px;
         }
 
         .toast.show {
             opacity: 1;
         }
 
+        /* ============================================================
+           SHORTCUT INFO + FOOTER
+           ============================================================ */
         .shortcut-info {
-            margin-top: 10px;
-            color: #777777;
-            font-size: 10px;
+            margin-top: 16px;
+            color: var(--text-muted);
+            font-size: 10.5px;
             text-align: center;
+            letter-spacing: 0.2px;
         }
 
         .footer {
             text-align: center;
-            margin-top: 30px;
-            color: #777777;
-            font-size: 10px;
+            margin-top: 32px;
+            color: var(--text-muted);
+            font-size: 10.5px;
             font-weight: 400;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-strong);
+            letter-spacing: 0.3px;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            .leads-section {
+                padding: 20px 16px;
+            }
+
+            .template-card {
+                padding: 20px 16px;
+                padding-top: 50px;
+            }
+
+            h1 {
+                font-size: 22px;
+                padding-bottom: 14px;
+                margin-bottom: 18px;
+            }
+
+            h2 {
+                font-size: 17px;
+            }
+
+            h3 {
+                font-size: 15px;
+            }
+
+            .theme-toggle-btn {
+                top: 12px;
+                right: 12px;
+                padding: 8px 14px;
+                font-size: 11px;
+            }
+
+            .platform-btn {
+                padding: 8px 14px;
+                font-size: 11px;
+            }
+
+            .template-action-btn {
+                padding: 10px 16px;
+                font-size: 11px;
+            }
         }
     </style>
 </head>
 <body>
     <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">🌙 Modo noturno</button>
     <h1>Equipa Vales Digitais</h1>
-    
+
     <div class="tabs-container">
         <div class="tabs">
-            <a href="index.html" class="tab-btn">Home</a>
             <a href="welcome.html" class="tab-btn">Welcomes</a>
             <a href="leadzai.html" class="tab-btn active">Leadzai</a>
             <a href="anunciante.html" class="tab-btn">Anunciante</a>
@@ -399,7 +603,7 @@
                 <!-- Seleção de Plataforma -->
                 <div class="leads-form-group">
                     <label>Selecione a Plataforma:</label>
-                    <div class="platform-buttons" style="margin-bottom: 10px;">
+                    <div class="platform-buttons" style="margin-bottom: 12px;">
                         <button type="button" class="platform-btn lead-platform-btn active" data-lead-platform="Google">Google</button>
                         <button type="button" class="platform-btn lead-platform-btn" data-lead-platform="Meta">Meta</button>
                         <button type="button" class="platform-btn lead-platform-btn" data-lead-platform="Omnichannel">Omnichannel</button>
@@ -409,7 +613,7 @@
                 <!-- Seleção de Objetivo -->
                 <div class="leads-form-group">
                     <label>Selecione o Objetivo:</label>
-                    <div class="platform-buttons" style="margin-bottom: 15px;">
+                    <div class="platform-buttons" style="margin-bottom: 18px;">
                         <button type="button" class="platform-btn lead-type-btn active" data-lead-type="Tráfego">Tráfego</button>
                         <button type="button" class="platform-btn lead-type-btn" data-lead-type="Leads">Leads</button>
                     </div>
@@ -504,7 +708,7 @@
             const themeToggleBtn = document.getElementById('themeToggleBtn');
             const platformBtns = document.querySelectorAll('.lead-platform-btn');
             const typeBtns = document.querySelectorAll('.lead-type-btn');
-            
+
             const leadBrandName = document.getElementById('leadBrandName');
             const leadWebsite = document.getElementById('leadWebsite');
             const leadContact = document.getElementById('leadContact');
@@ -513,11 +717,11 @@
             const leadGeo = document.getElementById('leadGeo');
             const leadAudience = document.getElementById('leadAudience');
             const leadNotes = document.getElementById('leadNotes');
-            
+
             const leadHeadCode = document.getElementById('leadHeadCode');
             const leadBodyCode = document.getElementById('leadBodyCode');
             const leadGtmId = document.getElementById('leadGtmId');
-            
+
             const copyLeadBriefingBtn = document.getElementById('copyLeadBriefingBtn');
             const copyLeadScriptBtn = document.getElementById('copyLeadScriptBtn');
             const leadBriefingToast = document.getElementById('leadBriefingToast');
@@ -579,7 +783,7 @@
             }
 
             function generateScriptTemplateText() {
-                return `Caro beneficiário,\n\nConforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.\n\nCÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO\nEste código deve ser instalado em TODAS as páginas do website:\n\n1ª PARTE - Colar no <head> (o mais alto possível, idealmente como primeiro item):\n${getValue(leadHeadCode)}\n\n2ª PARTE - Colar imediatamente após a abertura da tag <body>:\n${getValue(leadBodyCode)}\n\nNOTA: Algumas plataformas necessitam apenas do ID do Google Tag Manager.\nHaqi está o seu ID GTM: ${getValue(leadGtmId)}\n\nIMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto.\nO código deve ser implementado em todas as páginas do site.\nApós a instalação, podemos prosseguir com a configuração das tags e eventos.\n\nFico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.\n\nCom os melhores cumprimentos,`;
+                return `Caro beneficiário,\n\nConforme combinado em nossa conversa anterior, segue o script do Google Tag Manager para implementação em seu website.\n\nCÓDIGO GTM E INSTRUÇÕES DE INSTALAÇÃO\nEste código deve ser instalado em TODAS as páginas do website:\n\n1ª PARTE - Colar no <head> (o mais alto possível, idealmente como primeiro item):\n${getValue(leadHeadCode)}\n\n2ª PARTE - Colar imediatamente após a abertura da tag <body>:\n${getValue(leadBodyCode)}\n\nNOTA: Algumas plataformas necessitam apenas do ID do Google Tag Manager.\nAqui está o seu ID GTM: ${getValue(leadGtmId)}\n\nIMPORTANTE: Ambas as partes do código são necessárias para o funcionamento correto.\nO código deve ser implementado em todas as páginas do site.\nApós a instalação, podemos prosseguir com a configuração das tags e eventos.\n\nFico à disposição para qualquer dúvida sobre a implementação ou para verificar se tudo foi instalado corretamente.\n\nCom os melhores cumprimentos,`;
             }
 
             function copyTextWithFallback(textToCopy) {
