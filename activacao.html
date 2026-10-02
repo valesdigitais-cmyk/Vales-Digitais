@@ -6,206 +6,235 @@
     <title>Ativação - Equipa Vales Digitais</title>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ============================================================
+           VARIÁVEIS DE TEMA (Light / Dark)
+           ============================================================ */
+        :root {
+            --transition-speed: 0.25s;
+            --border-radius: 8px;
+            --border-radius-sm: 6px;
+            --border-radius-pill: 999px;
+
+            /* Light theme */
+            --bg-body: #f5f5f5;
+            --bg-card: #ffffff;
+            --bg-elevated: #fafafa;
+            --bg-subtle: #f8f9fa;
+            --bg-tab-hover: #f0f0f0;
+            --bg-field-header: #f1f1f1;
+            --bg-nav-item: #ffffff;
+            --bg-nav-hover: #f1f1f1;
+
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-muted: #888888;
+            --text-inverse: #ffffff;
+
+            --border-color: #e8e8e8;
+            --border-strong: #e0e0e0;
+            --border-divider: #d0d0d0;
+
+            --btn-bg: #1a1a1a;
+            --btn-text: #ffffff;
+            --btn-bg-hover: #333333;
+
+            --accent-copied: #2e7d32;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.08);
+            --shadow-btn: 0 2px 6px rgba(0, 0, 0, 0.1);
+            --shadow-btn-hover: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+            --focus-ring: #1a1a1a;
+        }
+
+        body.dark-mode {
+            --bg-body: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --bg-elevated: #222222;
+            --bg-subtle: #1f1f1f;
+            --bg-tab-hover: #222222;
+            --bg-field-header: #242424;
+            --bg-nav-item: #1a1a1a;
+            --bg-nav-hover: #2a2a2a;
+
+            --text-primary: #f5f5f5;
+            --text-secondary: #c8c8c8;
+            --text-muted: #a0a0a0;
+            --text-inverse: #0f0f0f;
+
+            --border-color: #2a2a2a;
+            --border-strong: #333333;
+            --border-divider: #3a3a3a;
+
+            --btn-bg: #ffffff;
+            --btn-text: #0f0f0f;
+            --btn-bg-hover: #e0e0e0;
+
+            --accent-copied: #2e7d32;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 5px 25px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.5);
+            --shadow-btn: 0 2px 8px rgba(0, 0, 0, 0.4);
+            --shadow-btn-hover: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+            --focus-ring: #ffffff;
+        }
+
+        /* ============================================================
+           RESET
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Google Sans', Arial, sans-serif;
-            font-size: 11px;
-        }
-        
-        body {
-            background-color: #ffffff;
-            min-height: 100vh;
-            padding: 20px;
-            color: #000000;
-            max-width: 1200px;
-            margin: 0 auto;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-size: 13px;
         }
 
-        /* ===== BOTÃO MODO NOTURNO ===== */
+        body {
+            background-color: var(--bg-body);
+            min-height: 100vh;
+            padding: 32px 24px;
+            color: var(--text-primary);
+            max-width: 1200px;
+            margin: 0 auto;
+            transition: background-color var(--transition-speed) ease,
+                        color var(--transition-speed) ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ============================================================
+           THEME TOGGLE
+           ============================================================ */
         .theme-toggle-btn {
             position: fixed;
-            top: 15px;
-            right: 15px;
+            top: 20px;
+            right: 20px;
             z-index: 999;
-            border: 1px solid #000000;
-            background: #ffffff;
-            color: #000000;
-            border-radius: 999px;
-            padding: 8px 14px;
+            border: 1px solid var(--text-primary);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-radius: var(--border-radius-pill);
+            padding: 10px 18px;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
+            box-shadow: var(--shadow-sm);
+            letter-spacing: 0.3px;
         }
 
         .theme-toggle-btn:hover {
-            background-color: #000000;
-            color: #ffffff;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            box-shadow: var(--shadow-btn-hover);
+            transform: translateY(-1px);
         }
 
-        /* ===== MODO NOTURNO ===== */
-        body.dark-mode {
-            background-color: #121212;
-            color: #e7e7e7;
+        .theme-toggle-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
         }
 
-        body.dark-mode h1,
-        body.dark-mode h2,
-        body.dark-mode h3,
-        body.dark-mode h4 {
-            color: #f3f3f3;
-        }
-
-        body.dark-mode .tabs,
-        body.dark-mode .page-header,
-        body.dark-mode .footer,
-        body.dark-mode .sidebar,
-        body.dark-mode .main-panel,
-        body.dark-mode .nav-item,
-        body.dark-mode .field-box,
-        body.dark-mode .panel-toolbar {
-            border-color: #333333;
-        }
-
-        body.dark-mode .sidebar,
-        body.dark-mode .main-panel,
-        body.dark-mode .field-box,
-        body.dark-mode .panel-toolbar {
-            background-color: #1b1b1b;
-        }
-
-        body.dark-mode .nav-item {
-            background-color: #1b1b1b;
-            color: #d7d7d7;
-        }
-
-        body.dark-mode .nav-item:hover {
-            background-color: #2a2a2a;
-        }
-
-        body.dark-mode .nav-item.active {
-            background-color: #ffffff;
-            color: #121212;
-        }
-
-        body.dark-mode .field-content {
-            background-color: #242424;
-            border-color: #3a3a3a;
-            color: #ebebeb;
-        }
-
-        body.dark-mode .tab-btn {
-            background-color: #2a2a2a;
-            color: #d7d7d7;
-            border-color: #3a3a3a;
-        }
-
-        body.dark-mode .tab-btn:hover {
-            background-color: #3a3a3a;
-        }
-
-        body.dark-mode .tab-btn.active {
-            background-color: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
-        }
-
-        body.dark-mode .shortcut-info,
-        body.dark-mode .footer,
-        body.dark-mode .field-label,
-        body.dark-mode .nav-desc,
-        body.dark-mode .page-subtitle {
-            color: #bdbdbd;
-        }
-
-        body.dark-mode .theme-toggle-btn {
-            background-color: #1f1f1f;
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-
-        body.dark-mode .theme-toggle-btn:hover {
-            background-color: #ffffff;
-            color: #121212;
-        }
-
-        body.dark-mode .btn.secondary {
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-
-        body.dark-mode .btn.secondary:hover {
-            background-color: #ffffff;
-            color: #121212;
-        }
-
-        body.dark-mode .badge {
-            background: #ffffff;
-            color: #121212;
-        }
-
-        /* ===== TABS SUPERIORES ===== */
+        /* ============================================================
+           TABS SUPERIORES
+           ============================================================ */
         .tabs-container {
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
-        
+
         .tabs {
             display: flex;
-            gap: 5px;
-            border-bottom: 1px solid #e0e0e0;
+            gap: 4px;
+            border-bottom: 1px solid var(--border-strong);
             flex-wrap: wrap;
         }
-        
+
         .tab-btn {
-            padding: 12px 18px;
-            background: #f1f1f1;
+            padding: 12px 20px;
+            background: transparent;
             border: none;
-            border-radius: 0;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 500;
-            color: #555;
-            transition: all 0.3s;
+            color: var(--text-secondary);
+            transition: all var(--transition-speed) ease;
             white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             text-decoration: none;
-        }
-        
-        .tab-btn:hover {
-            background: #e8e8e8;
-        }
-        
-        .tab-btn.active {
-            background: #000;
-            color: white;
-            font-weight: 600;
+            position: relative;
+            margin-bottom: -1px;
+            letter-spacing: 0.2px;
+            border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
         }
 
-        /* ===== CABEÇALHO DA PÁGINA ===== */
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-tab-hover);
+        }
+
+        .tab-btn.active {
+            color: var(--text-primary);
+            font-weight: 600;
+            border-bottom-color: var(--text-primary);
+            background: transparent;
+        }
+
+        .tab-btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .tabs::-webkit-scrollbar {
+                display: none;
+            }
+            .tab-btn {
+                padding: 10px 16px;
+                font-size: 11.5px;
+            }
+        }
+
+        /* ============================================================
+           CABEÇALHO DA PÁGINA
+           ============================================================ */
         .page-header {
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
             gap: 20px;
             padding-bottom: 18px;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-strong);
             flex-wrap: wrap;
         }
 
         .page-header-text h1 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 4px;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 6px;
             letter-spacing: -0.3px;
+            color: var(--text-primary);
         }
 
         .page-subtitle {
             font-size: 12px;
-            color: #777;
+            color: var(--text-muted);
             font-weight: 400;
+            letter-spacing: 0.1px;
         }
 
         .page-meta {
@@ -213,20 +242,19 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #999;
+            color: var(--text-muted);
             padding: 6px 12px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--border-radius-pill);
+            background: var(--bg-card);
         }
 
-        body.dark-mode .page-meta {
-            border-color: #333;
-            color: #888;
-        }
-
-        /* ===== LAYOUT PRINCIPAL: SIDEBAR + PAINEL ===== */
+        /* ============================================================
+           LAYOUT PRINCIPAL
+           ============================================================ */
         .layout {
             display: grid;
-            grid-template-columns: 240px 1fr;
+            grid-template-columns: 260px 1fr;
             gap: 20px;
             align-items: start;
         }
@@ -237,27 +265,27 @@
             }
         }
 
-        /* ===== SIDEBAR ===== */
+        /* ============================================================
+           SIDEBAR
+           ============================================================ */
         .sidebar {
-            background: #f8f9fa;
-            border: 1px solid #e0e0e0;
-            padding: 15px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 18px;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-speed) ease;
         }
 
         .sidebar-title {
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #777;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        body.dark-mode .sidebar-title {
-            color: #999;
-            border-color: #333;
+            letter-spacing: 1.2px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .nav-item {
@@ -265,50 +293,74 @@
             width: 100%;
             text-align: left;
             padding: 12px 14px;
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
+            background: var(--bg-nav-item);
+            border: 1px solid var(--border-color);
             border-left: 3px solid transparent;
+            border-radius: var(--border-radius-sm);
             margin-bottom: 8px;
             cursor: pointer;
-            transition: all 0.2s;
-            color: #333;
+            transition: all var(--transition-speed) ease;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        .nav-item:last-child {
+            margin-bottom: 0;
         }
 
         .nav-item:hover {
-            background: #f1f1f1;
-            border-left-color: #000;
+            background: var(--bg-nav-hover);
+            border-left-color: var(--text-primary);
+            transform: translateX(2px);
         }
 
         .nav-item.active {
-            background: #000;
-            color: #fff;
-            border-left-color: #000;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border-left-color: var(--text-primary);
+            box-shadow: var(--shadow-btn);
         }
 
         .nav-item.active .nav-desc {
-            color: #ccc;
+            color: var(--text-muted);
+        }
+
+        body.dark-mode .nav-item.active .nav-desc {
+            color: #999999;
+        }
+
+        .nav-item:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
         }
 
         .nav-item-title {
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 600;
             display: block;
             margin-bottom: 3px;
+            letter-spacing: 0.1px;
         }
 
         .nav-desc {
-            font-size: 10px;
-            color: #777;
+            font-size: 10.5px;
+            color: var(--text-muted);
             font-weight: 400;
             display: block;
             line-height: 1.4;
+            letter-spacing: 0.1px;
         }
 
-        /* ===== PAINEL PRINCIPAL ===== */
+        /* ============================================================
+           PAINEL PRINCIPAL
+           ============================================================ */
         .main-panel {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: all var(--transition-speed) ease;
         }
 
         .panel-toolbar {
@@ -316,44 +368,52 @@
             align-items: center;
             justify-content: space-between;
             gap: 15px;
-            padding: 16px 20px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 18px 24px;
+            background: var(--bg-subtle);
+            border-bottom: 1px solid var(--border-color);
             flex-wrap: wrap;
         }
 
         .panel-toolbar-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .panel-toolbar h2 {
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 600;
             margin: 0;
+            color: var(--text-primary);
+            letter-spacing: -0.1px;
         }
 
         .badge {
             display: inline-block;
-            background: #000;
-            color: #fff;
+            background: var(--btn-bg);
+            color: var(--btn-text);
             font-size: 9px;
             font-weight: 700;
-            padding: 3px 8px;
-            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            letter-spacing: 0.8px;
             text-transform: uppercase;
+            border-radius: var(--border-radius-pill);
         }
 
         .panel-body {
-            padding: 25px;
+            padding: 24px;
         }
 
-        /* ===== CAMPOS ===== */
+        /* ============================================================
+           CAMPOS (FIELD BOX)
+           ============================================================ */
         .field-box {
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
             margin-bottom: 18px;
-            background: #ffffff;
+            background: var(--bg-card);
+            overflow: hidden;
+            transition: all var(--transition-speed) ease;
         }
 
         .field-box:last-child {
@@ -364,133 +424,190 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 18px;
-            background: #f1f1f1;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 20px;
+            background: var(--bg-field-header);
+            border-bottom: 1px solid var(--border-color);
             gap: 10px;
             flex-wrap: wrap;
-        }
-
-        body.dark-mode .field-header {
-            background: #242424;
-            border-color: #3a3a3a;
         }
 
         .field-label {
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #555;
+            letter-spacing: 1.2px;
+            color: var(--text-secondary);
         }
 
         .field-content {
-            padding: 20px;
-            font-size: 12px;
+            padding: 22px;
+            font-size: 12.5px;
             line-height: 1.7;
-            background: #ffffff;
+            background: var(--bg-card);
             white-space: pre-wrap;
             word-break: break-word;
             min-height: 50px;
-            color: #000;
+            color: var(--text-primary);
+            letter-spacing: 0.1px;
+            transition: all var(--transition-speed) ease;
         }
 
         .field-content.subject {
             font-weight: 600;
-            font-size: 13px;
+            font-size: 13.5px;
             min-height: auto;
+            color: var(--text-primary);
         }
 
         .field-content.empty {
-            color: #aaa;
+            color: var(--text-muted);
             font-style: italic;
         }
 
-        /* ===== BOTÕES ===== */
+        /* ============================================================
+           BOTÕES
+           ============================================================ */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
             padding: 10px 18px;
-            background: #000;
-            color: #fff;
-            border: 1px solid #000;
-            font-size: 11px;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: 1px solid var(--btn-bg);
+            border-radius: var(--border-radius-sm);
+            font-size: 11.5px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s;
+            transition: all var(--transition-speed) ease;
             white-space: nowrap;
+            font-family: inherit;
+            letter-spacing: 0.3px;
         }
 
         .btn:hover {
-            background: #333;
-            border-color: #333;
+            background: var(--btn-bg-hover);
+            border-color: var(--btn-bg-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-btn-hover);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
         }
 
         .btn.secondary {
             background: transparent;
-            color: #000;
-            border-color: #000;
+            color: var(--text-primary);
+            border-color: var(--border-strong);
         }
 
         .btn.secondary:hover {
-            background: #000;
-            color: #fff;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border-color: var(--btn-bg);
         }
 
         .btn.copied {
-            background: #4CAF50 !important;
-            border-color: #4CAF50 !important;
-            color: #fff !important;
+            background: var(--accent-copied) !important;
+            border-color: var(--accent-copied) !important;
+            color: #ffffff !important;
         }
 
         .btn-sm {
-            padding: 6px 12px;
-            font-size: 10px;
+            padding: 7px 14px;
+            font-size: 10.5px;
         }
 
-        /* ===== RODAPÉ ===== */
+        /* ============================================================
+           RODAPÉ
+           ============================================================ */
         .shortcut-info {
-            margin-top: 12px;
-            color: #777;
-            font-size: 10px;
+            margin-top: 16px;
+            color: var(--text-muted);
+            font-size: 10.5px;
             text-align: center;
+            letter-spacing: 0.2px;
         }
 
         .footer {
             text-align: center;
-            margin-top: 30px;
-            color: #777;
-            font-size: 10px;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0;
+            margin-top: 32px;
+            color: var(--text-muted);
+            font-size: 10.5px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-strong);
+            letter-spacing: 0.3px;
         }
 
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
         @media (max-width: 768px) {
-            .tabs {
-                overflow-x: auto;
-                padding-bottom: 5px;
-            }
-            
-            .tab-btn {
-                padding: 10px 15px;
-                font-size: 11px;
-            }
-
             .panel-body {
                 padding: 18px;
+            }
+
+            .panel-toolbar {
+                padding: 14px 18px;
             }
 
             .page-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
+
+            .field-content {
+                padding: 18px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 12px;
+            }
+
+            .page-header-text h1 {
+                font-size: 20px;
+            }
+
+            .theme-toggle-btn {
+                top: 12px;
+                right: 12px;
+                padding: 8px 14px;
+                font-size: 11px;
+            }
+
+            .sidebar {
+                padding: 14px;
+            }
+
+            .panel-body {
+                padding: 14px;
+            }
+
+            .field-content {
+                padding: 14px;
+                font-size: 11.5px;
+            }
+
+            .btn {
+                padding: 9px 14px;
+                font-size: 11px;
+            }
         }
     </style>
 </head>
 <body>
-    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">☀️ Modo Claro</button>
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Ativar modo noturno">🌙 Modo noturno</button>
 
     <!-- TABS SUPERIORES -->
     <div class="tabs-container">
@@ -502,7 +619,6 @@
             <a href="calculadora.html" class="tab-btn">Calculadora</a>
             <a href="activacao.html" class="tab-btn active">Ativação</a>
             <a href="faturas.html" class="tab-btn">Faturas</a>
-            <a href="spinner.html" class="tab-btn">Spinner</a>
         </div>
     </div>
 
@@ -548,7 +664,7 @@
             </div>
 
             <div class="panel-body">
-                <!-- CAMPO: Assunto (só aparece no modo Vouchers 48h) -->
+                <!-- CAMPO: Assunto -->
                 <div class="field-box" id="subjectField" style="display:none;">
                     <div class="field-header">
                         <span class="field-label">Assunto do Email</span>
@@ -733,15 +849,25 @@
             function updateThemeLabel() {
                 if (!themeToggleBtn) return;
                 if (document.body.classList.contains('dark-mode')) {
-                    themeToggleBtn.textContent = '☀️ Modo Claro';
+                    themeToggleBtn.textContent = '☀️ Modo claro';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo claro');
                 } else {
-                    themeToggleBtn.textContent = '🌙 Modo Noturno';
+                    themeToggleBtn.textContent = '🌙 Modo noturno';
+                    themeToggleBtn.setAttribute('aria-label', 'Ativar modo noturno');
                 }
             }
+
+            // Carregar preferência guardada
+            if (localStorage.getItem('theme-preference') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+            updateThemeLabel();
 
             if (themeToggleBtn) {
                 themeToggleBtn.addEventListener('click', function () {
                     document.body.classList.toggle('dark-mode');
+                    var currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                    localStorage.setItem('theme-preference', currentTheme);
                     updateThemeLabel();
                 });
             }
@@ -788,7 +914,6 @@
 
             // Inicializar com o primeiro template por padrão
             selectTemplate('oneCampaign');
-            updateThemeLabel();
         }
 
         document.addEventListener('DOMContentLoaded', init);
